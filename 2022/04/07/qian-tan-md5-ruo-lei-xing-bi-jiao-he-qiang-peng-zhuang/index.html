@@ -1,0 +1,1644 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="浅谈md5弱类型比较和强碰撞, uf9n1x&#39;s blog">
+    <meta name="description" content="浅谈md5弱类型比较和强碰撞
+
+基本知识
+php中有两种比较的符号==与=====在进行比较的时候，如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换为数值并且比较按照数值来进行。
+===在进行比较的时候，会先判断两种">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>浅谈md5弱类型比较和强碰撞 | uf9n1x&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <style>
+        body{
+            background-image: url(https://img-blog.csdnimg.cn/e6c3814fecb44593a5707e12753dfd5d.png);
+            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-attachment:fixed;
+        }
+    </style>
+
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="uf9n1x's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+
+<!--动态诗词-->
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">uf9n1x&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">uf9n1x&#39;s blog</div>
+        <div class="logo-desc">
+            
+            websec
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">浅谈md5弱类型比较和强碰撞</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/md5%E5%BC%B1%E7%B1%BB%E5%9E%8B/">
+                                <span class="chip bg-color">md5弱类型</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-04-07
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="浅谈md5弱类型比较和强碰撞"><a href="#浅谈md5弱类型比较和强碰撞" class="headerlink" title="浅谈md5弱类型比较和强碰撞"></a>浅谈md5弱类型比较和强碰撞</h1><span id="more"></span>
+
+<p>基本知识</p>
+<p>php中有两种比较的符号==与=====在进行比较的时候，如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换为数值并且比较按照数值来进行。</p>
+<p>===在进行比较的时候，会先判断两种字符串的类型是否相等，再比较。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-c8190504cc361cdc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/508" alt="img"></p>
+<p>0e开头且都是数字的字符串，弱类型比较都等于0。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-ed4baee0ff0dab32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/564" alt="img"></p>
+<p><em><strong>==比较</strong></em></p>
+<p>测试代码</p>
+<pre class="line-numbers language-php"><code class="language-php"> <span class="token delimiter">&lt;?php</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">{</span>  
+         <span class="token keyword">echo</span> <span class="token string">'flag'</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span>
+     <span class="token keyword">else</span><span class="token punctuation">{</span>
+          <span class="token keyword">echo</span> <span class="token string">'you are wrong'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">else</span> <span class="token keyword">echo</span> <span class="token string">"请输入不同的a，b值"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>解法1</p>
+<p>由于md5不能加密数组，在加密数组的时候会返回NULL</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-21175278feddb55a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/837" alt="img"></p>
+<p>所以，我们可以传入两个数组</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-6457dd24eff0b444.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/823" alt="img"></p>
+<p>解法2</p>
+<p>可以传入两个md5加密后是0e开头的字符串，需要注意的地方是，这个以0e开头的字符串只能是纯数字，这样php在进行科学计算法的时候才会将它转化为0。可以查找以0e开头md5加密相等的字符串，也可以自己编写代码，提供以下脚本。</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token variable">$a</span><span class="token operator">&lt;=</span><span class="token number">1000000000</span><span class="token punctuation">;</span><span class="token variable">$a</span><span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token variable">$md5</span> <span class="token operator">=</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">'/^0e\d+$/'</span><span class="token punctuation">,</span><span class="token variable">$md5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token variable">$a</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+   <span class="token keyword">echo</span> <span class="token variable">$md5</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-e4dacc0e04463e39.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/823" alt="img"></p>
+<p>s1502113478a</p>
+<p>0e861580163291561247404381396064</p>
+<p>s1885207154a</p>
+<p>0e509367213418206700842008763514</p>
+<p>s1836677006a</p>
+<p>0e481036490867661113260034900752</p>
+<p>s155964671a</p>
+<p>0e342768416822451524974117254469</p>
+<p>s1184209335a</p>
+<p>0e072485820392773389523109082030</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-5c2db68916a0b610.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/705" alt="img"></p>
+<p><em><strong>===比较</strong></em></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">echo</span> <span class="token string">'flag'</span><span class="token punctuation">;</span>
+  <span class="token keyword">else</span>
+    <span class="token keyword">echo</span> <span class="token string">'you are wrong'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">else</span> <span class="token keyword">echo</span> <span class="token string">"请输入不同的a，b值"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>解法1：</p>
+<p>也可以传入两个数组，但不再适合传入两个0e开头的字符串，因为===是md5的强碰撞，进行了严格的过滤。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-4554bc957fe76f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/858" alt="img"></p>
+<p>解法2：</p>
+<p>使用md5加密后两个完全相等的两个字符串来绕过过滤。</p>
+<p>如何生成两个不一样的字符串，但是MD5是一样的呢。参考<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://xz.aliyun.com/t/2232">如何用不同的数值构建一样的MD5</a>后，我们可以使用快速MD5碰撞生成器来构建两个MD5一样，但内容完全不一样的字符串。</p>
+<p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http://www.win.tue.nl/hashclash/fastcoll_v1.0.0.5.exe.zip">fastcoll_v1.0.0.5.exe.zip</a></p>
+<p>构造</p>
+<p>创建一个文本文件，写入任意的文件内容，命名为ywj.txt （源文件）</p>
+<p>运行fastcoll输出以下参数。-p 是源文件，-o是输出文件</p>
+<p>fastcoll_v1.0.0.5.exe -p ywj.txt -o 1.txt 2.txt</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-9d8436ac95106745.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/710" alt="img"></p>
+<p>测试</p>
+<p>对生产的1.txt和2.txt文件进行测试</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">function</span> <span class="token function">readmyfile</span><span class="token punctuation">(</span><span class="token variable">$path</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token variable">$fh</span> <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$path</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">fread</span><span class="token punctuation">(</span><span class="token variable">$fh</span><span class="token punctuation">,</span> <span class="token function">filesize</span><span class="token punctuation">(</span><span class="token variable">$path</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$fh</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">return</span> <span class="token variable">$data</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">echo</span> <span class="token string">'二进制md5加密 '</span><span class="token punctuation">.</span> <span class="token function">md5</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token function">readmyfile</span><span class="token punctuation">(</span><span class="token string">"1.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">"&lt;/br>"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">'url编码 '</span><span class="token punctuation">.</span> <span class="token function">urlencode</span><span class="token punctuation">(</span><span class="token function">readmyfile</span><span class="token punctuation">(</span><span class="token string">"1.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">"&lt;/br>"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">'二进制md5加密 '</span><span class="token punctuation">.</span><span class="token function">md5</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token function">readmyfile</span><span class="token punctuation">(</span><span class="token string">"2.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">"&lt;/br>"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">'url编码 '</span><span class="token punctuation">.</span> <span class="token function">urlencode</span><span class="token punctuation">(</span><span class="token function">readmyfile</span><span class="token punctuation">(</span><span class="token string">"2.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">"&lt;/br>"</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>二进制md5加密 8e4ef6c69a337c0de0208455ee69a416</p>
+<p>url编码  </p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token number">1</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span>A3njn<span class="token operator">%</span>FD<span class="token operator">%</span>1A<span class="token operator">%</span>CB<span class="token operator">%</span>3A<span class="token operator">%</span>29Wr<span class="token operator">%</span>02En<span class="token operator">%</span>CE<span class="token operator">%</span><span class="token number">89</span><span class="token operator">%</span>9A<span class="token operator">%</span>E3<span class="token operator">%</span>8EF<span class="token operator">%</span>F1<span class="token operator">%</span>BE<span class="token operator">%</span>E9<span class="token operator">%</span>EE3<span class="token operator">%</span>0E<span class="token operator">%</span><span class="token number">82</span><span class="token operator">%</span>2A<span class="token operator">%</span><span class="token number">95</span><span class="token operator">%</span><span class="token number">23</span><span class="token operator">%</span>0D<span class="token operator">%</span>FA<span class="token operator">%</span>CE<span class="token operator">%</span>1C<span class="token operator">%</span>F2<span class="token operator">%</span>C•4P<span class="token operator">%</span>C2<span class="token operator">%</span>B7s<span class="token operator">%</span>0F<span class="token operator">%</span>C8t<span class="token operator">%</span>F28<span class="token operator">%</span>FAU<span class="token operator">%</span>AD<span class="token operator">%</span>2C<span class="token operator">%</span>EB<span class="token operator">%</span>1D<span class="token operator">%</span>D8<span class="token operator">%</span>D2<span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span>8C<span class="token operator">%</span>3B<span class="token operator">%</span>FCN<span class="token operator">%</span>C9b4<span class="token operator">%</span>DB<span class="token operator">%</span>AC<span class="token operator">%</span><span class="token number">17</span><span class="token operator">%</span>A8<span class="token operator">%</span>BF<span class="token operator">%</span>3Fh<span class="token operator">%</span>84i<span class="token operator">%</span>F4<span class="token operator">%</span>1E<span class="token operator">%</span>B5Q<span class="token operator">%</span>7B<span class="token operator">%</span>FC<span class="token operator">%</span>B9RuJ<span class="token operator">%</span><span class="token number">60</span><span class="token operator">%</span>B4<span class="token operator">%</span>0D7<span class="token operator">%</span>F9<span class="token operator">%</span>F9<span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span>1E<span class="token operator">%</span>C1<span class="token operator">%</span>1B<span class="token operator">%</span><span class="token number">16</span><span class="token operator">%</span>C9M<span class="token operator">%</span>2A<span class="token operator">%</span>7D<span class="token operator">%</span>B2<span class="token operator">%</span>BBoW<span class="token operator">%</span><span class="token number">02</span><span class="token operator">%</span>7D<span class="token operator">%</span>8F<span class="token operator">%</span>7F<span class="token operator">%</span>C0qT<span class="token operator">%</span>D0<span class="token operator">%</span>CF<span class="token operator">%</span>3A<span class="token operator">%</span>9DFH<span class="token operator">%</span>F1<span class="token operator">%</span><span class="token number">25</span><span class="token operator">%</span>AC<span class="token operator">%</span>DF<span class="token operator">%</span>FA<span class="token operator">%</span>C4G<span class="token operator">%</span>27uW<span class="token operator">%</span>CFNB<span class="token operator">%</span>E7<span class="token operator">%</span>EF<span class="token operator">%</span>B0
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>二进制md5加密 8e4ef6c69a337c0de0208455ee69a416</p>
+<p>url编码  </p>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token number">1</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span>A3njn<span class="token operator">%</span>FD<span class="token operator">%</span>1A<span class="token operator">%</span>CB<span class="token operator">%</span>3A<span class="token operator">%</span>29Wr<span class="token operator">%</span>02En<span class="token operator">%</span>CE<span class="token operator">%</span><span class="token number">89</span><span class="token operator">%</span>9A<span class="token operator">%</span>E3<span class="token operator">%</span>8E<span class="token operator">%</span>C6<span class="token operator">%</span>F1<span class="token operator">%</span>BE<span class="token operator">%</span>E9<span class="token operator">%</span>EE3<span class="token operator">%</span>0E<span class="token operator">%</span><span class="token number">82</span><span class="token operator">%</span>2A<span class="token operator">%</span><span class="token number">95</span><span class="token operator">%</span><span class="token number">23</span><span class="token operator">%</span>0D<span class="token operator">%</span>FA<span class="token operator">%</span>CE<span class="token operator">%</span>1C<span class="token operator">%</span>F2<span class="token operator">%</span>C4P<span class="token operator">%</span>C2<span class="token operator">%</span>B7s<span class="token operator">%</span>0F<span class="token operator">%</span>C8t<span class="token operator">%</span>F28zV<span class="token operator">%</span>AD<span class="token operator">%</span>2C<span class="token operator">%</span>EB<span class="token operator">%</span>1D<span class="token operator">%</span>D8<span class="token operator">%</span>D2<span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span>8C<span class="token operator">%</span>3B<span class="token operator">%</span>FCN<span class="token operator">%</span>C9<span class="token operator">%</span>E24<span class="token operator">%</span>DB<span class="token operator">%</span>AC<span class="token operator">%</span><span class="token number">17</span><span class="token operator">%</span>A8<span class="token operator">%</span>BF<span class="token operator">%</span>3Fh<span class="token operator">%</span>84i<span class="token operator">%</span>F4<span class="token operator">%</span>1E<span class="token operator">%</span>B5Q<span class="token operator">%</span>7B<span class="token operator">%</span>FC<span class="token operator">%</span>B9RuJ<span class="token operator">%</span><span class="token number">60</span><span class="token operator">%</span>B4<span class="token operator">%</span>0D<span class="token operator">%</span>B7<span class="token operator">%</span>F9<span class="token operator">%</span>F9<span class="token operator">%</span><span class="token number">00</span><span class="token operator">%</span>1E<span class="token operator">%</span>C1<span class="token operator">%</span>1B<span class="token operator">%</span><span class="token number">16</span><span class="token operator">%</span>C9M<span class="token operator">%</span>2A<span class="token operator">%</span>7D<span class="token operator">%</span>B2<span class="token operator">%</span>BBoW<span class="token operator">%</span><span class="token number">02</span><span class="token operator">%</span>7D<span class="token operator">%</span>8F<span class="token operator">%</span>7F<span class="token operator">%</span>C0qT<span class="token operator">%</span>D0<span class="token operator">%</span>CF<span class="token operator">%</span>3A<span class="token operator">%</span>1DFH<span class="token operator">%</span>F1<span class="token operator">%</span><span class="token number">25</span><span class="token operator">%</span>AC<span class="token operator">%</span>DF<span class="token operator">%</span>FA<span class="token operator">%</span>C4G<span class="token operator">%</span>27uW<span class="token operator">%</span>CF<span class="token operator">%</span>CEB<span class="token operator">%</span>E7<span class="token operator">%</span>EF<span class="token operator">%</span>B0
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>可以看到，1.txt和2.txt文件二进制md5加密后的结果完全相同。由于1.txt和2.txt文件中含有不可见字符，所以需要将其url编码后使用。可以看到url编码后的两个字符串不完全相同，满足我们输入两个不同参数的需要。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-6a4f54fdf2458ead.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200" alt="img"></p>
+<p>当题目限制不能传入数组，只能传入字符串时，如下例题，就只能采用解法2.</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>string<span class="token punctuation">)</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token punctuation">(</span>string<span class="token punctuation">)</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">===</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">echo</span> <span class="token string">"you are right"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span> <span class="token punctuation">{</span>
+  <span class="token keyword">echo</span> <span class="token string">"you are wrong"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token constant">HECTF</span> ezphp
+源码
+<span class="token delimiter">&lt;?php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">highlight_file</span><span class="token punctuation">(</span>__file__<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string">'flag.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$string_1</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'str1'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$string_2</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'str2'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'param1'</span><span class="token punctuation">]</span><span class="token operator">!==</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'param2'</span><span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'param1'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">===</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'param2'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$string_1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+       <span class="token variable">$md5_1</span> <span class="token operator">=</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$string_1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token variable">$md5_2</span> <span class="token operator">=</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$string_2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$md5_1</span> <span class="token operator">!=</span> <span class="token variable">$md5_2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+         <span class="token variable">$a</span> <span class="token operator">=</span> <span class="token function">strtr</span><span class="token punctuation">(</span><span class="token variable">$md5_1</span><span class="token punctuation">,</span> <span class="token string">'cxhp'</span><span class="token punctuation">,</span> <span class="token string">'0123'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token variable">$b</span> <span class="token operator">=</span> <span class="token function">strtr</span><span class="token punctuation">(</span><span class="token variable">$md5_2</span><span class="token punctuation">,</span> <span class="token string">'cxhp'</span><span class="token punctuation">,</span> <span class="token string">'0123'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$a</span> <span class="token operator">==</span> <span class="token variable">$b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+           <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
+         <span class="token punctuation">}</span>
+       <span class="token punctuation">}</span>  
+       <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"md5 is wrong"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span>
+       <span class="token punctuation">}</span>
+     <span class="token keyword">else</span> <span class="token punctuation">{</span>
+     <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'str1 not number'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>首先查看一些strtr()函数的用法：</p>
+<p>strtr() 函数转换字符串中特定的字符。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-bbdf44503bca5a71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/940" alt="img"></p>
+<p>观察源码，要求传入四个参数，首先param1===param2,因为没有别的限制，所以我们可以传入两个数组。对于是str1和str2，首先str1只能是数字，且最后$a == $b，但md5_1 != md5_2，所以我们不能传入两个md5加密后以0e开头的字符串。</p>
+<p>又因为会将md5加密后的str1和str2中的cxhp替换成0123，也就是说c会被替换成0，所以一个ce开头的字符串会被替换成0e开头的字符串。</p>
+<p>可以想到只要找到两个md5加密后是ce开头的字符串，或者一个md5加密后是ce开头的字符串，一个md5加密后是0e开头的字符串就可以绕过过滤。</p>
+<p>构造脚本</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token variable">$a</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token variable">$a</span> <span class="token operator">&lt;=</span> <span class="token number">100000000</span><span class="token punctuation">;</span> <span class="token variable">$a</span><span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token variable">$md5</span> <span class="token operator">=</span> <span class="token function">strtr</span><span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'cxhp'</span><span class="token punctuation">,</span> <span class="token string">'0123'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">'/^0e\d+$/'</span><span class="token punctuation">,</span> <span class="token variable">$md5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token variable">$a</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token variable">$md5</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-03169f806b8230c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/762" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-808b76fe2850fa06.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/964" alt="img"></p>
+<p>实战演练</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">function</span> <span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token variable">$a</span> <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token number">133</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">78</span><span class="token punctuation">;</span>
+   <span class="token variable">$b</span> <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">195</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">return</span> <span class="token variable">$a</span><span class="token operator">+</span><span class="token variable">$b</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token variable">$r</span> <span class="token operator">=</span> <span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>string<span class="token punctuation">)</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token punctuation">(</span>string<span class="token punctuation">)</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">.</span><span class="token variable">$r</span> <span class="token operator">==</span> <span class="token variable">$b</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token keyword">print</span> <span class="token string">"Yes,you are right"</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+     <span class="token keyword">else</span> <span class="token punctuation">{</span>
+       <span class="token keyword">print</span> <span class="token string">"you are wrong"</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>观察代码，有一个rondom方法，返回的是一个随机数，在这道题中，不需要清楚返回的是什么内容，我们只要知道返回的是一串数字就可以了。传入两个参数a和b，要求传入的是字符串，b会经过md5加密。最后要让$a.$r ==  $b。因为是弱类型比较，且只能传入字符串，想要的是两个0e开头的字符串进行比较，前面我们已经知道，以0e开头的字符串只能是纯数字，这样php在进行科学计算法的时候才会将它转化为0。所以保证$a以0e开头就可以了，因为$r是一串数字，所以$a.$r在php中还是可以被解析为0。因为$b是参数b经过md5加密而来，所以我们传入md5加密后是0e开头的字符串即可。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/48820-687eab910160234d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/805" alt="img"></p>
+<p>MD5套娃综合利用题</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string">'flag.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$string_1</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'str1'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$string_2</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'str2'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'aa'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'bb'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>  
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'aa'</span><span class="token punctuation">]</span><span class="token operator">!=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'bb'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>  
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'aa'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'bb'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>   
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$b</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">{</span>    
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$a</span> <span class="token operator">!=</span> <span class="token variable">$b</span> <span class="token operator">&amp;&amp;</span> <span class="token number">0</span> <span class="token operator">==</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$b</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>     
+                    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token string">'9331c'</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>     
+                        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$string_1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">{</span>     
+                            <span class="token variable">$md5_1</span> <span class="token operator">=</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$string_1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+                            <span class="token variable">$md5_2</span> <span class="token operator">=</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$string_2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+                            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$md5_1</span> <span class="token operator">!=</span> <span class="token variable">$md5_2</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">{</span>         
+                                <span class="token variable">$a</span> <span class="token operator">=</span> <span class="token function">strtr</span><span class="token punctuation">(</span><span class="token variable">$md5_1</span><span class="token punctuation">,</span> <span class="token string">'cxhp'</span><span class="token punctuation">,</span> <span class="token string">'0123'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>               
+                                <span class="token variable">$b</span> <span class="token operator">=</span> <span class="token function">strtr</span><span class="token punctuation">(</span><span class="token variable">$md5_2</span><span class="token punctuation">,</span> <span class="token string">'cxhp'</span><span class="token punctuation">,</span> <span class="token string">'0123'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
+                                <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$a</span> <span class="token operator">==</span> <span class="token variable">$b</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">{</span> 
+                                    <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span> 
+                                <span class="token punctuation">}</span>              
+                             <span class="token keyword">else</span><span class="token punctuation">{</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"can u give me the right str???"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+                                  
+                              <span class="token punctuation">}</span>               
+                         <span class="token keyword">else</span><span class="token punctuation">{</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"no!!!!!!!!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>            <span class="token punctuation">}</span> 
+                    <span class="token punctuation">}</span>      <span class="token punctuation">}</span> 
+                <span class="token keyword">else</span> <span class="token punctuation">{</span>          <span class="token keyword">echo</span> <span class="token string">"wrong!"</span><span class="token punctuation">;</span>        <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>        <span class="token keyword">echo</span> <span class="token string">'wrong!!!!'</span><span class="token punctuation">;</span>      <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>    <span class="token keyword">else</span>    <span class="token keyword">echo</span> <span class="token string">'you are wrong'</span><span class="token punctuation">;</span>  <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>  <span class="token keyword">echo</span> <span class="token string">"请输入不同的a，b值"</span><span class="token punctuation">;</span><span class="token punctuation">}</span>elseecho <span class="token string">"请输入a，b值"</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p> <strong>Warning</strong>:  md5() expects parameter 1 to be string, array given in <strong>/var/www/html/index.php</strong> on line <strong>10</strong></p>
+<p> <strong>Warning</strong>:  md5() expects parameter 1 to be string, array given in <strong>/var/www/html/index.php</strong> on line <strong>10</strong><br> flag{bc65416d-d33c-42f4-9586-13798cd8e4ab}</p>
+<p>payload：</p>
+<p>get:    ?a=0&amp;b=V5VDSHva7fjyJoJ33IQl&amp;c=21175023&amp;str1=9178521abc&amp;str2=30212349<br>post:    aa[]=1&amp;bb[]=2</p>
+<p>补充相关知识:</p>
+<h1 id="1-MD5截断比较验证"><a href="#1-MD5截断比较验证" class="headerlink" title="1.MD5截断比较验证"></a>1.MD5截断比较验证</h1><p>以De1CTF线上赛Web3为例，在De1CTF中，我遇到的MD5截断比较验证是这样的：</p>
+<p>这个验证码提示意思为“将问号（即为Code）进行md5加密之后截取前5位===9331c”**</p>
+<p>那么在理论上存在的可能性有16^5种，页面每次刷新之后md5都会更新一次，但是在现实中，md5前五位相同是多解</p>
+<p>那么我们的思路就可以梳理为：创建一个彩虹表进行比对，暴力猜解Code</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> multiprocessing<span class="token punctuation">.</span>dummy <span class="token keyword">import</span> Pool <span class="token keyword">as</span> tpimport hashlibknownMd5 <span class="token operator">=</span> <span class="token string">'9331c'</span>      <span class="token comment" spellcheck="true">#已知的md5明文def md5(text):     return hashlib.md5(str(text).encode('utf-8')).hexdigest()def findCode(code):       key = code.split(':')    start = int(key[0])      end = int(key[1])     for code in range(start, end):        if md5(code)[0:5] == knownMd5:                        print code            breaklist=[] for i in range(3):    #这里的range(number)指爆破出多少结果停止    list.append(str(10000000*i) + ':' + str(10000000*(i+1)))pool = tp()    #使用多线程加快爆破速度pool.map(findCode, list) pool.close()pool.join()</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>2.本题生成绕过$str1的脚本如下：</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token variable">$a</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token variable">$a</span> <span class="token markup">&lt;= 100000000; $a++) {    $b='abc';   $md5 = strtr(md5(($a.$b)),'cxhp', '0123');     if(preg_match('/^0e\d+$/', $md5))        {          echo $a.$b;           echo "\n";         echo $md5;          echo "\n";      }        }?></span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span class="token operator">></span><span class="token operator">></span><span class="token operator">></span>9178521abc0e084232128504747924645498217260
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">uf9n1x</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://uf9n1x.top/2022/04/07/qian-tan-md5-ruo-lei-xing-bi-jiao-he-qiang-peng-zhuang/">https://uf9n1x.top/2022/04/07/qian-tan-md5-ruo-lei-xing-bi-jiao-he-qiang-peng-zhuang/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">uf9n1x</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/md5%E5%BC%B1%E7%B1%BB%E5%9E%8B/">
+                                    <span class="chip bg-color">md5弱类型</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '1wgisEeeURi9KOmiSbCm7iil-gzGzoHsz# 必填',
+        appKey: 'cajDtJBhWBdsXmivKuThVNIh# 必填',
+        serverURLs: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/04/18/sql-zhu-ru-fu-xi-zong-jie/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="sql注入复习总结">
+                        
+                        <span class="card-title">sql注入复习总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            sql注入漏洞
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-18
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/sql%E6%B3%A8%E5%85%A5/" class="post-category">
+                                    sql注入
+                                </a>
+                            
+                            <a href="/categories/sql%E6%B3%A8%E5%85%A5/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    web安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/sql%E6%B3%A8%E5%85%A5/">
+                        <span class="chip bg-color">sql注入</span>
+                    </a>
+                    
+                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/07/python-chang-yong-mo-kuai-bi-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="python常用模块笔记">
+                        
+                        <span class="card-title">python常用模块笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、requests 模块
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/python/" class="post-category">
+                                    python
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: uf9n1x&#39;s blog<br />'
+            + '文章作者: uf9n1x<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2022</span>
+            
+            <a href="/about" target="_blank">uf9n1x</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">93.9k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/uf9n1x" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1916003479@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1916003479" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1916003479" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
+
+
+
+<!--动态标签标题-->
+<script type="text/javascript">
+    var OriginTitile=document.title,st;
+	document.addEventListener("visibilitychange",function(){
+        document.hidden?(document.title="ヽ(●-`Д´-)ノ你要玩捉迷藏嘛",clearTimeout(st)):(document.title="(Ő∀Ő3)ノ好哦！",st=setTimeout(function(){document.title=OriginTitile},3e3))
+    })
+</script>
+
+
+<script type="text/javascript">
+//只在桌面版网页启用特效,樱花飘落特效
+var windowWidth = $(window).width();
+if (windowWidth > 768) {
+    document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+}
+</script>

