@@ -1,0 +1,9 @@
+<div class="card">
+   <img class="ava" src="{avatarurl}" />
+   <div class="card-header">
+      <div>
+         <a href="{link}">{name}</a>
+      </div>
+      <div class="info">{description}</div>
+   </div>
+</div>
