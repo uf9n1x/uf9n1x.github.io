@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="内网渗透（七）frp端口转发与内网代理"><meta name="keywords" content="内网渗透,代理,端口转发"><meta name="author" content="uf9n1x,1916003479@qq.com"><meta name="copyright" content="uf9n1x"><title>内网渗透（七）frp端口转发与内网代理 | Uf9n1x's Blog</title><link rel="shortcut icon" href="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Uf9n1x's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">端口转发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FRP"><span class="toc-number">1.1.</span> <span class="toc-text">FRP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">内网代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FRP-1"><span class="toc-number">2.1.</span> <span class="toc-text">FRP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E7%BA%A7%E4%BB%A3%E7%90%86"><span class="toc-number">2.1.1.</span> <span class="toc-text">一级代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E4%BB%A3%E7%90%86"><span class="toc-number">2.1.2.</span> <span class="toc-text">二级代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E4%BB%A3%E7%90%86"><span class="toc-number">2.1.3.</span> <span class="toc-text">三级代理</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"></div><div class="author-info__name text-center">uf9n1x</div><div class="author-info__description text-center">websec</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/uf9n1x">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">43</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">35</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">30</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Some links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.cnblogs.com/uf9n1x/">博客园</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x">语雀</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://music.163.com/">Music</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Uf9n1x's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">内网渗透（七）frp端口转发与内网代理</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-19</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E4%BB%A3%E7%90%86/">代理</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.3k</span><span class="post-meta__separator">|</span><span>阅读时长: 5 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>这篇文章介绍frp端口转发与内网代理。</p>
+<span id="more"></span>
+
+<h1 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h1><h2 id="FRP"><a href="#FRP" class="headerlink" title="FRP"></a>FRP</h2><p><strong>将web服务器的3389端口转发到VPS的3389端口</strong></p>
+<ol>
+<li>在VPS上执行以下命令，启动FRP服务端 shell</li>
+</ol>
+<pre class="line-numbers language-shell"><code class="language-shell">./frps -c ./frps.ini
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p> frps.ini内容如下： </p>
+<pre><code>[common] bind_addr = 0.0.0.0 bind_port = 7000
+</code></pre>
+<ul>
+<li>在web服务器上执行以下命令，启动FRP客户端，连接vps的服务端 shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p> frpc.ini内容如下： </p>
+<pre><code>[common] 
+server_addr = 100.100.100.10 
+server_port = 7000 
+[socks5_forward] 
+type = tcp 
+local_ip = 127.0.0.1 
+local_port = 3389 
+remote_port = 33890
+</code></pre>
+<p><strong>将web服务器的3389端口转发到web服务器的的33890端口</strong></p>
+<ol>
+<li>在web服务器上执行以下命令，启动FRP服务端 shell</li>
+</ol>
+<pre><code>./frps -c ./frps.ini
+</code></pre>
+<p> frps.ini内容如下： </p>
+<pre><code>[common] 
+bind_addr = 0.0.0.0 
+bind_port = 7000
+</code></pre>
+<ul>
+<li>在web服务器上执行以下命令，启动FRP客户端，连接vps的服务端 shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p> frpc.ini内容如下： </p>
+<pre><code>[common] 
+server_addr = 127.0.0.1 
+server_port = 7000 
+[socks5_forward] 
+type = tcp 
+local_ip = 127.0.0.1 
+local_port = 3389 
+remote_port = 33890
+</code></pre>
+<h1 id="内网代理"><a href="#内网代理" class="headerlink" title="内网代理"></a>内网代理</h1><h2 id="FRP-1"><a href="#FRP-1" class="headerlink" title="FRP"></a>FRP</h2><p><a target="_blank" rel="noopener" href="https://blog-1300147235.cos.ap-chengdu.myqcloud.com/202302081501409.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304191117626.png" alt="img"></a></p>
+<h3 id="一级代理"><a href="#一级代理" class="headerlink" title="一级代理"></a>一级代理</h3><p>此时已经获得DMZ区web服务器的权限，将web服务器作为跳板打通DMZ区的网络，使得kali可以访问到FTP服务器</p>
+<p>vps -&gt; web服务器 -&gt; DMZ区网络</p>
+<ol>
+<li>使用vps作为FRP的服务端，在VPS执行shell</li>
+</ol>
+<pre><code>./frps -c ./frps.ini
+</code></pre>
+<p>frps.ini内容如下：</p>
+<pre><code>[common] 
+bind_addr = 0.0.0.0 
+bind_port = 7000
+</code></pre>
+<ul>
+<li>使用web服务器作为FRP客户端，执行shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p>frpc.ini内容如下：</p>
+<pre><code>[common] 
+server_addr = 100.100.100.10 
+server_port = 7000 
+[socks5] 
+remote_port = 1080 
+plugin = socks5
+</code></pre>
+<p>完成后<strong>在vps上会开启socks代理端口1080</strong>，使用代理软件代理即可。</p>
+<h3 id="二级代理"><a href="#二级代理" class="headerlink" title="二级代理"></a>二级代理</h3><p>此时已经获取到DMZ区域的web服务器和FTP服务器权限，将web服务器和FTP服务器同时作为跳板，打通到达办公区的网络</p>
+<p>vps -&gt; web服务器 -&gt; FTP服务器 -&gt; 办公区网络</p>
+<ol>
+<li>在VPS上执行以下命令，启动FRP服务端shell</li>
+</ol>
+<pre><code>./frps -c ./frps.ini
+</code></pre>
+<p>frps.ini内容如下：</p>
+<pre><code>[common] 
+bind_addr = 0.0.0.0 
+bind_port = 7000
+</code></pre>
+<ul>
+<li>在web服务器上执行以下命令，启动FRP客户端，连接vps的服务端shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p>frpc.ini内容如下：</p>
+<ul>
+<li>这将本地的10808端口转发到VPS的1080端口</li>
+</ul>
+<pre><code>[common] 
+server_addr = 100.100.100.10 
+server_port = 7000 
+[socks5_forward] 
+type = tcp 
+local_ip = 10.10.10.20 
+local_port = 10808 
+remote_port = 1080
+</code></pre>
+<ul>
+<li>在web服务器上执行以下命令，启动一个FRP服务端shell</li>
+</ul>
+<pre><code>./frps.exe -c ./frps.ini
+</code></pre>
+<p>frps.ini内容如下：</p>
+<pre><code>[common] 
+bind_addr = 10.10.10.20 
+bind_port = 7000
+</code></pre>
+<ul>
+<li>在FTP服务器上执行以下命令，启动FRP客户端shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p>frpc.ini内容如下：</p>
+<pre><code>[common] 
+server_addr = 10.10.10.20 
+server_port = 7000 
+[socks5] 
+type = tcp 
+remote_port = 10808 
+plugin = socks5
+</code></pre>
+<p>完成后<strong>在vps上会开启socks代理端口1080</strong>，使用代理软件代理即可访问办公区网络。</p>
+<p><strong>最终的隧道：</strong></p>
+<pre><code>VPS（100.100.100.10）    
+监听：0.0.0.0:1080、0.0.0.0:7000     
+&lt;--&gt; web服务器（10.10.10.20）    
+连接：100.100.100.10:7000    监听：10.10.10.20:7000、10.10.10.20:10808      
+&lt;--&gt; ftp服务器（10.10.10.30、192.168.30.10）    
+连接：10.10.10.20:7000
+&lt;--&gt;办公区网络（192.168.30.0/24）
+</code></pre>
+<h3 id="三级代理"><a href="#三级代理" class="headerlink" title="三级代理"></a>三级代理</h3><p>此时已获得DMZ区的web服务器和FTP服务器权限，以及办公区的文件服务器权限，将web服务器和FTP服务器以及文件服务器同时作为跳板，打通到达核心区的网络</p>
+<p>vps -&gt; web服务器 -&gt; FTP服务器 -&gt; 办公区文件服务器 -&gt; 核心区网络</p>
+<ol>
+<li>在VPS上启动FRP服务端shell</li>
+</ol>
+<pre><code>./frps -c ./frps.ini
+</code></pre>
+<p>frps.ini内容如下：</p>
+<pre><code>[common] 
+bind_addr = 0.0.0.0 
+bind_port = 7000
+</code></pre>
+<ul>
+<li>在web服务器上启动FRP客户端，同时将本地的10808端口转发到VPS的1080端口shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p>frpc.ini内容如下：</p>
+<ul>
+<li>这将本地的10808端口转发到VPS的1080端口</li>
+</ul>
+<pre><code>[common] 
+server_addr = 100.100.100.10 
+server_port = 7000 
+[socks5_forward] 
+type = tcp 
+local_ip = 10.10.10.20 
+local_port = 10808 
+remote_port = 1080
+</code></pre>
+<ul>
+<li>在web服务器上启动一个FRP服务端shell</li>
+</ul>
+<pre><code>./frps.exe -c ./frps.ini
+</code></pre>
+<p>frps.ini内容如下：</p>
+<pre><code>[common] 
+bind_addr = 10.10.10.20 
+bind_port = 7000
+</code></pre>
+<ul>
+<li>在FTP服务器上启动FRP客户端，连接web服务器的FRP服务端，同时将FTP服务端的10809端口转发到Web服务器的10808端口shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p>frpc.ini内容如下：</p>
+<pre><code>[common] 
+server_addr = 10.10.10.20 
+server_port = 7000 
+[socks5_forward] 
+type = tcp 
+local_ip = 192.168.30.10 
+local_port = 10809 
+remote_port = 10808
+</code></pre>
+<ul>
+<li>在FTP服务器上启动FRP服务端shell</li>
+</ul>
+<pre><code>./frps.exe -c ./frps.ini
+</code></pre>
+<p>frps.ini内容如下：</p>
+<pre><code>[common] 
+bind_addr = 192.168.30.10 
+bind_port = 7000
+</code></pre>
+<ul>
+<li>在办公区的文件服务器上启动FRP客户端，连接FTP服务器的服务端，并在FTP服务器的10809端口上启动socks5代理服务shell</li>
+</ul>
+<pre><code>./frpc.exe -c ./frpc.ini
+</code></pre>
+<p>frpc.ini内容如下：</p>
+<pre><code>[common] 
+server_addr = 192.168.30.10 
+server_port = 7000 
+[socks5] type = tcp 
+remote_port = 10809 
+plugin = socks5
+</code></pre>
+<p><strong>最终的隧道：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">VPS（100.100.100.10）
+    监听：0.0.0.0:1080、0.0.0.0:7000
+    
+<--> web服务器（10.10.10.20）
+    连接：100.100.100.10:7000
+    监听：10.10.10.20:7000、10.10.10.20:10808 
+    
+<--> ftp服务器（10.10.10.30、192.168.30.10）
+    连接：10.10.10.20:7000
+    监听：192.168.30.10:10809 、192.168.30.10:7000 
+    
+<--> 文件服务器（192.168.30.100、192.168.60.100）
+    连接：192.168.30.10:7000 
+    
+<-->核心区网络（192.168.60.0/24）
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1916003479@qq.com">uf9n1x</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://uf9n1x.top/2023/04/19/nei-wang-shen-tou-qi-frp-duan-kou-zhuan-fa-yu-nei-wang-dai-li/">https://uf9n1x.top/2023/04/19/nei-wang-shen-tou-qi-frp-duan-kou-zhuan-fa-yu-nei-wang-dai-li/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://uf9n1x.top">Uf9n1x's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%90%86/">代理</a><a class="post-meta__tags" href="/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/">端口转发</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2023/04/19/javasec-san-lei-jia-zai-ji-zhi/"><i class="fa fa-chevron-left">  </i><span>javasec(三)类加载机制</span></a></div><div class="next-post pull-right"><a href="/2023/04/18/javasec-qi-jndi-zhu-ru/"><span>javasec(七)JNDI注入</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div class="layout" id="footer"><div class="copyright">&copy;2023 By uf9n1x</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

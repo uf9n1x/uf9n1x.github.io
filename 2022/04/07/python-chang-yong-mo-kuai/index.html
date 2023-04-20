@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="python常用模块"><meta name="keywords" content="python"><meta name="author" content="uf9n1x,1916003479@qq.com"><meta name="copyright" content="uf9n1x"><title>python常用模块 | Uf9n1x's Blog</title><link rel="shortcut icon" href="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Uf9n1x's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81requests-%E6%A8%A1%E5%9D%97"><span class="toc-number">1.</span> <span class="toc-text">一、requests 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-requests%E6%A8%A1%E5%9D%97%E5%8F%91%E9%80%81get%E8%AF%B7%E6%B1%82"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.1 requests模块发送get请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-response%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.0.2.</span> <span class="toc-text">1.2 response响应对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-response-text%E4%B8%8Eresponse-content%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.0.3.</span> <span class="toc-text">1.3 response.text与response.content的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E9%80%9A%E8%BF%87%E5%AF%B9response-content%E8%BF%9B%E8%A1%8Cdecode%EF%BC%8C%E6%9D%A5%E8%A7%A3%E5%86%B3%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81"><span class="toc-number">1.0.4.</span> <span class="toc-text">1.4 通过对response.content进行decode，来解决中文乱码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-response%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="toc-number">1.0.5.</span> <span class="toc-text">1.5 response响应对象的其他常用的属性和方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%8F%91%E9%80%81%E5%B8%A6headers%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="toc-number">1.0.6.</span> <span class="toc-text">2.1 发送带headers的请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1%E6%80%9D%E8%80%83"><span class="toc-number">1.0.6.1.</span> <span class="toc-text">2.1.1思考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E6%90%BA%E5%B8%A6%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.0.6.2.</span> <span class="toc-text">2.1.2 携带请求头发送请求的方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8F%91%E9%80%81%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="toc-number">1.0.7.</span> <span class="toc-text">2.2 发送带参数的请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E5%9C%A8url%E6%90%BA%E5%B8%A6%E5%8F%82%E6%95%B0"><span class="toc-number">1.0.7.1.</span> <span class="toc-text">2.2.1 在url携带参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E9%80%9A%E8%BF%87params%E6%90%BA%E5%B8%A6%E5%8F%82%E6%95%B0%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.7.2.</span> <span class="toc-text">2.2.2 通过params携带参数字典</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%9C%A8headers%E5%8F%82%E6%95%B0%E4%B8%AD%E6%90%BA%E5%B8%A6cookie"><span class="toc-number">1.0.8.</span> <span class="toc-text">2.3 在headers参数中携带cookie</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-github%E7%99%BB%E5%BD%95%E6%8A%93%E5%8C%85%E5%88%86%E6%9E%90"><span class="toc-number">1.0.8.1.</span> <span class="toc-text">2.3.1 github登录抓包分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E5%AE%8C%E6%88%90%E4%BB%A3%E7%A0%81"><span class="toc-number">1.0.8.2.</span> <span class="toc-text">2.3.2 完成代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-cookie%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.0.9.</span> <span class="toc-text">2.4 cookie参数的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-cookiejar%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2%E4%B8%BAcookies%E5%AD%97%E5%85%B8%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.0.10.</span> <span class="toc-text">2.5 cookiejar对象转换为cookies字典的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%B6%85%E6%97%B6timeout%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.0.11.</span> <span class="toc-text">2.6 超时timeout的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E4%BB%A3%E7%90%86proxies%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.0.12.</span> <span class="toc-text">2.7 代理proxies的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-7-1%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">1.0.12.1.</span> <span class="toc-text">2.7.1正向代理和反向代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-7-3-%E4%BB%A3%E7%90%86IP-%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.0.12.2.</span> <span class="toc-text">2.7.3 代理IP(代理服务器)的分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-4-proxies%E4%BB%A3%E7%90%86%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.0.13.</span> <span class="toc-text">2.7.4 proxies代理参数的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E4%BD%BF%E7%94%A8verify%E5%8F%82%E6%95%B0%E5%BF%BD%E7%95%A5CA%E8%AF%81%E4%B9%A6"><span class="toc-number">1.0.14.</span> <span class="toc-text">2.8 使用verify参数忽略CA证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-requests%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.0.15.</span> <span class="toc-text">3.1 requests发送post请求的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-requests-session%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.0.16.</span> <span class="toc-text">4.1 requests.session的作用及应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-requests-session%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.0.17.</span> <span class="toc-text">4.2 requests.session的使用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%AE%9E%E4%BE%8B%EF%BC%9A%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95github"><span class="toc-number">1.0.18.</span> <span class="toc-text">4.3 实例：模拟登录github</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81base64%E6%A8%A1%E5%9D%97"><span class="toc-number">1.1.</span> <span class="toc-text">二、base64模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">代码实例</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"></div><div class="author-info__name text-center">uf9n1x</div><div class="author-info__description text-center">websec</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/uf9n1x">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">43</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">35</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">30</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Some links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.cnblogs.com/uf9n1x/">博客园</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x">语雀</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://music.163.com/">Music</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Uf9n1x's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">python常用模块</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/python/">python</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">3.8k</span><span class="post-meta__separator">|</span><span>阅读时长: 14 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="一、requests-模块"><a href="#一、requests-模块" class="headerlink" title="一、requests 模块"></a>一、requests 模块</h1><span id="more"></span>
+
+<p>该模块主要用于发起请求获取响应，该模块有很多替代模块，比如说urllib模块，但是在工作中使用最多的是requests模块，requests的代码语法简单易懂，相对于臃肿的urllib模块，使用requests模块写爬虫会大大减少代码量，而且实现某一功能会更简单，因此推荐大家使用requests模块。</p>
+<h3 id="1-1-requests模块发送get请求"><a href="#1-1-requests模块发送get请求" class="headerlink" title="1.1 requests模块发送get请求"></a><strong>1.1 requests模块发送get请求</strong></h3><blockquote>
+<p>通过requests向百度发送请求，获取页面的源码</p>
+</blockquote>
+<pre class="line-numbers language-python"><code class="language-python">demo1<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'http://www.baidu.com'</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 打印响应内容</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="1-2-response响应对象"><a href="#1-2-response响应对象" class="headerlink" title="1.2 response响应对象"></a><strong>1.2 response响应对象</strong></h3><blockquote>
+<p>★ 观察上面代码运行的结果观察发现，有好多乱码，这是因为编码与解码所使用的字符集不同造成的；我们尝试使用下边的办法来解决中文乱码问题。</p>
+</blockquote>
+<pre class="line-numbers language-python"><code class="language-python">demo2<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'http://www.baidu.com'</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 打印响应内容</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 注意这里</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>1、response.text是requests模块按照charset模块推测出的编码字符串进行解码的结果。</strong></p>
+<p><strong>2、网络传输的字符串都是bytes类型的数据，所以requests.text = response.content.decode(‘推测出来的编码字符集’)</strong></p>
+<p>3、我们可以在网页源码中搜索charset，尝试参考该编码的字符集，注意：存在不准确的情况。</p>
+<h3 id="1-3-response-text与response-content的区别"><a href="#1-3-response-text与response-content的区别" class="headerlink" title="1.3 response.text与response.content的区别"></a><strong>1.3 response.text与response.content的区别</strong></h3><ul>
+<li>response.text</li>
+</ul>
+<p>类型：str</p>
+<p>解码类型：requests模块自动根据http头部对响应的编码做出有根据的推测，推测文本编码。</p>
+<p>我们可以手动设定编码格式</p>
+<pre class="line-numbers language-python"><code class="language-python">demo3<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'http://www.baidu.com'</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+response<span class="token punctuation">.</span>encoding<span class="token operator">=</span><span class="token string">'utf-8'</span>
+<span class="token comment" spellcheck="true"># 打印响应内容</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>response.content</li>
+</ul>
+<p>类型：bytes</p>
+<p>解码类型：没有设定。可以自行进行设定。</p>
+<hr>
+<h3 id="1-4-通过对response-content进行decode，来解决中文乱码"><a href="#1-4-通过对response-content进行decode，来解决中文乱码" class="headerlink" title="1.4 通过对response.content进行decode，来解决中文乱码"></a><strong>1.4 通过对response.content进行decode，来解决中文乱码</strong></h3><ul>
+<li>response.content.decode() 默认utf-8</li>
+<li>response.content.decode(‘GBK’)</li>
+<li>常见的字符集编码</li>
+</ul>
+<p>utf-8</p>
+<p>gbk</p>
+<p>gb2312</p>
+<p>ascill(读音：阿斯克码)</p>
+<p>iso-8859-1</p>
+<hr>
+<p><strong>知识点：掌握利用decode函数对requests.content解决中文乱码</strong></p>
+<hr>
+<h3 id="1-5-response响应对象的其他常用的属性和方法"><a href="#1-5-response响应对象的其他常用的属性和方法" class="headerlink" title="1.5 response响应对象的其他常用的属性和方法"></a><strong>1.5 response响应对象的其他常用的属性和方法</strong></h3><blockquote>
+<p>★ response = requests.get(url)中response是发送请求获取的响应对象；response响应对象中除了text，content获取响应内容以外还有其他常用的属性或方法。</p>
+</blockquote>
+<ul>
+<li>response.url 响应的URL，有时候响应的URL和请求的URL并不样。</li>
+<li>response.status_code 响应状态码</li>
+<li>response.headers 响应头</li>
+<li>response.request.headers 响应头对应的请求头</li>
+<li>response.request._cookies 响应对应请求的cookies，返回cookieJar类型</li>
+<li>response.cookies 响应的cookie（<strong>经过了set-cookie动作</strong>）返回cookieJar类型</li>
+<li><strong>response.json() 自动将json字符串类型的响应内容转换为Python对象(dict or list)</strong></li>
+</ul>
+<pre class="line-numbers language-python"><code class="language-python">demo4<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'http://www.baidu.com'</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+response<span class="token punctuation">.</span>encoding<span class="token operator">=</span><span class="token string">'utf-8'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>request<span class="token punctuation">.</span>headers<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>headers<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>request<span class="token punctuation">.</span>_cookies<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>cookies<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p><strong>知识点：掌握response响应对象的其他常用属性</strong></p>
+<h3 id="2-1-发送带headers的请求"><a href="#2-1-发送带headers的请求" class="headerlink" title="2.1 发送带headers的请求"></a><strong>2.1 发送带headers的请求</strong></h3><blockquote>
+<p>先写一个获取百度首页的代码</p>
+</blockquote>
+<pre class="line-numbers language-python"><code class="language-python">`demo5`<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'http://www.baidu.com'</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 打印响应内容</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># 打印对应请求头信息</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>request<span class="token punctuation">.</span>headers<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-1-1思考"><a href="#2-1-1思考" class="headerlink" title="2.1.1思考"></a><strong>2.1.1思考</strong></h4><p>1、对比浏览器上百度网页的源码和代码中百度首页的源码，发现代码中的百度首页的源码非常少，为什么？</p>
+<p>！！因为需要带上请求头信息</p>
+<blockquote>
+<p>★ 回顾爬虫的概念，模拟浏览器，欺骗服务器，获取和浏览器一致的内容</p>
+</blockquote>
+<p>请求头中有很多字段，其中User-Agent字段必不可少，表示客户端的操作系统以及浏览器的信息</p>
+<h4 id="2-1-2-携带请求头发送请求的方法"><a href="#2-1-2-携带请求头发送请求的方法" class="headerlink" title="2.1.2 携带请求头发送请求的方法"></a><strong>2.1.2 携带请求头发送请求的方法</strong></h4><p>==requests.get(url, headers)==</p>
+<ul>
+<li>headers 参数接收<strong>字典形式</strong>的请求头</li>
+<li>请求头字段名为key，字段对应的操作为value</li>
+</ul>
+<pre class="line-numbers language-python"><code class="language-python">demo6<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'http://www.baidu.com'</span>
+<span class="token comment" spellcheck="true"># 构造请求头</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"User-Agent"</span><span class="token punctuation">:</span> <span class="token string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"</span><span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 打印响应内容</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># 打印对应请求头信息</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>request<span class="token punctuation">.</span>headers<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2-2-发送带参数的请求"><a href="#2-2-发送带参数的请求" class="headerlink" title="2.2 发送带参数的请求"></a><strong>2.2 发送带参数的请求</strong></h3><h4 id="2-2-1-在url携带参数"><a href="#2-2-1-在url携带参数" class="headerlink" title="2.2.1 在url携带参数"></a><strong>2.2.1 在url携带参数</strong></h4><p>直接对含有参数的url发送请求</p>
+<pre class="line-numbers language-python"><code class="language-python">demo7<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'https://www.baidu.com/s?wd=Python'</span>
+<span class="token comment" spellcheck="true"># 构造请求头</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"User-Agent"</span><span class="token punctuation">:</span> <span class="token string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"</span><span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'baidu.html'</span><span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-2-2-通过params携带参数字典"><a href="#2-2-2-通过params携带参数字典" class="headerlink" title="2.2.2 通过params携带参数字典"></a><strong>2.2.2 通过params携带参数字典</strong></h4><ol>
+<li>构建请求参数字典</li>
+<li>向接口发送请求时带上参数字典，设置字典参数params。</li>
+</ol>
+<pre class="line-numbers language-python"><code class="language-python">demo8<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+
+<span class="token comment" spellcheck="true">#目标url</span>
+url <span class="token operator">=</span> <span class="token string">'https://www.baidu.com/s?'</span>
+<span class="token comment" spellcheck="true"># 请求参数是一个字典，即wd=Python</span>
+kw <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'wd'</span><span class="token punctuation">:</span> <span class="token string">'python'</span><span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true"># 构造请求头</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"User-Agent"</span><span class="token punctuation">:</span> <span class="token string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"</span><span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true"># 向url发送get请求</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">,</span> params<span class="token operator">=</span>kw<span class="token punctuation">)</span>
+<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'baidu1.html'</span><span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p><strong>知识点：掌握发送带参数的请求方法</strong></p>
+<hr>
+<h3 id="2-3-在headers参数中携带cookie"><a href="#2-3-在headers参数中携带cookie" class="headerlink" title="2.3 在headers参数中携带cookie"></a><strong>2.3 在headers参数中携带cookie</strong></h3><blockquote>
+<p>★ 网站经常利用请求头中的Cookie字段来做用户状态的保持，那么我们可以在headers参数中添加Cookie，模拟普通用户的请求，我们以github为例。</p>
+</blockquote>
+<h4 id="2-3-1-github登录抓包分析"><a href="#2-3-1-github登录抓包分析" class="headerlink" title="2.3.1 github登录抓包分析"></a><strong>2.3.1 github登录抓包分析</strong></h4><ol>
+<li>打开浏览器，右键-检查，点击network，勾选Preserve log</li>
+<li>访问github登录的url地址：<a href="https://link.zhihu.com/?target=https://github.com/login">https://github.com/login</a></li>
+<li>输入账号密码，点击登录后，访问一个需要登录后才能获取正确内容的URL。比如点击右上角的Your profle访问<a href="https://link.zhihu.com/?target=https://github.com/USER_NAME">https://github.com/USER_NAME</a></li>
+<li>确定URL后，再确定发送该请求所需要的请求头中的User-Agent和cookie</li>
+</ol>
+<h4 id="2-3-2-完成代码"><a href="#2-3-2-完成代码" class="headerlink" title="2.3.2 完成代码"></a><strong>2.3.2 完成代码</strong></h4><ul>
+<li>从浏览器中复制User-Agent和cookie</li>
+<li>浏览器中的请求头字段和值与headers参数中必须一致</li>
+<li>headers请求参数字典中的cookie键对应的值是字符串</li>
+</ul>
+<pre class="line-numbers language-python"><code class="language-python">demo9<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'Cookie'</span><span class="token punctuation">:</span> <span class="token string">'你的cookie'</span>
+<span class="token punctuation">}</span>
+
+url <span class="token operator">=</span> <span class="token string">'https://github.com/Zhimin7'</span>
+
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'github_withcookie.html'</span><span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>接下来写一个不包含cookie的爬虫，看看对比后的结果，不同之处就相当明显了。</p>
+<pre class="line-numbers language-python"><code class="language-python">demo10<span class="token punctuation">.</span>py
+<span class="token keyword">import</span> requests
+headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+    <span class="token string">'User-Agent'</span><span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36'</span>
+<span class="token punctuation">}</span>
+
+url <span class="token operator">=</span> <span class="token string">'https://github.com/Zhimin7'</span>
+
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'github_without_cookie.html'</span><span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2-4-cookie参数的使用"><a href="#2-4-cookie参数的使用" class="headerlink" title="2.4 cookie参数的使用"></a><strong>2.4 cookie参数的使用</strong></h3><blockquote>
+<p>可以在headers参数中携带cookie，也可以使用专门的cookie参数</p>
+</blockquote>
+<p>1.cookie参数的形式：字典</p>
+<p>cookies = {‘cookie的name’ : ‘cookie的value’}</p>
+<ul>
+<li>该字典对应请求头中cookie的字符串</li>
+<li>等号左边对应cookie的key</li>
+<li>等号右边对应cookie的value</li>
+</ul>
+<p>2.cookies参数的使用方法</p>
+<pre><code>response = requests.get(url, cookies)
+</code></pre>
+<p>3.将cookie字符串转换为cookies参数所需要的字典</p>
+<pre class="line-numbers language-python"><code class="language-python">cookie_dict <span class="token operator">=</span> <span class="token punctuation">{</span>cookie<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'='</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token punctuation">:</span> cookie<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'='</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">for</span> cookie <span class="token keyword">in</span> temp<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">';'</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>当然，如果你的字典生成式学的不够熟悉的话，那你可以使用较为稳妥方法</p>
+<pre class="line-numbers language-python"><code class="language-python">demo11<span class="token punctuation">.</span>py
+temp <span class="token operator">=</span>  <span class="token string">'octo=GH1.1.1102395001.1582362358; _ga=GA1.2.454155278.1582362359; _device_id=0442b4dd494cafc0301c2ad3e9eeca31; experiment:homepage_signup_flow=eyJ2ZXJzaW9uIjoiMSIsInJvbGxPdXRQbGFjZW1lbnQiOjI1LjY3MjIzNTIyOTQ0MTk1Miwic3ViZ3JvdXAiOiJjb250cm9sIiwiY3JlYXRlZEF0IjoiMjAyMC0wMy0yNlQxNDozNToxNC45ODdaIiwidXBkYXRlZEF0IjoiMjAyMC0wMy0yNlQxNDozNToxNC45ODdaIn0=; user_session=vsC4WPrJRjDLSTC3Up0h0D5i0Knfyah9hGXzhfrchfW_5eyc; __Host-user_session_same_site=vsC4WPrJRjDLSTC3Up0h0D5i0Knfyah9hGXzhfrchfW_5eyc; logged_in=yes; dotcom_user=Zhimin7; has_recent_activity=1; tz=Asia%2FShanghai; _gh_sess=e9HSDZpXyMNlwvsRH7kjV39DisarWcGKdXqnr65Z3VfFlChN0onUNHwROBPqX2yfS9WudAE71IQF2h7TRiVQ3rvVp1KbvbmfOOkULatFZsHoVRi5UUCI%2FY8wz0QVBLXF3VY0WgLwoUoZhaJ5MhPG%2F22am%2Bowt2XigTISZm289i%2BCYxkDvWz8N7J61WTPz9i3--3YPo3PUW%2B3asHJSS--AmjAHcbcaKfU%2BneNyzA13w%3D%3D'</span>
+cookie_list <span class="token operator">=</span> temp<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">';'</span><span class="token punctuation">)</span>
+cookies <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">for</span> cookie <span class="token keyword">in</span> cookie_list<span class="token punctuation">:</span>
+    cookies<span class="token punctuation">[</span>cookie<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'='</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> cookie<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'='</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>cookies<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2-5-cookiejar对象转换为cookies字典的方法"><a href="#2-5-cookiejar对象转换为cookies字典的方法" class="headerlink" title="2.5 cookiejar对象转换为cookies字典的方法"></a><strong>2.5 cookiejar对象转换为cookies字典的方法</strong></h3><blockquote>
+<p>使用request获取的Response对象，具有cookie属性。该属性值是一个cookieJar类型，包含了对方服务器设置在本地的cookie。我们如何将其转换为cookie字典呢？</p>
+</blockquote>
+<p>1.转换方法</p>
+<pre><code>cookie_dict = requests.utils.dict_from_cookieJar(response.cookies)
+</code></pre>
+<p>2.其中response.cookies返回的就是cookieJar类型的对象。</p>
+<p>3.requests.utils.dict_from_cookieJar函数返回cookie字典。</p>
+<pre class="line-numbers language-python"><code class="language-python">demo12<span class="token punctuation">.</span>py
+<span class="token keyword">from</span> requests <span class="token keyword">import</span> utils
+<span class="token keyword">import</span> requests
+
+url <span class="token operator">=</span> <span class="token string">'http://www.baidu.com'</span>
+response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>response<span class="token punctuation">.</span>cookies<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>cookies<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 将cookieJar转换为dict</span>
+dict_cookies <span class="token operator">=</span> requests<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>dict_from_cookiejar<span class="token punctuation">(</span>response<span class="token punctuation">.</span>cookies<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dict_cookies<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 将dict转换为cookieJar</span>
+jar_cookies <span class="token operator">=</span> requests<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>cookiejar_from_dict<span class="token punctuation">(</span>dict_cookies<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>jar_cookies<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>不过这种方法会造成域名缺失，不是很常用。在之后会具体讲如何使用cookie保存会话。</p>
+<h3 id="2-6-超时timeout的使用"><a href="#2-6-超时timeout的使用" class="headerlink" title="2.6 超时timeout的使用"></a><strong>2.6 超时timeout的使用</strong></h3><blockquote>
+<p>在平时上网的过程中，我们经常会遇到网络波动，这个时候，一个请求等待了很久的时间仍然没有结果。<br>在爬虫中，一个请求很久没有结果，就会让整个项目的效率变得非常低，这个时候我们就需要对请求进行强制要求，让他必须在特定的时间内返回结果，否则就报错。</p>
+</blockquote>
+<p>1.超时参数timeout的使用方法</p>
+<pre><code>reponse = requests.get(url, timeout=3)
+</code></pre>
+<p><strong>timeout=3，表示3</strong>秒*<em>内程序访问服务器仍然没有响应，程序就会终止运行并报错</em></p>
+<h3 id="2-7-代理proxies的使用"><a href="#2-7-代理proxies的使用" class="headerlink" title="2.7 代理proxies的使用"></a><strong>2.7 代理proxies的使用</strong></h3><h4 id="2-7-1正向代理和反向代理"><a href="#2-7-1正向代理和反向代理" class="headerlink" title="2.7.1正向代理和反向代理"></a><strong>2.7.1正向代理和反向代理</strong></h4><blockquote>
+<p>前面提到proxy参数指定的代理IP指向的是正向代理服务器，那么相应的就有反向代理服务器；现在来了解一下正向代理服务器和反向代理服务器的区别</p>
+</blockquote>
+<ol>
+<li><strong>从发送请求一方的角度，来区分正向和反向代理</strong></li>
+<li><strong>为浏览器或客户端（发送请求的一方）转发请求的，叫做正向代理</strong>，如VPN</li>
+<li><strong>不为浏览器或客户端(发送请求的一方)转发请求，而是为最终处理请求的服务器转发请求的，叫做反向代理</strong>，浏览器不知道服务器的真实IP地址，如NGINX</li>
+</ol>
+<h4 id="2-7-3-代理IP-代理服务器-的分类"><a href="#2-7-3-代理IP-代理服务器-的分类" class="headerlink" title="2.7.3 代理IP(代理服务器)的分类"></a><strong>2.7.3 代理IP(代理服务器)的分类</strong></h4><ul>
+<li>透明代理：透明代理虽然可以直接“隐藏”你的IP地址，但是还是可以直接看到你是谁。</li>
+<li>匿名代理：使用匿名代理，别人只能知道你用了代理，无法知道你是谁。</li>
+<li>高匿代理：高匿代理让别人不知道你使用了代理，所以最好的选择，毫无疑问<strong>使用高匿代理效果最好</strong>。</li>
+</ul>
+<p>根据网站所使用的协议不同，需要使用相应协议的代理服务。从代理服务器请求的协议可以分为：</p>
+<ul>
+<li>http代理：目标url为http协议</li>
+<li>https代理：目标urlhttps协议</li>
+</ul>
+<h3 id="2-7-4-proxies代理参数的使用"><a href="#2-7-4-proxies代理参数的使用" class="headerlink" title="2.7.4 proxies代理参数的使用"></a><strong>2.7.4 proxies代理参数的使用</strong></h3><blockquote>
+<p> 为了让服务器以为是不同客户端发送的请求，防止频繁向同一个域名发送请求被封IP，所以我们要使用代理IP。</p>
+</blockquote>
+<pre><code>response = requests.get(url, proxies=proxies)
+</code></pre>
+<p>proxies的形式：字典</p>
+<pre class="line-numbers language-python"><code class="language-python">proxies <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'http'</span><span class="token punctuation">:</span><span class="token string">'http://12.32.56.78:8000'</span><span class="token punctuation">,</span>
+    <span class="token string">'https'</span><span class="token punctuation">:</span><span class="token string">'https://12.32.56.78:8000'</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意：如果proxies字典中含有多个键值对，发送请求的时候将按照url地址的协议来选择使用相应的代理IP。</p>
+<h3 id="2-8-使用verify参数忽略CA证书"><a href="#2-8-使用verify参数忽略CA证书" class="headerlink" title="2.8 使用verify参数忽略CA证书"></a><strong>2.8 使用verify参数忽略CA证书</strong></h3><blockquote>
+<p> 在使用浏览器上网的时候，有时会看到，【您的链接不是私密连接】</p>
+</blockquote>
+<ul>
+<li>原因：该网站的CA证书没有经过【受信任的证书颁发机构】的认证</li>
+</ul>
+<p>所以作为爬虫，我们需要避免这种情况的发生，必须无视这个信息。</p>
+<pre class="line-numbers language-text"><code class="language-text">import requests
+
+    url = '' # 填写没有认证的URL
+response = requests.get(url, verify=False)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3-1-requests发送post请求的方法"><a href="#3-1-requests发送post请求的方法" class="headerlink" title="3.1 requests发送post请求的方法"></a><strong>3.1 requests发送post请求的方法</strong></h3><ul>
+<li>response = requests.post(url, data=data)</li>
+<li>data参数接收一个字典</li>
+<li><strong>response模块发送post请求函数和发送get请求的方法是一样的</strong></li>
+</ul>
+<h3 id="4-1-requests-session的作用及应用场景"><a href="#4-1-requests-session的作用及应用场景" class="headerlink" title="4.1 requests.session的作用及应用场景"></a><strong>4.1 requests.session的作用及应用场景</strong></h3><p> requests模块中的session类能够自动的处理发送请求获取响应的过程中产生cookie，进而达到状态保持的目的</p>
+<ul>
+<li>requests.session的作用</li>
+</ul>
+<p>自动处理cookie，即<strong>下一次请求会自动带上前一次的cookie</strong></p>
+<ul>
+<li>requests.session的应用场景</li>
+</ul>
+<p>自动处理连续请求多次请求过程产生的cookie</p>
+<h3 id="4-2-requests-session的使用方法"><a href="#4-2-requests-session的使用方法" class="headerlink" title="4.2 requests.session的使用方法"></a><strong>4.2 requests.session的使用方法</strong></h3><blockquote>
+<p> session示例在请求一个网站后，对方服务器设置在本地的cookie会保存在session中，下一次再用session请求网站的时候，会带上前一次的cookie</p>
+</blockquote>
+<pre class="line-numbers language-python"><code class="language-python">session <span class="token operator">=</span> requests<span class="token punctuation">.</span>session<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#实例化session对象</span>
+response <span class="token operator">=</span> session<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+response <span class="token operator">=</span> session<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span> data<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>session发送get请求和post请求的参数，与requests模块发送请求的参数完全一致</li>
+</ul>
+<h3 id="4-3-实例：模拟登录github"><a href="#4-3-实例：模拟登录github" class="headerlink" title="4.3 实例：模拟登录github"></a><strong>4.3 实例：模拟登录github</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">from</span> lxml <span class="token keyword">import</span> etree
+
+
+<span class="token keyword">class</span> <span class="token class-name">GitHub</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>session <span class="token operator">=</span> requests<span class="token punctuation">.</span>session<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>session<span class="token punctuation">.</span>headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+            <span class="token string">'User-Agent'</span><span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36'</span>
+        <span class="token punctuation">}</span>
+        self<span class="token punctuation">.</span>login_url <span class="token operator">=</span> <span class="token string">'https://github.com/login'</span>
+
+    <span class="token keyword">def</span> <span class="token function">login</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        response <span class="token operator">=</span> self<span class="token punctuation">.</span>session<span class="token punctuation">.</span>get<span class="token punctuation">(</span>self<span class="token punctuation">.</span>login_url<span class="token punctuation">)</span>
+        html <span class="token operator">=</span> etree<span class="token punctuation">.</span>HTML<span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> html
+
+    <span class="token keyword">def</span> <span class="token function">get_token</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        authenticity_token <span class="token operator">=</span> self<span class="token punctuation">.</span>login<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//form/input[1]/@value'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> authenticity_token
+
+    <span class="token keyword">def</span> <span class="token function">get_timestamp_secret</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        timestamp_secret <span class="token operator">=</span> self<span class="token punctuation">.</span>login<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//div[@class="auth-form-body mt-3"]/input[11]/@value'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> timestamp_secret
+    <span class="token keyword">def</span> <span class="token function">get_timestamp</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        timestamp <span class="token operator">=</span> self<span class="token punctuation">.</span>login<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//div[@class="auth-form-body mt-3"]/input[10]/@value'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> timestamp
+
+
+    <span class="token keyword">def</span> <span class="token function">get_profile</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        url_session <span class="token operator">=</span> <span class="token string">'https://github.com/session'</span>
+        url_profile <span class="token operator">=</span> <span class="token string">'https://github.com/Ufgnix'</span>
+        data <span class="token operator">=</span> <span class="token punctuation">{</span>
+            <span class="token string">'commit'</span><span class="token punctuation">:</span> <span class="token string">'Sign in'</span><span class="token punctuation">,</span>
+            <span class="token string">'authenticity_token'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>get_token<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token string">'ga_id'</span><span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">,</span>
+            <span class="token string">'login'</span><span class="token punctuation">:</span> <span class="token string">'你的邮箱'</span><span class="token punctuation">,</span>
+            <span class="token string">'password'</span><span class="token punctuation">:</span> <span class="token string">'你的密码'</span><span class="token punctuation">,</span>
+            <span class="token string">'webauthn - support'</span><span class="token punctuation">:</span> <span class="token string">'supported'</span><span class="token punctuation">,</span>
+            <span class="token string">'webauthn - iuvpaa - support'</span><span class="token punctuation">:</span> <span class="token string">'supported'</span><span class="token punctuation">,</span>
+            <span class="token string">'return_to'</span><span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">,</span>
+            <span class="token string">'allow_signup'</span><span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">,</span>
+            <span class="token string">'client_id'</span><span class="token punctuation">:</span><span class="token string">''</span>
+            <span class="token string">'integration:'</span><span class="token punctuation">,</span>
+            <span class="token string">'required_field_86b0'</span><span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">,</span>
+            <span class="token string">'timestamp'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>get_timestamp<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token string">'timestamp_secret'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>get_timestamp_secret<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        self<span class="token punctuation">.</span>session<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url_session<span class="token punctuation">,</span> data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+        html <span class="token operator">=</span> self<span class="token punctuation">.</span>session<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url_profile<span class="token punctuation">)</span><span class="token punctuation">.</span>content
+        <span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'github.html'</span><span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'获取完毕'</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    github <span class="token operator">=</span> GitHub<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    github<span class="token punctuation">.</span>get_token<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    github<span class="token punctuation">.</span>get_timestamp<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    github<span class="token punctuation">.</span>get_timestamp_secret<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    github<span class="token punctuation">.</span>get_profile<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="二、base64模块"><a href="#二、base64模块" class="headerlink" title="二、base64模块"></a>二、base64模块</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=base64&amp;spm=1001.2101.3001.7020">base64</a>模块是用来作base64编码解码，常用于小型数据的传输。编码后的数据是一个字符串，其包括a-z、A-Z、0-9、/、+共64个字符，即可用6个字节表示，写出数值就是0-63.故三个字节编码的话就变成了4个字节，如果数据字节数不是3的倍数，就不能精确地划分6位的块，此时需要在原数据后添加1个或2个零值字节，使其字节数为3的倍数，然后在编码后的字符串后添加1个或2个‘=’，表示零值字节，故事实上总共由65个字符组成。下面举几个小例子。</p>
+<p>将3个字节的‘Xue‘进行base64编码：</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/python%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B01.png" alt="image-20230416085458110"></p>
+<p>将2个字节’Xu‘进行base64编码：</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/python%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B02.png" alt="image-20230416085544695"></p>
+<p>将1个字节’X’进行base64编码：</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/python%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B03.png" alt="image-20230416085621124"></p>
+<p>base64模块真正用的上的方法只有8个，分别是encode, decode, encodestring, decodestring, b64encode,b64decode, urlsafe_b64decode,urlsafe_b64encode。他们8个可以两两分为4组，<strong>encode,decode</strong>一组，专门用来编码和<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%A7%A3%E7%A0%81&amp;spm=1001.2101.3001.7020">解码</a>文件的,也可以StringIO里的数据做编解码；<strong>encodestring,decodestring</strong>一组，专门用来编码和解码<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&amp;spm=1001.2101.3001.7020">字符串</a>； <strong>b64encode和b64decode</strong>一组，用来编码和解码字符串，并且有一个替换符号字符的功能；<strong>urlsafe_b64encode和urlsafe_b64decode</strong>一组，这个就是用来专门对url进行base64编解码的。</p>
+<h3 id="代码实例"><a href="#代码实例" class="headerlink" title="代码实例"></a>代码实例</h3><ul>
+<li>b64encode和b64decode：对字符串操作</li>
+</ul>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> base64
+st <span class="token operator">=</span> <span class="token string">'hello, i am Ufgnix!'</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#默认以utf8编码</span>
+res <span class="token operator">=</span> base64<span class="token punctuation">.</span>b64encode<span class="token punctuation">(</span>st<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#默认以utf8解码</span>
+res <span class="token operator">=</span> base64<span class="token punctuation">.</span>b64decode<span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#默认以utf8解码</span>
+aGVsbG8gd29ybGQh
+hello world!
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>编码与解码的处理对象是byte，故对原数据要先编码，使原本的str类型变成byte，解码后直接输出来的是byte对象，故要解码成str对象。</p>
+<ul>
+<li>encode和code：对文件操作，有两个参数，一个是input，一个是output。</li>
+</ul>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> base64
+<span class="token keyword">import</span> io
+
+st <span class="token operator">=</span> <span class="token string">"hello world!"</span>
+
+f <span class="token operator">=</span> io<span class="token punctuation">.</span>StringIO<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#创建文件</span>
+
+out1 <span class="token operator">=</span> io<span class="token punctuation">.</span>StringIO<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+out2 <span class="token operator">=</span> io<span class="token punctuation">.</span>StringIO<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>st<span class="token punctuation">)</span>
+
+f<span class="token punctuation">.</span>seek<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+base64<span class="token punctuation">.</span>encode<span class="token punctuation">(</span>f<span class="token punctuation">,</span>out1<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>out1<span class="token punctuation">.</span>getvalue<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+out1<span class="token punctuation">.</span>seek<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+base64<span class="token punctuation">.</span>decode<span class="token punctuation">(</span>out1<span class="token punctuation">,</span>out2<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>out2<span class="token punctuation">.</span>getvalue<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1916003479@qq.com">uf9n1x</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://uf9n1x.top/2022/04/07/python-chang-yong-mo-kuai/">https://uf9n1x.top/2022/04/07/python-chang-yong-mo-kuai/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://uf9n1x.top">Uf9n1x's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/qian-tan-md5-ruo-lei-xing-bi-jiao-he-qiang-peng-zhuang/"><i class="fa fa-chevron-left">  </i><span>浅谈md5弱类型比较和强碰撞</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/zheng-ze-biao-da-shi/"><span>正则表达式笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div class="layout" id="footer"><div class="copyright">&copy;2023 By uf9n1x</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

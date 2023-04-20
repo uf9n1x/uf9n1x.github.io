@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>uf9n1x&#39;s blog</title>
+  <title>Uf9n1x&#39;s Blog</title>
   <icon>https://www.gravatar.com/avatar/fef6679bef2ef67e33c5e271aafec735</icon>
-  <subtitle>紫陌花间客</subtitle>
+  <subtitle>君子慎独，不欺暗室</subtitle>
   <link href="https://uf9n1x.top/atom.xml" rel="self"/>
   
   <link href="https://uf9n1x.top/"/>
-  <updated>2022-09-26T00:42:10.000Z</updated>
+  <updated>2023-04-19T09:19:05.019Z</updated>
   <id>https://uf9n1x.top/</id>
   
   <author>
@@ -17,392 +17,480 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>杂记（一）</title>
-    <link href="https://uf9n1x.top/2022/09/26/za-ji-yi/"/>
-    <id>https://uf9n1x.top/2022/09/26/za-ji-yi/</id>
-    <published>2022-09-26T00:31:40.000Z</published>
-    <updated>2022-09-26T00:42:10.000Z</updated>
+    <title>javasec(三)类加载机制</title>
+    <link href="https://uf9n1x.top/2023/04/19/javasec-san-lei-jia-zai-ji-zhi/"/>
+    <id>https://uf9n1x.top/2023/04/19/javasec-san-lei-jia-zai-ji-zhi/</id>
+    <published>2023-04-19T09:17:30.000Z</published>
+    <updated>2023-04-19T09:19:05.019Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;杂记（一）由安装DS-Store文件泄露处理工具引发的一系列问题&quot;&gt;&lt;a href=&quot;#杂记（一）由安装DS-Store文件泄露处理工具引发的一系列问题&quot; class=&quot;headerlink&quot; title=&quot;杂记（一）由安装DS_Store文件泄露处理工具引发的一系列问题&quot;&gt;&lt;/a&gt;杂记（一）由安装DS_Store文件泄露处理工具引发的一系列问题&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;安装ds_store_exp-master工具，下载解压之后需要先安装依赖包 cmd执行：**&lt;code&gt;pip2 install ds-store requests&lt;/code&gt;** 发现报错：&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;</summary>
-    
-    
-    
-    
-    <category term="杂记" scheme="https://uf9n1x.top/tags/%E6%9D%82%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kkcms代码审计</title>
-    <link href="https://uf9n1x.top/2022/09/14/kkcms-dai-ma-shen-ji/"/>
-    <id>https://uf9n1x.top/2022/09/14/kkcms-dai-ma-shen-ji/</id>
-    <published>2022-09-14T12:39:41.000Z</published>
-    <updated>2022-09-14T13:29:54.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;继初次选择xhcms审计审计之后，对代码审计来了兴趣，一处处分析，经历失败，重来，最后找到漏洞点的过程确实很不错。因此，在喜欢xhcms审计结束后就马不停蹄找了个小众一点的cms再开启一次审计，熟悉熟悉，之后计划开始浮现tp,yii之类框架内容，且行且记吧。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;这篇文章介绍java的类加载机制。&lt;/p&gt;</summary>
     
     
     
+    <category term="javasec" scheme="https://uf9n1x.top/categories/javasec/"/>
     
-    <category term="cms" scheme="https://uf9n1x.top/tags/cms/"/>
     
-    <category term="php代码审计" scheme="https://uf9n1x.top/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
     
-    <category term="php" scheme="https://uf9n1x.top/tags/php/"/>
+    <category term="java" scheme="https://uf9n1x.top/tags/java/"/>
+    
+    <category term="javasec" scheme="https://uf9n1x.top/tags/javasec/"/>
     
   </entry>
   
   <entry>
-    <title>xhcms代码审计</title>
-    <link href="https://uf9n1x.top/2022/05/03/xhcms-dai-ma-shen-ji/"/>
-    <id>https://uf9n1x.top/2022/05/03/xhcms-dai-ma-shen-ji/</id>
-    <published>2022-05-03T08:23:20.000Z</published>
-    <updated>2022-05-03T08:44:30.000Z</updated>
+    <title>内网渗透（七）frp端口转发与内网代理</title>
+    <link href="https://uf9n1x.top/2023/04/19/nei-wang-shen-tou-qi-frp-duan-kou-zhuan-fa-yu-nei-wang-dai-li/"/>
+    <id>https://uf9n1x.top/2023/04/19/nei-wang-shen-tou-qi-frp-duan-kou-zhuan-fa-yu-nei-wang-dai-li/</id>
+    <published>2023-04-19T03:16:47.000Z</published>
+    <updated>2023-04-19T03:22:59.432Z</updated>
     
     
-    <summary type="html">&lt;p&gt;第一次审计，抱着学习的态度，从一个初学者的角度去尝试摸石头过河，踩坑，跳坑，并做个记录吧：&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;这篇文章介绍frp端口转发与内网代理。&lt;/p&gt;</summary>
     
     
     
-    <category term="php" scheme="https://uf9n1x.top/categories/php/"/>
+    <category term="内网渗透" scheme="https://uf9n1x.top/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
     
-    <category term="php代码审计" scheme="https://uf9n1x.top/categories/php/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
-    
-    <category term="cms" scheme="https://uf9n1x.top/categories/php/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/cms/"/>
+    <category term="代理" scheme="https://uf9n1x.top/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E4%BB%A3%E7%90%86/"/>
     
     
-    <category term="cms" scheme="https://uf9n1x.top/tags/cms/"/>
+    <category term="内网渗透" scheme="https://uf9n1x.top/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
     
-    <category term="php代码审计" scheme="https://uf9n1x.top/tags/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    <category term="代理" scheme="https://uf9n1x.top/tags/%E4%BB%A3%E7%90%86/"/>
+    
+    <category term="端口转发" scheme="https://uf9n1x.top/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/"/>
     
   </entry>
   
   <entry>
-    <title>sql注入复习总结</title>
-    <link href="https://uf9n1x.top/2022/04/18/sql-zhu-ru-fu-xi-zong-jie/"/>
-    <id>https://uf9n1x.top/2022/04/18/sql-zhu-ru-fu-xi-zong-jie/</id>
-    <published>2022-04-18T15:19:14.000Z</published>
-    <updated>2022-09-13T10:35:04.000Z</updated>
+    <title>javasec(七)JNDI注入</title>
+    <link href="https://uf9n1x.top/2023/04/18/javasec-qi-jndi-zhu-ru/"/>
+    <id>https://uf9n1x.top/2023/04/18/javasec-qi-jndi-zhu-ru/</id>
+    <published>2023-04-18T08:03:31.000Z</published>
+    <updated>2023-04-18T08:03:31.166Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;sql注入漏洞&quot;&gt;&lt;a href=&quot;#sql注入漏洞&quot; class=&quot;headerlink&quot; title=&quot;sql注入漏洞&quot;&gt;&lt;/a&gt;sql注入漏洞&lt;/h1&gt;</summary>
+    <summary type="html">&lt;p&gt;这篇文章介绍&lt;/p&gt;</summary>
     
     
     
-    <category term="sql注入" scheme="https://uf9n1x.top/categories/sql%E6%B3%A8%E5%85%A5/"/>
+    <category term="Cate" scheme="https://uf9n1x.top/categories/Cate/"/>
     
-    <category term="web安全" scheme="https://uf9n1x.top/categories/sql%E6%B3%A8%E5%85%A5/web%E5%AE%89%E5%85%A8/"/>
     
+    <category term="Tag" scheme="https://uf9n1x.top/tags/Tag/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javasec(六)RMI</title>
+    <link href="https://uf9n1x.top/2023/04/18/javasec-liu-rmi/"/>
+    <id>https://uf9n1x.top/2023/04/18/javasec-liu-rmi/</id>
+    <published>2023-04-18T08:03:15.000Z</published>
+    <updated>2023-04-19T09:21:46.363Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍java-RMI远程方法调用机制。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="java" scheme="https://uf9n1x.top/categories/java/"/>
+    
+    <category term="javasec" scheme="https://uf9n1x.top/categories/java/javasec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="java" scheme="https://uf9n1x.top/tags/java/"/>
+    
+    <category term="javasec" scheme="https://uf9n1x.top/tags/javasec/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javasec(五)URLDNS反序列化分析</title>
+    <link href="https://uf9n1x.top/2023/04/18/javasec-wu-urldns-fan-xu-lie-hua-fen-xi/"/>
+    <id>https://uf9n1x.top/2023/04/18/javasec-wu-urldns-fan-xu-lie-hua-fen-xi/</id>
+    <published>2023-04-18T08:02:46.000Z</published>
+    <updated>2023-04-18T08:13:33.978Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="javasec" scheme="https://uf9n1x.top/categories/javasec/"/>
+    
+    
+    <category term="javasec" scheme="https://uf9n1x.top/tags/javasec/"/>
+    
+    <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javasec(四)序列化与反序列化基本原理</title>
+    <link href="https://uf9n1x.top/2023/04/18/javasec-si-xu-lie-hua-yu-fan-xu-lie-hua-ji-ben-yuan-li/"/>
+    <id>https://uf9n1x.top/2023/04/18/javasec-si-xu-lie-hua-yu-fan-xu-lie-hua-ji-ben-yuan-li/</id>
+    <published>2023-04-18T08:02:20.000Z</published>
+    <updated>2023-04-18T08:08:17.421Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍java序列化与反序列化基本原理。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="javasec" scheme="https://uf9n1x.top/categories/javasec/"/>
+    
+    
+    <category term="javasec" scheme="https://uf9n1x.top/tags/javasec/"/>
+    
+    <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>内网渗透（六）信息收集</title>
+    <link href="https://uf9n1x.top/2023/04/17/nei-wang-shen-tou-liu-xin-xi-shou-ji/"/>
+    <id>https://uf9n1x.top/2023/04/17/nei-wang-shen-tou-liu-xin-xi-shou-ji/</id>
+    <published>2023-04-17T08:55:51.000Z</published>
+    <updated>2023-04-20T12:05:33.439Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍内网渗透中的信息收集。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="内网渗透" scheme="https://uf9n1x.top/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/Redteam/"/>
+    
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/tags/Redteam/"/>
+    
+    <category term="内网渗透" scheme="https://uf9n1x.top/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+    
+    <category term="信息收集" scheme="https://uf9n1x.top/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>信息收集（一）外网打点</title>
+    <link href="https://uf9n1x.top/2023/04/16/xin-xi-shou-ji-yi-wai-wang-da-dian/"/>
+    <id>https://uf9n1x.top/2023/04/16/xin-xi-shou-ji-yi-wai-wang-da-dian/</id>
+    <published>2023-04-16T09:38:14.000Z</published>
+    <updated>2023-04-16T09:42:21.434Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍外网打点的信息收集手法。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="信息收集" scheme="https://uf9n1x.top/categories/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/categories/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/Redteam/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/tags/Redteam/"/>
+    
+    <category term="信息收集" scheme="https://uf9n1x.top/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
+    
+    <category term="渗透测试" scheme="https://uf9n1x.top/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XSS之域、CORS、JSONP</title>
+    <link href="https://uf9n1x.top/2023/04/16/xss-zhi-yu-cors-jsonp/"/>
+    <id>https://uf9n1x.top/2023/04/16/xss-zhi-yu-cors-jsonp/</id>
+    <published>2023-04-16T09:34:16.000Z</published>
+    <updated>2023-04-16T09:36:00.544Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍xss攻击相关补充知识。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="XSS" scheme="https://uf9n1x.top/categories/XSS/"/>
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/XSS/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="XSS" scheme="https://uf9n1x.top/tags/XSS/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/tags/Redteam/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javasec(二)class文件结构</title>
+    <link href="https://uf9n1x.top/2023/04/16/javasec-er-class-wen-jian-jie-gou/"/>
+    <id>https://uf9n1x.top/2023/04/16/javasec-er-class-wen-jian-jie-gou/</id>
+    <published>2023-04-16T09:27:54.000Z</published>
+    <updated>2023-04-16T09:32:13.247Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍java的class文件结构。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="javasec" scheme="https://uf9n1x.top/categories/javasec/"/>
+    
+    <category term="java" scheme="https://uf9n1x.top/categories/javasec/java/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/tags/Redteam/"/>
+    
+    <category term="java" scheme="https://uf9n1x.top/tags/java/"/>
+    
+    <category term="javasec" scheme="https://uf9n1x.top/tags/javasec/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javasec(一)java反射</title>
+    <link href="https://uf9n1x.top/2023/04/16/javasec-yi-java-fan-she/"/>
+    <id>https://uf9n1x.top/2023/04/16/javasec-yi-java-fan-she/</id>
+    <published>2023-04-16T09:25:11.000Z</published>
+    <updated>2023-04-16T09:29:36.388Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍javasec基础知识–java反射。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    <category term="javasec" scheme="https://uf9n1x.top/categories/websec/javasec/"/>
+    
+    <category term="反序列化" scheme="https://uf9n1x.top/categories/websec/javasec/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="java" scheme="https://uf9n1x.top/tags/java/"/>
+    
+    <category term="javasec" scheme="https://uf9n1x.top/tags/javasec/"/>
+    
+    <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XXE</title>
+    <link href="https://uf9n1x.top/2023/04/16/xxe/"/>
+    <id>https://uf9n1x.top/2023/04/16/xxe/</id>
+    <published>2023-04-16T09:22:40.000Z</published>
+    <updated>2023-04-16T09:24:47.849Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍xml外部实体注入攻击。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="XXE" scheme="https://uf9n1x.top/tags/XXE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SSTI</title>
+    <link href="https://uf9n1x.top/2023/04/16/ssti/"/>
+    <id>https://uf9n1x.top/2023/04/16/ssti/</id>
+    <published>2023-04-16T09:12:50.000Z</published>
+    <updated>2023-04-16T09:46:06.790Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍SSTI注入漏洞.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="SSTI" scheme="https://uf9n1x.top/tags/SSTI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XSS攻防相关函数</title>
+    <link href="https://uf9n1x.top/2023/04/16/xss-gong-fang-xiang-guan-han-shu/"/>
+    <id>https://uf9n1x.top/2023/04/16/xss-gong-fang-xiang-guan-han-shu/</id>
+    <published>2023-04-16T09:10:49.000Z</published>
+    <updated>2023-04-16T09:12:03.426Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍xss攻防相关的一些函数。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="XSS" scheme="https://uf9n1x.top/tags/XSS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XSS</title>
+    <link href="https://uf9n1x.top/2023/04/16/xss/"/>
+    <id>https://uf9n1x.top/2023/04/16/xss/</id>
+    <published>2023-04-16T09:06:30.000Z</published>
+    <updated>2023-04-16T09:10:07.379Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍XSS漏洞原理。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/categories/websec/Redteam/"/>
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/Redteam/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="XSS" scheme="https://uf9n1x.top/tags/XSS/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/tags/Redteam/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sql-labs靶场</title>
+    <link href="https://uf9n1x.top/2023/04/16/sql-labs-ba-chang/"/>
+    <id>https://uf9n1x.top/2023/04/16/sql-labs-ba-chang/</id>
+    <published>2023-04-16T09:03:33.000Z</published>
+    <updated>2023-04-16T09:06:00.372Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍sql-labs靶场过关记录。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="靶场" scheme="https://uf9n1x.top/categories/%E9%9D%B6%E5%9C%BA/"/>
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/%E9%9D%B6%E5%9C%BA/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="靶场" scheme="https://uf9n1x.top/tags/%E9%9D%B6%E5%9C%BA/"/>
     
     <category term="sql注入" scheme="https://uf9n1x.top/tags/sql%E6%B3%A8%E5%85%A5/"/>
     
-    <category term="web安全" scheme="https://uf9n1x.top/tags/web%E5%AE%89%E5%85%A8/"/>
-    
   </entry>
   
   <entry>
-    <title>浅谈md5弱类型比较和强碰撞</title>
-    <link href="https://uf9n1x.top/2022/04/07/qian-tan-md5-ruo-lei-xing-bi-jiao-he-qiang-peng-zhuang/"/>
-    <id>https://uf9n1x.top/2022/04/07/qian-tan-md5-ruo-lei-xing-bi-jiao-he-qiang-peng-zhuang/</id>
-    <published>2022-04-07T13:26:50.000Z</published>
-    <updated>2022-09-13T13:59:16.000Z</updated>
+    <title>upload-labs靶场</title>
+    <link href="https://uf9n1x.top/2023/04/16/upload-labs-ba-chang/"/>
+    <id>https://uf9n1x.top/2023/04/16/upload-labs-ba-chang/</id>
+    <published>2023-04-16T08:59:51.000Z</published>
+    <updated>2023-04-16T09:03:00.104Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;浅谈md5弱类型比较和强碰撞&quot;&gt;&lt;a href=&quot;#浅谈md5弱类型比较和强碰撞&quot; class=&quot;headerlink&quot; title=&quot;浅谈md5弱类型比较和强碰撞&quot;&gt;&lt;/a&gt;浅谈md5弱类型比较和强碰撞&lt;/h1&gt;</summary>
+    <summary type="html">&lt;p&gt;这篇文章介绍upload-labs靶场过关记录。&lt;/p&gt;</summary>
     
     
     
+    <category term="靶场" scheme="https://uf9n1x.top/categories/%E9%9D%B6%E5%9C%BA/"/>
     
-    <category term="md5弱类型" scheme="https://uf9n1x.top/tags/md5%E5%BC%B1%E7%B1%BB%E5%9E%8B/"/>
+    <category term="websec" scheme="https://uf9n1x.top/categories/%E9%9D%B6%E5%9C%BA/websec/"/>
     
-  </entry>
-  
-  <entry>
-    <title>python常用模块笔记</title>
-    <link href="https://uf9n1x.top/2022/04/07/python-chang-yong-mo-kuai-bi-ji/"/>
-    <id>https://uf9n1x.top/2022/04/07/python-chang-yong-mo-kuai-bi-ji/</id>
-    <published>2022-04-07T13:24:12.000Z</published>
-    <updated>2022-09-13T14:03:36.000Z</updated>
     
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
     
-    <summary type="html">&lt;h1 id=&quot;一、requests-模块&quot;&gt;&lt;a href=&quot;#一、requests-模块&quot; class=&quot;headerlink&quot; title=&quot;一、requests 模块&quot;&gt;&lt;/a&gt;一、requests 模块&lt;/h1&gt;</summary>
-    
-    
-    
-    <category term="python" scheme="https://uf9n1x.top/categories/python/"/>
-    
-    
-    <category term="python" scheme="https://uf9n1x.top/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>正则表达式笔记</title>
-    <link href="https://uf9n1x.top/2022/04/07/zheng-ze-biao-da-shi-bi-ji/"/>
-    <id>https://uf9n1x.top/2022/04/07/zheng-ze-biao-da-shi-bi-ji/</id>
-    <published>2022-04-07T13:23:37.000Z</published>
-    <updated>2022-09-13T14:04:44.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;正则表达式的基本知识汇总&quot;&gt;&lt;a href=&quot;#正则表达式的基本知识汇总&quot; class=&quot;headerlink&quot; title=&quot;正则表达式的基本知识汇总&quot;&gt;&lt;/a&gt;正则表达式的基本知识汇总&lt;/h1&gt;</summary>
-    
-    
-    
-    <category term="php" scheme="https://uf9n1x.top/categories/php/"/>
-    
-    <category term="python" scheme="https://uf9n1x.top/categories/php/python/"/>
-    
-    <category term="正则表达式" scheme="https://uf9n1x.top/categories/php/python/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    
-    
-    <category term="php" scheme="https://uf9n1x.top/tags/php/"/>
-    
-    <category term="正则表达式" scheme="https://uf9n1x.top/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ssrf相关之攻击fastcgi</title>
-    <link href="https://uf9n1x.top/2022/03/31/ssrf-xiang-guan-zhi-gong-ji-fastcgi/"/>
-    <id>https://uf9n1x.top/2022/03/31/ssrf-xiang-guan-zhi-gong-ji-fastcgi/</id>
-    <published>2022-03-31T13:28:31.000Z</published>
-    <updated>2022-09-13T14:06:26.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;ssrf相关之攻击fastcgi&quot;&gt;&lt;a href=&quot;#ssrf相关之攻击fastcgi&quot; class=&quot;headerlink&quot; title=&quot;ssrf相关之攻击fastcgi&quot;&gt;&lt;/a&gt;ssrf相关之攻击fastcgi&lt;/h1&gt;</summary>
-    
-    
-    
-    
-    <category term="ssrf" scheme="https://uf9n1x.top/tags/ssrf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ssrf概述</title>
-    <link href="https://uf9n1x.top/2022/03/31/ssrf-gai-shu/"/>
-    <id>https://uf9n1x.top/2022/03/31/ssrf-gai-shu/</id>
-    <published>2022-03-31T13:28:14.000Z</published>
-    <updated>2022-09-13T14:08:12.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;ssrf概述&quot;&gt;&lt;a href=&quot;#ssrf概述&quot; class=&quot;headerlink&quot; title=&quot;ssrf概述&quot;&gt;&lt;/a&gt;ssrf概述&lt;/h1&gt;</summary>
-    
-    
-    
-    
-    <category term="ssrf" scheme="https://uf9n1x.top/tags/ssrf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SSRF---gopher和dict打redis</title>
-    <link href="https://uf9n1x.top/2022/03/31/ssrf-gopher-he-dict-da-redis/"/>
-    <id>https://uf9n1x.top/2022/03/31/ssrf-gopher-he-dict-da-redis/</id>
-    <published>2022-03-31T13:27:51.000Z</published>
-    <updated>2022-09-13T14:53:06.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;SSRF—gopher和dict打redis&quot;&gt;&lt;a href=&quot;#SSRF—gopher和dict打redis&quot; class=&quot;headerlink&quot; title=&quot;SSRF—gopher和dict打redis&quot;&gt;&lt;/a&gt;SSRF—gopher和dict打redis&lt;/h1&gt;</summary>
-    
-    
-    
-    
-    <category term="ssrf" scheme="https://uf9n1x.top/tags/ssrf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python_SSTI模板注入</title>
-    <link href="https://uf9n1x.top/2022/03/24/python-ssti-mo-ban-zhu-ru/"/>
-    <id>https://uf9n1x.top/2022/03/24/python-ssti-mo-ban-zhu-ru/</id>
-    <published>2022-03-24T14:10:47.000Z</published>
-    <updated>2022-09-13T14:12:18.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1 id=&quot;一、python-SSTI模板注入介绍&quot;&gt;&lt;a href=&quot;#一、python-SSTI模板注入介绍&quot; class=&quot;headerlink&quot; title=&quot;一、python_SSTI模板注入介绍&quot;&gt;&lt;/a&gt;一、python_SSTI模板注入介绍&lt;/h1&gt;</summary>
-    
-    
-    
-    <category term="模板注入" scheme="https://uf9n1x.top/categories/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/"/>
-    
-    <category term="python" scheme="https://uf9n1x.top/categories/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/python/"/>
-    
-    
-    <category term="SSTI模板注入" scheme="https://uf9n1x.top/tags/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/"/>
-    
-    <category term="python" scheme="https://uf9n1x.top/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>phar反序列化</title>
-    <link href="https://uf9n1x.top/2022/03/21/phar-fan-xu-lie-hua/"/>
-    <id>https://uf9n1x.top/2022/03/21/phar-fan-xu-lie-hua/</id>
-    <published>2022-03-21T14:56:42.000Z</published>
-    <updated>2022-04-11T14:17:34.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;反序列化篇之phar反序列化&quot;&gt;&lt;a href=&quot;#反序列化篇之phar反序列化&quot; class=&quot;headerlink&quot; title=&quot;反序列化篇之phar反序列化&quot;&gt;&lt;/a&gt;反序列化篇之phar反序列化&lt;/h1&gt;</summary>
-    
-    
-    
-    <category term="php" scheme="https://uf9n1x.top/categories/php/"/>
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/categories/php/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-    
-    <category term="phar://反序列化" scheme="https://uf9n1x.top/tags/phar-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/tags/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>session反序列化</title>
-    <link href="https://uf9n1x.top/2022/03/21/session-fan-xu-lie-hua/"/>
-    <id>https://uf9n1x.top/2022/03/21/session-fan-xu-lie-hua/</id>
-    <published>2022-03-21T10:19:29.000Z</published>
-    <updated>2022-09-14T11:14:50.000Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;1-Session到底是啥？&quot;&gt;&lt;a href=&quot;#1-Session到底是啥？&quot; class=&quot;headerlink&quot; title=&quot;1.Session到底是啥？&quot;&gt;&lt;/a&gt;1.Session到底是啥？&lt;/h2&gt;&lt;p&gt;前面我们说到，Session是浏览器和服务器之间交互的会话，会话是啥呢？就是我问候你好吗？你回答说很好。就是一次会话，那么对话完成后，这次会话相当于就结束了，但为什么会出现Session会话呢？因为我们用浏览器访问网站用的是&lt;code&gt;http&lt;/code&gt;协议，&lt;code&gt;http&lt;/code&gt;协议是一种无状态的协议&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/tags/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>php反序列化之字符逃逸法</title>
-    <link href="https://uf9n1x.top/2022/03/21/php-fan-xu-lie-hua-zhi-zi-fu-tao-yi-fa/"/>
-    <id>https://uf9n1x.top/2022/03/21/php-fan-xu-lie-hua-zhi-zi-fu-tao-yi-fa/</id>
-    <published>2022-03-21T10:09:37.000Z</published>
-    <updated>2022-04-11T14:19:34.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;php反序列化之字符逃逸&quot;&gt;&lt;a href=&quot;#php反序列化之字符逃逸&quot; class=&quot;headerlink&quot; title=&quot;php反序列化之字符逃逸&quot;&gt;&lt;/a&gt;php反序列化之字符逃逸&lt;/h1&gt;</summary>
-    
-    
-    
-    <category term="php" scheme="https://uf9n1x.top/categories/php/"/>
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/categories/php/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/tags/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>无字母数字的rce</title>
-    <link href="https://uf9n1x.top/2022/03/13/wu-zi-mu-shu-zi-de-rce/"/>
-    <id>https://uf9n1x.top/2022/03/13/wu-zi-mu-shu-zi-de-rce/</id>
-    <published>2022-03-13T08:32:12.000Z</published>
-    <updated>2022-03-16T10:57:16.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;</summary>
-    
-    
-    
-    
-    <category term="rce" scheme="https://uf9n1x.top/tags/rce/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>无参数rce</title>
-    <link href="https://uf9n1x.top/2022/03/13/wu-can-shu-rce/"/>
-    <id>https://uf9n1x.top/2022/03/13/wu-can-shu-rce/</id>
-    <published>2022-03-13T08:29:25.000Z</published>
-    <updated>2022-03-16T10:57:16.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;无参数rce&quot;&gt;&lt;a href=&quot;#无参数rce&quot; class=&quot;headerlink&quot; title=&quot;无参数rce&quot;&gt;&lt;/a&gt;无参数rce&lt;/h1&gt;</summary>
-    
-    
-    
-    
-    <category term="rce" scheme="https://uf9n1x.top/tags/rce/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于约束的Sql注入</title>
-    <link href="https://uf9n1x.top/2022/03/13/ji-yu-yue-shu-de-sql-zhu-ru/"/>
-    <id>https://uf9n1x.top/2022/03/13/ji-yu-yue-shu-de-sql-zhu-ru/</id>
-    <published>2022-03-13T08:26:43.000Z</published>
-    <updated>2022-09-13T14:14:08.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="SQL注入" scheme="https://uf9n1x.top/tags/SQL%E6%B3%A8%E5%85%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>php反序列化刷题记录</title>
-    <link href="https://uf9n1x.top/2022/03/13/php-fan-xu-lie-hua-shua-ti-ji-lu/"/>
-    <id>https://uf9n1x.top/2022/03/13/php-fan-xu-lie-hua-shua-ti-ji-lu/</id>
-    <published>2022-03-13T08:23:23.000Z</published>
-    <updated>2022-03-16T10:57:16.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;</summary>
-    
-    
-    
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/tags/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>php反序列化简析</title>
-    <link href="https://uf9n1x.top/2022/03/12/php-fan-xu-lie-hua-jian-xi/"/>
-    <id>https://uf9n1x.top/2022/03/12/php-fan-xu-lie-hua-jian-xi/</id>
-    <published>2022-03-12T12:30:50.000Z</published>
-    <updated>2022-04-11T14:19:18.000Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;php反序列化漏洞简单讲解&quot;&gt;&lt;a href=&quot;#php反序列化漏洞简单讲解&quot; class=&quot;headerlink&quot; title=&quot;php反序列化漏洞简单讲解&quot;&gt;&lt;/a&gt;&lt;strong&gt;php反序列化漏洞简单讲解&lt;/strong&gt;&lt;/h2&gt;</summary>
-    
-    
-    
-    <category term="php" scheme="https://uf9n1x.top/categories/php/"/>
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/categories/php/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-    
-    <category term="php反序列化" scheme="https://uf9n1x.top/tags/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>文件上传</title>
-    <link href="https://uf9n1x.top/2022/02/28/wen-jian-shang-chuan/"/>
-    <id>https://uf9n1x.top/2022/02/28/wen-jian-shang-chuan/</id>
-    <published>2022-02-28T09:57:01.000Z</published>
-    <updated>2022-03-16T10:57:16.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;文件上传漏洞全面渗透姿势总结&quot;&gt;&lt;a href=&quot;#文件上传漏洞全面渗透姿势总结&quot; class=&quot;headerlink&quot; title=&quot;文件上传漏洞全面渗透姿势总结 &quot;&gt;&lt;/a&gt;文件上传漏洞全面渗透姿势总结&lt;/h1&gt;</summary>
-    
-    
-    
+    <category term="靶场" scheme="https://uf9n1x.top/tags/%E9%9D%B6%E5%9C%BA/"/>
     
     <category term="文件上传" scheme="https://uf9n1x.top/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RCE-Tricks</title>
+    <link href="https://uf9n1x.top/2023/04/16/rce-tricks/"/>
+    <id>https://uf9n1x.top/2023/04/16/rce-tricks/</id>
+    <published>2023-04-16T08:52:38.000Z</published>
+    <updated>2023-04-16T08:58:17.666Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍RCE的一些tricks&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    <category term="Tricks" scheme="https://uf9n1x.top/categories/websec/Tricks/"/>
+    
+    
+    <category term="RCE" scheme="https://uf9n1x.top/tags/RCE/"/>
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="Tricks" scheme="https://uf9n1x.top/tags/Tricks/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python反序列化</title>
+    <link href="https://uf9n1x.top/2023/04/16/python-fan-xu-lie-hua/"/>
+    <id>https://uf9n1x.top/2023/04/16/python-fan-xu-lie-hua/</id>
+    <published>2023-04-16T08:46:59.000Z</published>
+    <updated>2023-04-16T08:51:13.757Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍python反序列化。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+    <category term="python" scheme="https://uf9n1x.top/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>phpGC机制</title>
+    <link href="https://uf9n1x.top/2023/04/16/phpgc-ji-zhi/"/>
+    <id>https://uf9n1x.top/2023/04/16/phpgc-ji-zhi/</id>
+    <published>2023-04-16T08:31:47.000Z</published>
+    <updated>2023-04-16T08:44:51.180Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍phpGC(垃圾回收)机制。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+    <category term="phpGC机制" scheme="https://uf9n1x.top/tags/phpGC%E6%9C%BA%E5%88%B6/"/>
     
   </entry>
   
