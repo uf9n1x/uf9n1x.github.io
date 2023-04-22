@@ -6,7 +6,7 @@
   <link href="https://uf9n1x.top/atom.xml" rel="self"/>
   
   <link href="https://uf9n1x.top/"/>
-  <updated>2023-04-19T09:19:05.019Z</updated>
+  <updated>2023-04-22T08:43:11.290Z</updated>
   <id>https://uf9n1x.top/</id>
   
   <author>
@@ -17,11 +17,44 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>javasec（八）jndi注入</title>
+    <link href="https://uf9n1x.top/2023/04/22/javasec-ba-jndi-zhu-ru/"/>
+    <id>https://uf9n1x.top/2023/04/22/javasec-ba-jndi-zhu-ru/</id>
+    <published>2023-04-22T08:38:27.000Z</published>
+    <updated>2023-04-22T08:43:11.290Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;JNDI&quot;&gt;&lt;a href=&quot;#JNDI&quot; class=&quot;headerlink&quot; title=&quot;JNDI&quot;&gt;&lt;/a&gt;JNDI&lt;/h1&gt;&lt;p&gt;JNDI（全称&lt;strong&gt;Java Naming and Directory</summary>
+        
+      
+    
+    
+    
+    <category term="javasec" scheme="https://uf9n1x.top/categories/javasec/"/>
+    
+    <category term="java" scheme="https://uf9n1x.top/categories/javasec/java/"/>
+    
+    
+    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/tags/Redteam/"/>
+    
+    <category term="java" scheme="https://uf9n1x.top/tags/java/"/>
+    
+    <category term="javasec" scheme="https://uf9n1x.top/tags/javasec/"/>
+    
+  </entry>
+  
+  <entry>
     <title>javasec(三)类加载机制</title>
     <link href="https://uf9n1x.top/2023/04/19/javasec-san-lei-jia-zai-ji-zhi/"/>
     <id>https://uf9n1x.top/2023/04/19/javasec-san-lei-jia-zai-ji-zhi/</id>
     <published>2023-04-19T09:17:30.000Z</published>
-    <updated>2023-04-19T09:19:05.019Z</updated>
+    <updated>2023-04-21T06:30:34.601Z</updated>
     
     
     <summary type="html">&lt;p&gt;这篇文章介绍java的类加载机制。&lt;/p&gt;</summary>
@@ -66,8 +99,8 @@
   
   <entry>
     <title>javasec(七)JNDI注入</title>
-    <link href="https://uf9n1x.top/2023/04/18/javasec-qi-jndi-zhu-ru/"/>
-    <id>https://uf9n1x.top/2023/04/18/javasec-qi-jndi-zhu-ru/</id>
+    <link href="https://uf9n1x.top/2023/04/18/javasec-qi-jndi/"/>
+    <id>https://uf9n1x.top/2023/04/18/javasec-qi-jndi/</id>
     <published>2023-04-18T08:03:31.000Z</published>
     <updated>2023-04-18T08:03:31.166Z</updated>
     
@@ -468,29 +501,6 @@
     <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
     
     <category term="python" scheme="https://uf9n1x.top/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>phpGC机制</title>
-    <link href="https://uf9n1x.top/2023/04/16/phpgc-ji-zhi/"/>
-    <id>https://uf9n1x.top/2023/04/16/phpgc-ji-zhi/</id>
-    <published>2023-04-16T08:31:47.000Z</published>
-    <updated>2023-04-16T08:44:51.180Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这篇文章介绍phpGC(垃圾回收)机制。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
-    
-    
-    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
-    
-    <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-    <category term="phpGC机制" scheme="https://uf9n1x.top/tags/phpGC%E6%9C%BA%E5%88%B6/"/>
     
   </entry>
   
