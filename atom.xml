@@ -6,7 +6,7 @@
   <link href="https://uf9n1x.top/atom.xml" rel="self"/>
   
   <link href="https://uf9n1x.top/"/>
-  <updated>2023-04-22T08:43:11.290Z</updated>
+  <updated>2023-04-23T09:42:20.684Z</updated>
   <id>https://uf9n1x.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>内网渗透（八）横向移不动</title>
+    <link href="https://uf9n1x.top/2023/04/23/nei-wang-shen-tou-ba-heng-xiang-yi-bu-dong/"/>
+    <id>https://uf9n1x.top/2023/04/23/nei-wang-shen-tou-ba-heng-xiang-yi-bu-dong/</id>
+    <published>2023-04-23T09:24:37.000Z</published>
+    <updated>2023-04-23T09:42:20.684Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍内网渗透种的横向移动。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="内网渗透" scheme="https://uf9n1x.top/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+    
+    <category term="渗透测试" scheme="https://uf9n1x.top/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+    <category term="Redteam" scheme="https://uf9n1x.top/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/Redteam/"/>
+    
+    
+    <category term="内网渗透" scheme="https://uf9n1x.top/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+    
+    <category term="渗透测试" scheme="https://uf9n1x.top/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>javasec（八）jndi注入</title>
     <link href="https://uf9n1x.top/2023/04/22/javasec-ba-jndi-zhu-ru/"/>
     <id>https://uf9n1x.top/2023/04/22/javasec-ba-jndi-zhu-ru/</id>
     <published>2023-04-22T08:38:27.000Z</published>
-    <updated>2023-04-22T08:43:11.290Z</updated>
+    <updated>2023-04-22T08:54:51.020Z</updated>
     
     
       
@@ -478,29 +503,6 @@
     <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
     
     <category term="Tricks" scheme="https://uf9n1x.top/tags/Tricks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python反序列化</title>
-    <link href="https://uf9n1x.top/2023/04/16/python-fan-xu-lie-hua/"/>
-    <id>https://uf9n1x.top/2023/04/16/python-fan-xu-lie-hua/</id>
-    <published>2023-04-16T08:46:59.000Z</published>
-    <updated>2023-04-16T08:51:13.757Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这篇文章介绍python反序列化。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
-    
-    
-    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
-    
-    <category term="反序列化" scheme="https://uf9n1x.top/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-    <category term="python" scheme="https://uf9n1x.top/tags/python/"/>
     
   </entry>
   
