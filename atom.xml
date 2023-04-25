@@ -6,7 +6,7 @@
   <link href="https://uf9n1x.top/atom.xml" rel="self"/>
   
   <link href="https://uf9n1x.top/"/>
-  <updated>2023-04-23T09:42:20.684Z</updated>
+  <updated>2023-04-25T10:36:14.295Z</updated>
   <id>https://uf9n1x.top/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>内网渗透（九）Kerberos协议</title>
+    <link href="https://uf9n1x.top/2023/04/25/nei-wang-shen-tou-jiu-kerberos-xie-yi-ptt-wei-pai-gong-ji/"/>
+    <id>https://uf9n1x.top/2023/04/25/nei-wang-shen-tou-jiu-kerberos-xie-yi-ptt-wei-pai-gong-ji/</id>
+    <published>2023-04-25T10:21:47.000Z</published>
+    <updated>2023-04-25T10:36:14.295Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章介绍Kerberos协议相关的内容。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Kerberos" scheme="https://uf9n1x.top/categories/Kerberos/"/>
+    
+    <category term="内网渗透" scheme="https://uf9n1x.top/categories/Kerberos/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+    
+    <category term="PTT" scheme="https://uf9n1x.top/categories/Kerberos/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/PTT/"/>
+    
+    
+    <category term="内网渗透" scheme="https://uf9n1x.top/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+    
+    <category term="Kerberos" scheme="https://uf9n1x.top/tags/Kerberos/"/>
+    
+    <category term="PTT" scheme="https://uf9n1x.top/tags/PTT/"/>
+    
+  </entry>
   
   <entry>
     <title>内网渗透（八）横向移不动</title>
@@ -46,16 +73,11 @@
     <link href="https://uf9n1x.top/2023/04/22/javasec-ba-jndi-zhu-ru/"/>
     <id>https://uf9n1x.top/2023/04/22/javasec-ba-jndi-zhu-ru/</id>
     <published>2023-04-22T08:38:27.000Z</published>
-    <updated>2023-04-22T08:54:51.020Z</updated>
+    <updated>2023-04-25T10:36:04.402Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;JNDI&quot;&gt;&lt;a href=&quot;#JNDI&quot; class=&quot;headerlink&quot; title=&quot;JNDI&quot;&gt;&lt;/a&gt;JNDI&lt;/h1&gt;&lt;p&gt;JNDI（全称&lt;strong&gt;Java Naming and Directory</summary>
-        
-      
+    <summary type="html">&lt;p&gt;z&lt;/p&gt;
+&lt;p&gt;这篇文章介绍jndi注入。&lt;/p&gt;</summary>
     
     
     
@@ -478,31 +500,6 @@
     <category term="靶场" scheme="https://uf9n1x.top/tags/%E9%9D%B6%E5%9C%BA/"/>
     
     <category term="文件上传" scheme="https://uf9n1x.top/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RCE-Tricks</title>
-    <link href="https://uf9n1x.top/2023/04/16/rce-tricks/"/>
-    <id>https://uf9n1x.top/2023/04/16/rce-tricks/</id>
-    <published>2023-04-16T08:52:38.000Z</published>
-    <updated>2023-04-16T08:58:17.666Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这篇文章介绍RCE的一些tricks&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="websec" scheme="https://uf9n1x.top/categories/websec/"/>
-    
-    <category term="Tricks" scheme="https://uf9n1x.top/categories/websec/Tricks/"/>
-    
-    
-    <category term="RCE" scheme="https://uf9n1x.top/tags/RCE/"/>
-    
-    <category term="websec" scheme="https://uf9n1x.top/tags/websec/"/>
-    
-    <category term="Tricks" scheme="https://uf9n1x.top/tags/Tricks/"/>
     
   </entry>
   
