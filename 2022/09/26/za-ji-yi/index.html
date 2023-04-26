@@ -18,12 +18,12 @@
 </ol>
 <p><img src="https://img-blog.csdnimg.cn/79f397534d1b4e729935ab613aaf2e0d.png" alt="1"></p>
 <p>搜索该报错发现是因为pip工具早就停止了对python2的更新支持，因此安装的python2中是不带有pip工具的，那就通过setuptools工具安装一个：</p>
-<pre class="line-numbers language-php"><code class="language-php">https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz</span></span><br></pre></td></tr></tbody></table></figure>
+
 <p>下载后解压进入目录内，使用命令<code>**python2 setup.py install**</code>进行安装，这里一定要注意需要<code>管理员权限</code>，等待一会后，安装即可完成。</p>
 <p>安装完成之后，再下载pip进行安装，这里使用pip19,下载后安装方式和刚刚安装setuptools的方法相同。</p>
-<pre class="line-numbers language-php"><code class="language-php">https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//files.pythonhosted.org/packages/11/31/c483614095176ddfa06ac99c2af4171375053b270842c7865ca0b4438dc1/pip-19.0.tar.gz</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//files.pythonhosted.org/packages/11/31/c483614095176ddfa06ac99c2af4171375053b270842c7865ca0b4438dc1/pip-19.0.tar.gz</span></span><br></pre></td></tr></tbody></table></figure>
+
 <ol start="2">
 <li>pip安装完成之后，再次进行依赖包安装：<code>pip2 install ds-store requests</code></li>
 </ol>
@@ -31,10 +31,8 @@
 <p><img src="https://img-blog.csdnimg.cn/5d9cd06b07a04db288b9f3c25ed15878.png" alt="2"></p>
 <p>查看报错信息，发现是编码问题，这是因为python安装依赖包时会加载用户目录，而我的目录中有中文，因此出现编码错误</p>
 <p>解决办法：找到<code>python安装目录 Python27\Lib\目录下的mimetypes.py文件</code>，添加以下三行代码，更改编码方式即可解决：(注意二三行空格以及gbk包裹引号为英文符)</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">if</span> sys<span class="token punctuation">.</span>getdefaultencoding<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">'gbk'</span><span class="token punctuation">:</span> 
- reload<span class="token punctuation">(</span>sys<span class="token punctuation">)</span> 
- sys<span class="token punctuation">.</span>setdefaultencoding<span class="token punctuation">(</span><span class="token string">'gbk'</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> sys.getdefaultencoding() != <span class="string">'gbk'</span>: </span><br><span class="line"> reload(sys) </span><br><span class="line"> sys.setdefaultencoding(<span class="string">'gbk'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
 <p><img src="https://img-blog.csdnimg.cn/0b8ba2b10a7047c7a7878121e46bf171.png" alt="3"></p>
 <p>修改保存之后即可解决报错</p>
 <ol start="3">
@@ -42,11 +40,11 @@
 </ol>
 <p>这是因为环境中同时存在python2和python3引起的兼容性问题</p>
 <p>Python3中要这样引入：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> queue
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> queue</span><br></pre></td></tr></tbody></table></figure>
+
 <p>Python2中要这样引入：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> Queue
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Queue</span><br></pre></td></tr></tbody></table></figure>
+
 <p>因此只需要找到报错文件，将导入模块queue更改成Queue即可解决。更改之后再执行依赖包安装命令，发现成功安装。</p>
 <p><img src="https://img-blog.csdnimg.cn/28cf3700c1fb4253a8ed3f01b624e4c9.png" alt="4"></p>
 <p><strong>总结：</strong></p>

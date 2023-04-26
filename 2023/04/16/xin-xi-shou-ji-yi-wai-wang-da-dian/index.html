@@ -149,21 +149,10 @@
 <p>pip3 install –user -r requirements.txt -i <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a></p>
 <p>python3 oneforall.py –target baidu.com run /<em>收集</em>/</p>
 <p>爆破子域名</p>
-<pre><code>Example：
-brute.py --target domain.com --word True run
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Example：</span><br><span class="line">brute.py --target domain.com --word True run</span><br><span class="line"></span><br><span class="line">brute.py --targets ./domains.txt --word True run</span><br><span class="line"></span><br><span class="line">brute.py --target domain.com --word True --concurrent 2000 run</span><br><span class="line"></span><br><span class="line">brute.py --target domain.com --word True --wordlist subnames.txt run</span><br><span class="line"></span><br><span class="line">brute.py --target domain.com --word True --recursive True --depth 2 run</span><br><span class="line"></span><br><span class="line">brute.py --target d.com --fuzz True --place m.*.d.com --rule '[a-z]' run</span><br><span class="line"></span><br><span class="line">brute.py --target d.com --fuzz True --place m.*.d.com --fuzzlist subnames.txt run</span><br></pre></td></tr></tbody></table></figure>
 
-brute.py --targets ./domains.txt --word True run
 
-brute.py --target domain.com --word True --concurrent 2000 run
 
-brute.py --target domain.com --word True --wordlist subnames.txt run
-
-brute.py --target domain.com --word True --recursive True --depth 2 run
-
-brute.py --target d.com --fuzz True --place m.*.d.com --rule '[a-z]' run
-
-brute.py --target d.com --fuzz True --place m.*.d.com --fuzzlist subnames.txt run
-</code></pre>
 <p><strong>5、Wydomain</strong></p>
 <p>dnsburte.py -d aliyun.com -f dnspod.csv -o aliyun.log</p>
 <p>wydomain.py -d aliyun.com </p>
@@ -498,41 +487,8 @@ brute.py --target d.com --fuzz True --place m.*.d.com --fuzzlist subnames.txt ru
 <p><a target="_blank" rel="noopener" href="https://c.webscan.cc/">https://c.webscan.cc/</a></p>
 <p>注意：探测C段时一定要确认ip是否归属于目标，因为一个C段中的所有ip不一定全部属于目标。</p>
 <p><strong>2、c段利用脚本</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#coding:utf-8</span>
-<span class="token keyword">import</span> requests
-<span class="token keyword">import</span> json
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_c</span>(<span class="params">ip</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"正在收集{}"</span>.<span class="built_in">format</span>(ip))</span><br><span class="line">url=<span class="string">"http://api.webscan.cc/?action=query&amp;ip={}"</span>.<span class="built_in">format</span>(ip)</span><br><span class="line">req=requests.get(url=url)</span><br><span class="line">html=req.text</span><br><span class="line">data=req.json()</span><br><span class="line"><span class="keyword">if</span> <span class="string">'null'</span> <span class="keyword">not</span> <span class="keyword">in</span> html:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">"resulit.txt"</span>, <span class="string">'a'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(ip + <span class="string">'\n'</span>)</span><br><span class="line">f.close()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">"resulit.txt"</span>, <span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(<span class="string">"\t{} {}\n"</span>.<span class="built_in">format</span>(i[<span class="string">'domain'</span>],i[<span class="string">'title'</span>]))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"     [+] {} {}[+]"</span>.<span class="built_in">format</span>(i[<span class="string">'domain'</span>],i[<span class="string">'title'</span>]))</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_ips</span>(<span class="params">ip</span>):</span><br><span class="line">    iplist=[]</span><br><span class="line">ips_str = ip[:ip.rfind(<span class="string">'.'</span>)]</span><br><span class="line"><span class="keyword">for</span> ips <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">256</span>):</span><br><span class="line">    ipadd=ips_str + <span class="string">'.'</span> + <span class="built_in">str</span>(ips)</span><br><span class="line">iplist.append(ipadd)</span><br><span class="line"><span class="keyword">return</span> iplist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ip=<span class="built_in">input</span>(<span class="string">"请你输入要查询的ip:"</span>)</span><br><span class="line"></span><br><span class="line">ips=get_ips(ip)</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> ips:</span><br><span class="line">    get_c(p)</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">def</span> <span class="token function">get_c</span><span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"正在收集{}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">)</span>
-url<span class="token operator">=</span><span class="token string">"http://api.webscan.cc/?action=query&amp;ip={}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>ip<span class="token punctuation">)</span>
-req<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">)</span>
-html<span class="token operator">=</span>req<span class="token punctuation">.</span>text
-data<span class="token operator">=</span>req<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span> <span class="token string">'null'</span> <span class="token operator">not</span> <span class="token keyword">in</span> html<span class="token punctuation">:</span>
-    <span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">"resulit.txt"</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
-        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>ip <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
-f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> data<span class="token punctuation">:</span>
-    <span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">"resulit.txt"</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">,</span>encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
-        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"\t{} {}\n"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>i<span class="token punctuation">[</span><span class="token string">'domain'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>i<span class="token punctuation">[</span><span class="token string">'title'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"     [+] {} {}[+]"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>i<span class="token punctuation">[</span><span class="token string">'domain'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>i<span class="token punctuation">[</span><span class="token string">'title'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">get_ips</span><span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    iplist<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
-ips_str <span class="token operator">=</span> ip<span class="token punctuation">[</span><span class="token punctuation">:</span>ip<span class="token punctuation">.</span>rfind<span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> ips <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    ipadd<span class="token operator">=</span>ips_str <span class="token operator">+</span> <span class="token string">'.'</span> <span class="token operator">+</span> str<span class="token punctuation">(</span>ips<span class="token punctuation">)</span>
-iplist<span class="token punctuation">.</span>append<span class="token punctuation">(</span>ipadd<span class="token punctuation">)</span>
-<span class="token keyword">return</span> iplist
-
-
-ip<span class="token operator">=</span>input<span class="token punctuation">(</span><span class="token string">"请你输入要查询的ip:"</span><span class="token punctuation">)</span>
-
-ips<span class="token operator">=</span>get_ips<span class="token punctuation">(</span>ip<span class="token punctuation">)</span>
-<span class="token keyword">for</span> p <span class="token keyword">in</span> ips<span class="token punctuation">:</span>
-    get_c<span class="token punctuation">(</span>p<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>3、网络空间搜索引擎</strong></p>
 <p>如果想要在短时间内快速收集资产，那么利用网络空间搜索引擎是不错的选择，可以直观地看到旁站，端口，站点标题，IP等信息，点击列举出站点可以直接访问，以此来判断是否为自己需要的站点信息。FOFA的常用语法</p>
 <p><strong>1、同IP旁站：ip=”192.168.0.1”</strong></p>
@@ -543,38 +499,10 @@ ips<span class="token operator">=</span>get_ips<span class="token punctuation">(
 <p><strong>title=”百度”&amp;&amp; region=”Beijing”</strong></p>
 <p><strong>6、特征：body=”百度”或header=”baidu”</strong></p>
 <h1 id="9-扫描敏感目录-x2F-文件"><a href="#9-扫描敏感目录-x2F-文件" class="headerlink" title="9. 扫描敏感目录/文件"></a>9. 扫描敏感目录/文件</h1><p>扫描敏感目录<strong>需要强大的字典，需要平时积累</strong>，拥有强大的字典能够更高效地找出网站的管理后台，敏感文件常见的如.git文件泄露，.svn文件泄露，phpinfo泄露等，这一步一般交给各类扫描器就可以了，将目标站点输入到域名中，选择对应字典类型，就可以开始扫描了，十分方便。</p>
-<h2 id="9-0-网站常见敏感文件"><a href="#9-0-网站常见敏感文件" class="headerlink" title="9.0.网站常见敏感文件"></a>9.0.网站常见敏感文件</h2><pre><code>1. robots.txt
+<h2 id="9-0-网站常见敏感文件"><a href="#9-0-网站常见敏感文件" class="headerlink" title="9.0.网站常见敏感文件"></a>9.0.网站常见敏感文件</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">1. robots.txt</span><br><span class="line"></span><br><span class="line">2. crossdomin.xml</span><br><span class="line"></span><br><span class="line">3. sitemap.xml</span><br><span class="line"></span><br><span class="line">4. 后台目录</span><br><span class="line"></span><br><span class="line">5. 网站安装包</span><br><span class="line"></span><br><span class="line">6. 网站上传目录</span><br><span class="line"></span><br><span class="line">7. mysql管理页面</span><br><span class="line"></span><br><span class="line">8. phpinfo</span><br><span class="line"></span><br><span class="line">9. 网站文本编辑器</span><br><span class="line"></span><br><span class="line">10. 测试文件</span><br><span class="line"></span><br><span class="line">11. 网站备份文件(.rar、zip、.7z、.tar.gz、.bak)</span><br><span class="line"></span><br><span class="line">12. DS_Store 文件</span><br><span class="line"></span><br><span class="line">13. vim编辑器备份文件(.swp)</span><br><span class="line"></span><br><span class="line">14. WEB—INF/web.xml文件</span><br><span class="line"></span><br><span class="line">15 .git</span><br><span class="line"></span><br><span class="line">16 .svn</span><br></pre></td></tr></tbody></table></figure>
 
-2. crossdomin.xml
 
-3. sitemap.xml
 
-4. 后台目录
-
-5. 网站安装包
-
-6. 网站上传目录
-
-7. mysql管理页面
-
-8. phpinfo
-
-9. 网站文本编辑器
-
-10. 测试文件
-
-11. 网站备份文件(.rar、zip、.7z、.tar.gz、.bak)
-
-12. DS_Store 文件
-
-13. vim编辑器备份文件(.swp)
-
-14. WEB—INF/web.xml文件
-
-15 .git
-
-16 .svn
-</code></pre>
 <h2 id="9-1-御剑"><a href="#9-1-御剑" class="headerlink" title="9.1.御剑"></a>9.1.御剑</h2><p><a target="_blank" rel="noopener" href="https://www.fujieace.com/hacker/tools/yujian.html">https://www.fujieace.com/hacker/tools/yujian.html</a></p>
 <h2 id="9-2-7kbstorm"><a href="#9-2-7kbstorm" class="headerlink" title="9.2.7kbstorm"></a>9.2.7kbstorm</h2><p><a target="_blank" rel="noopener" href="https://github.com/7kbstorm/7kbscan-WebPathBrute">https://github.com/7kbstorm/7kbscan-WebPathBrute</a></p>
 <h2 id="9-3-bbscan"><a href="#9-3-bbscan" class="headerlink" title="9.3.bbscan"></a>9.3.bbscan</h2><p><a target="_blank" rel="noopener" href="https://github.com/lijiejie/BBScan">https://github.com/lijiejie/BBScan</a></p>

